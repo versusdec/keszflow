@@ -1,9 +1,11 @@
 {
-  "name": "@keszflow/components",
+  "name": "@keszflow-business/components",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "scripts": {
-    "test": "echo \"COMPONENTS\" && exit 1"
+    "clean": "rm -rf \"./dist\"",
+    "build": "npm run clean && swc ./src --out-dir ./dist"
   },
   "repository": {
     "type": "git",
@@ -15,7 +17,7 @@
     "url": "https://github.com/ionesoftware/keszflow-business-panel/issues"
   },
   "homepage": "https://github.com/ionesoftware/keszflow-business-panel#readme",
-  "main": "src/index.tsx",
+  "main": "src/index.ts",
   "peerDependencies": {
     "react": "*",
     "typescript": "*"
