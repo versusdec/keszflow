@@ -1,10 +1,11 @@
 {
   "private": true,
-  "name": "@keszflow/panel",
-  "version": "1.0.0",
+  "name": "@keszflow-business/panel",
+  "version": "0.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"ROOT\" && exit 1"
+    "test": "echo \"ROOT\" && exit 1",
+    "dev:client": "npm run dev -w=@keszflow-business/panel"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,13 @@
     "packages/client"
   ],
   "devDependencies": {
+    "@tsconfig/recommended": "1.0.1",
     "@types/node": "^14.0.23",
-    "@types/react": "^17.0.0"
+    "@types/react": "^17.0.0",
+    "eslint": "8.12.0",
+    "swc": "1.0.11"
+  },
+  "dependencies": {
+    "prettier": "^2.6.2"
   }
 }
