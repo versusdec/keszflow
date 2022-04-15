@@ -5,7 +5,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"ROOT\" && exit 1",
-    "dev:client": "npm run dev -w=@keszflow-business/panel"
+    "dev:panel": "npm run dev -w=@keszflow/panel"
   },
   "repository": {
     "type": "git",
@@ -19,16 +19,16 @@
   "homepage": "https://github.com/ionesoftware/keszflow-business-panel#readme",
   "workspaces": [
     "packages/components",
-    "packages/client"
+    "packages/panel"
   ],
   "devDependencies": {
     "@tsconfig/recommended": "1.0.1",
-    "@types/node": "^14.0.23",
-    "@types/react": "^17.0.0",
+    "@types/node": "14.0.23",
+    "@types/react": "17.0.0",
     "eslint": "8.12.0",
     "swc": "1.0.11"
   },
   "dependencies": {
-    "prettier": "^2.6.2"
+    "prettier": "2.6.2"
   }
 }
