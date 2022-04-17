@@ -48,45 +48,7 @@ export const Item = ({ data }: { data: any }) => {
   )
 }
 
-const data = [
-  {
-    id: 1,
-    date: '2022.04.15',
-    name: 'My invoice',
-    total: 1500,
-    status: 'active',
-  },
-  {
-    id: 2,
-    date: '2022.04.15',
-    name: 'My invoice',
-    total: 24158,
-    status: 'active',
-  },
-  {
-    id: 3,
-    date: '2022.04.15',
-    name: 'My invoice',
-    total: 4561,
-    status: 'active',
-  },
-  {
-    id: 4,
-    date: '2022.04.15',
-    name: 'My invoice',
-    total: 48945,
-    status: 'active',
-  },
-  {
-    id: 5,
-    date: '2022.04.15',
-    name: 'My invoice',
-    total: 1245,
-    status: 'active',
-  },
-]
-
-export const List = () => {
+export const List = ({ invoices }: { invoices: any[] }) => {
   return (
     <>
       <TableContainer component={Paper}>
@@ -102,8 +64,8 @@ export const List = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
-              <Item key={row.id} data={row} />
+            {(invoices || []).map((invoice) => (
+              <Item key={invoice.id} data={invoice} />
             ))}
           </TableBody>
         </Table>

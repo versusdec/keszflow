@@ -1,29 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import { api } from '@keszflow/panel/api'
 import { List as Invoices } from '@keszflow/components'
+import { useInvoices } from '@keszflow/panel/hooks/useInvoices'
+import { useServer } from '@keszflow/panel/hooks/useServer'
 
-const test = async () => {
-  const data = await api.test.fetch().then((res) => res.json())
-  return data
-}
-const useData = () => {
-  return {
-    data: {},
-  }
-}
 export const Home = () => {
-  console.log('Home inited')
-  const [data, setData] = useState({})
-
-  useEffect(() => {
-    const d = async () => {
-      setData(await test())
-    }
-
-    d()
-  }, [])
+  const { data } = useServer()
   console.log(data)
+  const { invoices } = useInvoices()
 
   return (
     <Box p={3}>
@@ -31,7 +15,7 @@ export const Home = () => {
         Dashboard
       </Typography>
       <Box sx={{}}>
-        <Invoices />
+        <Invoices invoices={invoices} />
       </Box>
     </Box>
   )

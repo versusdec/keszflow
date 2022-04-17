@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Header } from '@keszflow/components'
 import { View } from '@keszflow/components'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const theme = createTheme({
   components: {
@@ -38,15 +39,34 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
+const defaultQueryFn = async ({
+  queryKey,
+}: {
+  queryKey: readonly unknown[] | [string]
+}) => {
+  const res = await fetch(`https://api.dev.keszflow.business/${queryKey[0]}`)
+  return res.json()
+}
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      queryFn: defaultQueryFn,
+    },
+  },
+})
+
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return getLayout(
-    <ThemeProvider theme={theme}>
-      <CssBaseline>
-        <Component {...pageProps} />
-      </CssBaseline>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline>
+          <Component {...pageProps} />
+        </CssBaseline>
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }
