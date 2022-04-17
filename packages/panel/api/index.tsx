@@ -1,5 +1,5 @@
-import {root} from './config'
-import axios from "axios";
+import { root } from './config'
+// import axios from "axios";
 /*import NextCors from 'nextjs-cors';
 
 async function handler(req: any, res: any) {
@@ -18,20 +18,21 @@ async function handler(req: any, res: any) {
 //todo remove '/api/cors?url=' from prod
 const url = '/api/cors?url=' + root
 export const api = Object.freeze({
-    test: {
-        fetch: () => {
-            return fetch(url, {}).then(res => {
-                return res
-            }).catch(error => {
-                return error
-            });
-            /*return axios.get(root, {}).then(res => {
+  test: {
+    fetch: () => {
+      return fetch(url, {})
+        .then((res) => {
+          return res
+        })
+        .catch((error) => {
+          return error
+        })
+      /*return axios.get(root, {}).then(res => {
                 if (res)
                     return res.data
             }).catch(error => {
                 return error
             });*/
-        }
     },
-
+  },
 })

@@ -13,12 +13,10 @@
     "jsx": "preserve",
     "paths": {
       "@keszflow/components": ["../components/src"],
-      "@keszflow/components/*": ["../components/src/*"],
+      "@keszflow/components/*": ["../components/src/*"]
     },
     "incremental": true
   },
-  "include": ["next-env.d.ts", "src",
-    "src/pages"
-  ],
+  "include": ["next-env.d.ts", "src", "src/pages"],
   "exclude": ["node_modules"]
 }
