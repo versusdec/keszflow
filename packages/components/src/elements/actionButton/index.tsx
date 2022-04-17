@@ -1,7 +1,26 @@
 import React from 'react'
-import { IconButton, Tooltip } from '@mui/material'
+import { IconButton, IconButtonProps, Tooltip } from '@mui/material'
+import {
+  SvgIconComponent,
+  LaunchOutlined,
+  Edit,
+  DeleteOutline,
+} from '@mui/icons-material'
 
-export const ActionButton = ({ onClick, Icon, tooltip, disabled }: any) => {
+export interface ActionButtonProps {
+  onClick: IconButtonProps['onClick']
+  icon: 'launch' | 'edit' | 'delete'
+  tooltip: string
+  disabled?: boolean
+}
+
+export const ActionButton = ({
+  onClick,
+  icon,
+  tooltip,
+  disabled,
+}: ActionButtonProps) => {
+  const IconComponent = getIcon(icon)
   return (
     <Tooltip title={tooltip}>
       <IconButton
@@ -11,12 +30,24 @@ export const ActionButton = ({ onClick, Icon, tooltip, disabled }: any) => {
         onClick={onClick}
         disabled={!!disabled}
       >
-        <Icon
+        <IconComponent
           color={'primary'}
           sx={{ fontSize: 16, color: !!disabled ? 'inherit' : '' }}
-          title={'Open'}
         />
       </IconButton>
     </Tooltip>
   )
+}
+
+const getIcon = (icon: ActionButtonProps['icon']): SvgIconComponent => {
+  switch (icon) {
+    case 'edit':
+      return Edit
+    case 'delete':
+      return DeleteOutline
+    case 'launch':
+      return LaunchOutlined
+    default:
+      throw new Error('no mapping')
+  }
 }

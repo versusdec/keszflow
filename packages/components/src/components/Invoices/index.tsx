@@ -9,7 +9,6 @@ import {
   TableBody,
 } from '@mui/material'
 import { ActionButton } from '../../elements/actionButton'
-import { LaunchOutlined, Edit, DeleteOutline } from '@mui/icons-material'
 
 export const Item = ({ data }: { data: any }) => {
   return (
@@ -22,24 +21,24 @@ export const Item = ({ data }: { data: any }) => {
         <TableCell align="left">{data.status}</TableCell>
         <TableCell align="right">
           <ActionButton
-            onClick={(e: MouseEvent) => {
+            onClick={(e) => {
               console.log(e)
             }}
-            Icon={LaunchOutlined}
+            icon="launch"
             tooltip={'Open'}
           />
           <ActionButton
-            onClick={(e: MouseEvent) => {
+            onClick={(e) => {
               console.log(e)
             }}
-            Icon={Edit}
+            icon="edit"
             tooltip={'Edit'}
           />
           <ActionButton
-            onClick={(e: MouseEvent) => {
+            onClick={(e) => {
               console.log(e)
             }}
-            Icon={DeleteOutline}
+            icon="delete"
             tooltip={'Delete'}
           />
         </TableCell>
