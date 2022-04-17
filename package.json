@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev:format": "prettier --write packages/components/src && prettier --write packages/panel/pages",
-    "dev:panel": "npm run dev -w=@keszflow/panel"
+    "dev:panel": "npm run dev -w=@keszflow/panel",
+    "dist:panel": "npm run export -w=@keszflow/panel"
   },
   "repository": {
     "type": "git",
