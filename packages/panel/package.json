@@ -1,13 +1,17 @@
 {
-  "private": true,
   "name": "@keszflow/panel",
   "version": "1.0.0",
+  "description": "",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
+  "author": "IONE Software Sp. z o.o. [Ltd]",
+  "license": "ISC",
+  "main": "src/index.ts",
   "dependencies": {
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",

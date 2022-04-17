@@ -1,22 +1,18 @@
 {
-  "private": true,
   "name": "@keszflow-business/panel",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
+  "private": true,
   "scripts": {
-    "test": "echo \"ROOT\" && exit 1",
+    "dev:format": "prettier --write packages/components/src && prettier --write packages/panel/pages",
     "dev:panel": "npm run dev -w=@keszflow/panel"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ionesoftware/keszflow-business-panel.git"
   },
-  "author": "",
+  "author": "IONE Software Sp. z o.o. [Ltd]",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ionesoftware/keszflow-business-panel/issues"
-  },
-  "homepage": "https://github.com/ionesoftware/keszflow-business-panel#readme",
   "workspaces": [
     "packages/components",
     "packages/panel"
@@ -26,9 +22,7 @@
     "@types/node": "14.0.23",
     "@types/react": "17.0.0",
     "eslint": "8.12.0",
+    "prettier": "2.6.2",
     "swc": "1.0.11"
-  },
-  "dependencies": {
-    "prettier": "2.6.2"
   }
 }
