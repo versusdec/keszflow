@@ -3,7 +3,6 @@ import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Header } from '@keszflow/components'
 import { View } from '@keszflow/components'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
@@ -57,16 +56,15 @@ const queryClient = new QueryClient({
 })
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout ?? ((page) => page)
-
-  return getLayout(
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <Component {...pageProps} />
-        </CssBaseline>
-      </ThemeProvider>
-    </QueryClientProvider>
+  return (
+    <View>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline>
+            <Component {...pageProps} />
+          </CssBaseline>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </View>
   )
 }

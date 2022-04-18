@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { Footer, Header } from '@keszflow/components'
 import { Sidebar } from '@keszflow/components'
 import Head from 'next/head'
-import { Grid, Box } from '@mui/material'
+import { Grid, Box, Container } from '@mui/material'
 
 interface Props {
   children?: ReactElement
@@ -20,28 +20,16 @@ export default function Layout(props: Props) {
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
       </Head>
-      <Grid container sx={{ height: '100%' }}>
-        <Grid item>
-          <Sidebar />
-        </Grid>
-        <Grid item sx={{ flexGrow: 1 }}>
-          <Box
-            component={'main'}
-            sx={{
-              bgcolor: 'grey.50',
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <Header />
-            <Box component="article" sx={{ flexGrow: 1 }}>
-              {props.children}
-            </Box>
+      <Box sx={{ bgcolor: 'background.paper', minHeight: '100vh' }}>
+        <Header />
+        <Box component="main">
+          <Container>
+            {props.children}
+
             <Footer />
-          </Box>
-        </Grid>
-      </Grid>
+          </Container>
+        </Box>
+      </Box>
     </>
   )
 }

@@ -1,12 +1,7 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 
-import { View } from '@keszflow/components'
-import { Home as HomeComponent } from '@keszflow/components'
+import { AccountantDashboard } from './dashboard/accountant'
 
-const Home = () => <HomeComponent />
-
-Home.getLayout = function getLayout(page: ReactElement) {
-  return <View title={'Dashboard'}>{page}</View>
-}
+const Home = () => <AccountantDashboard />
 
 export default Home
