@@ -13,16 +13,8 @@ import {
 } from '@mui/material'
 import { ActionButton } from '../../elements/actionButton'
 import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
-import { useInvoices } from '@keszflow/panel/hooks/useInvoices'
+import { invoiceData, useInvoices } from '@keszflow/panel/hooks/useInvoices'
 import { Invoice } from './Invoice'
-
-interface invoiceData {
-  id: number
-  date: string
-  name: string
-  total: number
-  status: string
-}
 
 export const Item = ({ data, open }: { data: invoiceData; open: any }) => {
   return (
