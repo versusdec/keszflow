@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import {
   Paper,
   Table,
@@ -7,10 +7,24 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Modal,
+  Box,
+  Typography,
 } from '@mui/material'
 import { ActionButton } from '../../elements/actionButton'
+import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
+import { useInvoices } from '@keszflow/panel/hooks/useInvoices'
+import { Invoice } from './Invoice'
 
-export const Item = ({ data }: { data: any }) => {
+interface invoiceData {
+  id: number
+  date: string
+  name: string
+  total: number
+  status: string
+}
+
+export const Item = ({ data, open }: { data: invoiceData; open: any }) => {
   return (
     <>
       <TableRow>
@@ -21,8 +35,8 @@ export const Item = ({ data }: { data: any }) => {
         <TableCell align="left">{data.status}</TableCell>
         <TableCell align="right">
           <ActionButton
-            onClick={(e) => {
-              console.log(e)
+            onClick={() => {
+              open(data.id)
             }}
             icon="launch"
             tooltip={'Open'}
@@ -40,11 +54,19 @@ export const Item = ({ data }: { data: any }) => {
   )
 }
 
-export const List = ({ invoices }: { invoices: any[] }) => {
+export const List = () => {
+  const { data } = useInvoices()
+  const [active, setActive] = useState(0)
+  const { invoice } = useInvoice(active)
+
+  const openHandler = (id: number) => {
+    setActive(id)
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{}} aria-label="simple table">
+        <Table sx={{}}>
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
@@ -56,12 +78,15 @@ export const List = ({ invoices }: { invoices: any[] }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(invoices || []).map((invoice) => (
-              <Item key={invoice.id} data={invoice} />
-            ))}
+            {/*todo data Object is of type 'unknown'*/}
+            {data &&
+              data.map((invoice) => (
+                <Item key={invoice.id} data={invoice} open={openHandler} />
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
+      {!!active && <Invoice id={active} openHandler={openHandler} />}
     </>
   )
 }

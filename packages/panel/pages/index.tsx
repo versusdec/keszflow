@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { AccountantDashboard } from './dashboard/accountant'
+import Dashboard from './dashboard'
 
-const Home = () => <AccountantDashboard />
-
-export default Home
+export default Dashboard

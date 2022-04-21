@@ -1,17 +1,34 @@
-import React from 'react'
-import { Box, Button } from '@mui/material'
+import React, { useState } from 'react'
+import {
+  Avatar,
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  Grid,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Typography,
+} from '@mui/material'
 import { InvoiceList } from '@keszflow/components'
-import { useInvoices } from '../../hooks/useInvoices'
+import { InvoiceCreate } from '@keszflow/components/src/components/Invoices/Create'
 
 export const BusinessDashboard = () => {
-  const { invoices } = useInvoices()
-
   return (
     <>
-      <Box>
-        <Button variant="contained">Upload</Button>
-      </Box>
-      <InvoiceList invoices={invoices} />
+      <Grid container mb={3} justifyContent={'space-between'}>
+        <Grid item>
+          <Typography variant={'h5'}>My Invoices</Typography>
+        </Grid>
+        <Grid item>
+          <Box>
+            <InvoiceCreate />
+          </Box>
+        </Grid>
+      </Grid>
+      <InvoiceList />
     </>
   )
 }
