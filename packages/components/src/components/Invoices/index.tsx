@@ -31,13 +31,6 @@ export const Item = ({ data }: { data: any }) => {
             onClick={(e) => {
               console.log(e)
             }}
-            icon="edit"
-            tooltip={'Edit'}
-          />
-          <ActionButton
-            onClick={(e) => {
-              console.log(e)
-            }}
             icon="delete"
             tooltip={'Delete'}
           />
