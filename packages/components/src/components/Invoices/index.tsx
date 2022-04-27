@@ -46,8 +46,7 @@ export const Item = ({ data, open }: { data: invoiceData; open: any }) => {
   )
 }
 
-export const List = () => {
-  const { data } = useInvoices()
+export const List = ({ invoices }: { invoices: invoiceData[] | undefined }) => {
   const [active, setActive] = useState(0)
   const { invoice } = useInvoice(active)
 
@@ -70,9 +69,8 @@ export const List = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/*todo data Object is of type 'unknown'*/}
-            {data &&
-              data.map((invoice) => (
+            {invoices &&
+              invoices.map((invoice) => (
                 <Item key={invoice.id} data={invoice} open={openHandler} />
               ))}
           </TableBody>

@@ -13,9 +13,16 @@ import {
   Typography,
 } from '@mui/material'
 import { InvoiceList } from '@keszflow/components'
-import { InvoiceCreate } from '@keszflow/components/src/components/Invoices/Create'
+import { useInvoices } from '../../hooks/useInvoices'
+import {
+  InvoiceCreate,
+  useCreateModal,
+} from '@keszflow/components/src/components/Invoices/Create'
 
 export const BusinessDashboard = () => {
+  const { data } = useInvoices()
+  const { open, handleCreateModal } = useCreateModal()
+
   return (
     <>
       <Grid container mb={3} justifyContent={'space-between'}>
@@ -24,11 +31,19 @@ export const BusinessDashboard = () => {
         </Grid>
         <Grid item>
           <Box>
-            <InvoiceCreate />
+            <Grid container gap={2}>
+              <Button variant="contained" onClick={() => {}}>
+                upload
+              </Button>
+              <Button variant="contained" onClick={handleCreateModal}>
+                create
+              </Button>
+            </Grid>
           </Box>
         </Grid>
       </Grid>
-      <InvoiceList />
+      <InvoiceList invoices={data} />
+      <InvoiceCreate open={open} onClose={handleCreateModal} />
     </>
   )
 }

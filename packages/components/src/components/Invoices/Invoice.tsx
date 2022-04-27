@@ -1,6 +1,15 @@
 import React from 'react'
-import { Paper, Modal, Box, Typography, IconButton } from '@mui/material'
-import { CloseOutlined } from '@mui/icons-material'
+import {
+  Paper,
+  Modal,
+  Box,
+  Typography,
+  IconButton,
+  DialogTitle,
+  DialogContent,
+  Dialog,
+} from '@mui/material'
+import { Close, CloseOutlined } from '@mui/icons-material'
 
 export const getInvoice = () => {}
 
@@ -11,33 +20,32 @@ export const Invoice = (data: any) => {
 
   return (
     <>
-      <Modal open={true} onClose={modalHandler}>
-        <Box
-          component={Paper}
-          sx={{
-            position: 'absolute',
-            top: 30,
-            left: 30,
-            right: 30,
-            bottom: 30,
-            bgcolor: 'background.paper',
-            p: 3,
-          }}
-        >
+      <Dialog
+        open={true}
+        onClose={modalHandler}
+        fullWidth={true}
+        scroll={'paper'}
+        maxWidth={'md'}
+      >
+        <DialogTitle sx={{ pr: 10 }}>
           <IconButton
+            aria-label="close"
             onClick={modalHandler}
-            color={'primary'}
             sx={{
               position: 'absolute',
-              right: 30,
-              top: 30,
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.primary.main,
             }}
           >
-            <CloseOutlined fontSize={'large'} />
+            <Close />
           </IconButton>
-          IM INVOICE ID: {data.id}
-        </Box>
-      </Modal>
+          Invoice #{data.id}
+        </DialogTitle>
+        <DialogContent dividers>
+          <Box sx={{}}></Box>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

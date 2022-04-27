@@ -5,6 +5,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { View } from '@keszflow/components'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 
 const theme = createTheme({
   components: {
@@ -58,13 +60,15 @@ const queryClient = new QueryClient({
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <View>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline>
-            <Component {...pageProps} />
-          </CssBaseline>
-        </ThemeProvider>
-      </QueryClientProvider>
+      <LocalizationProvider dateAdapter={AdapterMoment}>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline>
+              <Component {...pageProps} />
+            </CssBaseline>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </LocalizationProvider>
     </View>
   )
 }
