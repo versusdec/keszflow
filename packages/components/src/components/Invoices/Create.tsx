@@ -1,4 +1,10 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from 'react'
+import React, {
+  ChangeEvent,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import {
   Box,
   Dialog,
@@ -93,30 +99,6 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
     items: ItemInfo[]
   }
 
-  const validationSchema = Yup.object({
-    dates: Yup.object({
-      issue: Yup.date().nullable(),
-    }),
-    client: Yup.string().required('This field is required'),
-    seller: Yup.string().required('This field is required'),
-    create_date: Yup.string().required('This field is required'),
-    payment_date: Yup.string().required('This field is required'),
-    payment_type: Yup.string()
-      .oneOf(['bank', 'cash'])
-      .required('This field is required'),
-    items: Yup.array().of(
-      Yup.object({
-        name: Yup.string().required('This field is required'),
-        amount: Yup.number().required('This field is required'),
-        price: Yup.number().required('This field is required'),
-        netto: Yup.number().required('This field is required'),
-        vat: Yup.number().required('This field is required'),
-        quota: Yup.number().required('This field is required'),
-        brutto: Yup.number().required('This field is required'),
-      })
-    ),
-  })
-
   const invoiceValues: Invoice = {
     no: '',
     seller: {
@@ -164,9 +146,29 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
     ],
   }
 
-  const addInvoiceItem = () => {}
-
-  const removeInvoiceItem = () => {}
+  const validationSchema = Yup.object({
+    dates: Yup.object({
+      issue: Yup.date().nullable(),
+    }),
+    client: Yup.string().required('This field is required'),
+    seller: Yup.string().required('This field is required'),
+    create_date: Yup.string().required('This field is required'),
+    payment_date: Yup.string().required('This field is required'),
+    payment_type: Yup.string()
+      .oneOf(['bank', 'cash'])
+      .required('This field is required'),
+    items: Yup.array().of(
+      Yup.object({
+        name: Yup.string().required('This field is required'),
+        amount: Yup.number().required('This field is required'),
+        price: Yup.number().required('This field is required'),
+        netto: Yup.number().required('This field is required'),
+        vat: Yup.number().required('This field is required'),
+        quota: Yup.number().required('This field is required'),
+        brutto: Yup.number().required('This field is required'),
+      })
+    ),
+  })
 
   return (
     <>
@@ -391,81 +393,82 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                               <Box>
                                 <Input
                                   label={'Name'}
-                                  fast
+                                  fast="true"
                                   name={`items.${index}.name`}
-                                  value={item.name || ''}
+                                  value={`items.${index}.name` || ''}
                                   size={'small'}
-                                  onChange={formikProps.handleChange}
+                                  onChange={() => {}}
+                                  onBlur={formikProps.handleChange}
                                 />
                               </Box>
                               <Box>
                                 <Input
                                   label={'Unit'}
-                                  fast
+                                  fast="true"
                                   name={`items.${index}.unit`}
-                                  value={item.unit || ''}
+                                  value={`items.${index}.unit`}
                                   size={'small'}
-                                  onChange={formikProps.handleChange}
+                                  // onBlur={formikProps.handleChange}
                                 />
                               </Box>
                               <Box>
                                 <Input
                                   label={'Quantity'}
-                                  fast
+                                  fast="true"
                                   name={`items.${index}.quantity`}
-                                  value={item.quantity || ''}
+                                  value={`items.${index}.quantity`}
                                   size={'small'}
-                                  onChange={formikProps.handleChange}
+                                  // onBlur={formikProps.handleChange}
                                 />
                               </Box>
                               <Box>
                                 <Input
                                   label={'Gross amount'}
-                                  fast
+                                  fast="true"
                                   name={`items.${index}.grossAmount`}
-                                  value={item.grossAmount || ''}
+                                  value={`items.${index}.grossAmount`}
                                   size={'small'}
-                                  onChange={formikProps.handleChange}
+                                  // onBlur={formikProps.handleChange}
                                 />
                               </Box>
                               <Box>
                                 <Input
                                   label={'Net amount'}
-                                  fast
+                                  fast="true"
                                   name={`items.${index}.netAmount`}
-                                  value={item.netAmount || ''}
+                                  value={`items.${index}.netAmount`}
                                   size={'small'}
-                                  onChange={formikProps.handleChange}
+                                  // onBlur={formikProps.handleChange}
                                 />
                               </Box>
                               <Box>
                                 <Input
                                   label={'Net price'}
-                                  fast
+                                  fast="true"
                                   name={`items.${index}.netPrice`}
-                                  value={item.netPrice || ''}
+                                  value={`items.${index}.netPrice`}
                                   size={'small'}
-                                  onChange={formikProps.handleChange}
+                                  // onBlur={formikProps.handleChange}
                                 />
                               </Box>
                               <Box>
                                 <Input
                                   label={'Tax amount'}
-                                  fast
+                                  fast="true"
                                   name={`items.${index}.taxAmount`}
-                                  value={item.taxAmount || ''}
+                                  value={`items.${index}.taxAmount`}
                                   size={'small'}
-                                  onChange={formikProps.handleChange}
+                                  // onBlur={formikProps.handleChange}
                                 />
                               </Box>
                               <Box>
                                 <Input
                                   label={'Tax rate'}
-                                  fast
+                                  fast="true"
                                   name={`items.${index}.taxRate`}
-                                  value={item.taxRate || ''}
+                                  value={`items.${index}.taxRate`}
                                   size={'small'}
-                                  onChange={formikProps.handleChange}
+                                  // onBlur={formikProps.handleChange}
                                 />
                               </Box>
 
