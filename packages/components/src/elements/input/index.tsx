@@ -6,6 +6,7 @@ import {
   FieldProps,
   getIn,
   Field,
+  FastField,
 } from 'formik'
 import { TextFieldProps, TextField } from '@mui/material'
 
@@ -34,9 +35,15 @@ const CustomInput: React.FC<FieldProps & TextFieldProps> = (props) => {
 }
 
 export const Input: React.FC<PropsWithChildren<any>> = (props) => {
-  return (
-    <>
-      <Field {...props} component={CustomInput} />
-    </>
+  /*switch (props.fast) {
+    case true:
+      return <FastField {...props} component={CustomInput} />
+    case
+  }*/
+
+  return props.fast ? (
+    <FastField {...props} component={CustomInput} />
+  ) : (
+    <Field {...props} component={CustomInput} />
   )
 }
