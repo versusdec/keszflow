@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { useState } from 'react'
 import {
   Box,
   Dialog,
@@ -16,19 +10,11 @@ import {
   Divider,
   DialogActions,
   Typography,
-  Grid,
   TextField,
   MenuItem,
   Select,
   FormControl,
   InputLabel,
-  Table,
-  TableCell,
-  TableBody,
-  TableContainer,
-  TableRow,
-  TableHead,
-  Paper,
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import * as Yup from 'yup'
@@ -37,20 +23,18 @@ import { DesktopDatePicker, DatePicker } from '@mui/x-date-pickers'
 import {
   Formik,
   Form,
-  Field,
   FormikHelpers,
-  useFormik,
   FormikProps,
   FieldArray,
   ArrayHelpers,
 } from 'formik'
+
 import { Input } from '../../elements/input'
-import { Item } from './index'
 import { ActionButton } from '../../elements/actionButton'
+import Sortable from '../Sortable'
 
 interface CreateModalProps {
   open: boolean
-  // onSave: () => void
   onClose: () => void
 }
 
@@ -64,41 +48,41 @@ export const useCreateModal = () => {
   return { open, handleCreateModal }
 }
 
+interface DatesInfo {
+  issue: string | null
+  end: string | null
+  due: string | null
+}
+
+export interface ItemInfo {
+  pos: number
+  name: string
+  unit: string
+  quantity: number | ''
+  netPrice: number | ''
+  taxRate: number | ''
+  netAmount: number | ''
+  taxAmount: number | ''
+  grossAmount: number | ''
+}
+
+export interface SellerInfo {
+  name: string
+  country: 'Poland' | 'Ukraine'
+  address_line_1: string
+  address_line_2?: string
+  address_line_3?: string
+}
+
+export interface Invoice {
+  no: string
+  seller: SellerInfo
+  buyer: SellerInfo
+  dates: DatesInfo
+  items: ItemInfo[]
+}
+
 export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
-  interface DatesInfo {
-    issue: string | null
-    end: string | null
-    due: string | null
-  }
-
-  interface ItemInfo {
-    pos: number
-    name: string
-    unit: string
-    quantity: number | ''
-    netPrice: number | ''
-    taxRate: number | ''
-    netAmount: number | ''
-    taxAmount: number | ''
-    grossAmount: number | ''
-  }
-
-  interface SellerInfo {
-    name: string
-    country: 'Poland' | 'Ukraine'
-    address_line_1: string
-    address_line_2?: string
-    address_line_3?: string
-  }
-
-  interface Invoice {
-    no: string
-    seller: SellerInfo
-    buyer: SellerInfo
-    dates: DatesInfo
-    items: ItemInfo[]
-  }
-
   const invoiceValues: Invoice = {
     no: '',
     seller: {
@@ -123,10 +107,10 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
     items: [
       {
         pos: 0,
-        name: 'bla bla',
-        unit: '',
-        quantity: '',
-        netPrice: '',
+        name: '1',
+        unit: 'kg',
+        quantity: 10,
+        netPrice: 125,
         taxRate: '',
         netAmount: '',
         taxAmount: '',
@@ -134,10 +118,43 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
       },
       {
         pos: 1,
-        name: 'test',
-        unit: 'kg',
+        name: '2',
+        unit: 'pcs',
         quantity: 12,
         netPrice: 1232,
+        taxRate: '',
+        netAmount: '',
+        taxAmount: '',
+        grossAmount: '',
+      },
+      {
+        pos: 2,
+        name: '3',
+        unit: 'hrs',
+        quantity: 43,
+        netPrice: 23,
+        taxRate: '',
+        netAmount: '',
+        taxAmount: '',
+        grossAmount: '',
+      },
+      {
+        pos: 3,
+        name: '4',
+        unit: 'gr',
+        quantity: 123,
+        netPrice: 435,
+        taxRate: '',
+        netAmount: '',
+        taxAmount: '',
+        grossAmount: '',
+      },
+      {
+        pos: 4,
+        name: '5',
+        unit: 'ml',
+        quantity: 250,
+        netPrice: 50,
         taxRate: '',
         netAmount: '',
         taxAmount: '',
@@ -170,6 +187,111 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
     ),
   })
 
+  const itemJSX = ({ item, index, formikProps }: any) => {
+    return (
+      <Stack direction={'row'} spacing={2} mb={2} key={index}>
+        <Box>
+          <ActionButton
+            onClick={() => {
+              // open(data.id)
+            }}
+            icon="apps"
+            tooltip={'Drag'}
+          />
+        </Box>
+        <Box>
+          <Input
+            label={'Name'}
+            fast="true"
+            name={`items.${index}.name`}
+            value={`items.${index}.name` || ''}
+            size={'small'}
+          />
+        </Box>
+        <Box>
+          <Input
+            label={'Unit'}
+            fast="true"
+            name={`items.${index}.unit`}
+            value={`items.${index}.unit`}
+            size={'small'}
+          />
+        </Box>
+        <Box>
+          <Input
+            label={'Quantity'}
+            fast="true"
+            name={`items.${index}.quantity`}
+            value={`items.${index}.quantity`}
+            size={'small'}
+          />
+        </Box>
+        <Box>
+          <Input
+            label={'Gross amount'}
+            fast="true"
+            name={`items.${index}.grossAmount`}
+            value={`items.${index}.grossAmount`}
+            size={'small'}
+          />
+        </Box>
+        <Box>
+          <Input
+            label={'Net amount'}
+            fast="true"
+            name={`items.${index}.netAmount`}
+            value={`items.${index}.netAmount`}
+            size={'small'}
+          />
+        </Box>
+        <Box>
+          <Input
+            label={'Net price'}
+            fast="true"
+            name={`items.${index}.netPrice`}
+            value={`items.${index}.netPrice`}
+            size={'small'}
+          />
+        </Box>
+        <Box>
+          <Input
+            label={'Tax amount'}
+            fast="true"
+            name={`items.${index}.taxAmount`}
+            value={`items.${index}.taxAmount`}
+            size={'small'}
+          />
+        </Box>
+        <Box>
+          <Input
+            label={'Tax rate'}
+            fast="true"
+            name={`items.${index}.taxRate`}
+            value={`items.${index}.taxRate`}
+            size={'small'}
+          />
+        </Box>
+
+        <Box justifyContent={'flex-end'}>
+          <ActionButton
+            onClick={() => {
+              // arrayHelpers.remove(index);
+              // console.log(formikProps.values.items[index])
+              formikProps.values.items.splice(index, 1)
+              formikProps.setFieldValue('items', formikProps.values.items)
+              // formikProps.setValues(formikProps.values)
+            }}
+            icon="delete"
+            tooltip={'Remove'}
+          />
+        </Box>
+      </Stack>
+    )
+  }
+  /*  const handleChange = (items: any[]) => {
+    formikProps.setFieldValue('items', items)
+  }*/
+
   return (
     <>
       <Dialog
@@ -182,12 +304,17 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
         <Formik
           initialValues={invoiceValues}
           // validationSchema={validationSchema}
+          // enableReinitialize={true}
           onSubmit={(
             values: Invoice,
             formikHelpers: FormikHelpers<Invoice>
           ) => {
+            values.items &&
+              values.items.map((item, i) => {
+                item.pos = i
+              })
             console.log(values)
-            // alert(JSON.stringify(values, null, 2))
+
             formikHelpers.setSubmitting(false)
           }}
         >
@@ -213,12 +340,7 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                   <Stack spacing={2} direction={'row'}>
                     <Input label={'Number'} required name={'no'} />
                   </Stack>
-                  <Box
-                    sx={{
-                      mt: 2,
-                      mb: 3,
-                    }}
-                  >
+                  <Box sx={{ mt: 2, mb: 3 }}>
                     <Typography variant={'h6'}>Seller</Typography>
                     <Divider />
                   </Box>
@@ -232,15 +354,18 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                     <Input label={'Address 2'} name={'seller.address_line_2'} />
                     <Input label={'Address 3'} name={'seller.address_line_3'} />
                     <FormControl>
-                      <InputLabel id="country">Country</InputLabel>
+                      <InputLabel id="seller.country">Country</InputLabel>
                       <Select
-                        id={'country'}
-                        name={'country'}
+                        id={'seller.country'}
+                        name={'seller.country'}
                         value={formikProps.values.seller.country}
                         label={'country'}
                         onChange={(e) => {
                           console.log(e.target.value)
-                          formikProps.setFieldValue('country', e.target.value)
+                          formikProps.setFieldValue(
+                            'seller.country',
+                            e.target.value
+                          )
                         }}
                       >
                         <MenuItem value={'Poland'}>Poland</MenuItem>
@@ -248,12 +373,7 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                       </Select>
                     </FormControl>
                   </Stack>
-                  <Box
-                    sx={{
-                      mt: 2,
-                      mb: 3,
-                    }}
-                  >
+                  <Box sx={{ mt: 2, mb: 3 }}>
                     <Typography variant={'h6'}>Buyer</Typography>
                     <Divider />
                   </Box>
@@ -267,15 +387,18 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                     <Input label={'Address 2'} name={'buyer.address_line_2'} />
                     <Input label={'Address 3'} name={'buyer.address_line_3'} />
                     <FormControl>
-                      <InputLabel id="country">Country</InputLabel>
+                      <InputLabel id="buyer.country">Country</InputLabel>
                       <Select
-                        id={'country'}
-                        name={'country'}
+                        id={'buyer.country'}
+                        name={'buyer.country'}
                         value={formikProps.values.seller.country}
                         label={'country'}
                         onChange={(e) => {
                           console.log(e.target.value)
-                          formikProps.setFieldValue('country', e.target.value)
+                          formikProps.setFieldValue(
+                            'buyer.country',
+                            e.target.value
+                          )
                         }}
                       >
                         <MenuItem value={'Poland'}>Poland</MenuItem>
@@ -283,12 +406,7 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                       </Select>
                     </FormControl>
                   </Stack>
-                  <Divider
-                    sx={{
-                      mt: 2,
-                      mb: 3,
-                    }}
-                  />
+                  <Divider sx={{ mt: 2, mb: 3 }} />
                   <Stack direction="row" spacing={2}>
                     <DatePicker
                       label="Issue date"
@@ -327,13 +445,7 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                       renderInput={(params) => <TextField {...params} />}
                     />
                   </Stack>
-
-                  <Divider
-                    sx={{
-                      mt: 2,
-                      mb: 3,
-                    }}
-                  />
+                  <Divider sx={{ mt: 2, mb: 3 }} />
                   <Stack
                     direction="row"
                     justifyContent={'space-between'}
@@ -357,144 +469,29 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                           grossAmount: '',
                         })
                         formikProps.setValues(formikProps.values)
+                        console.log(formikProps.values.items)
                       }}
                     >
                       Add
                     </Button>
                   </Stack>
-                  <Divider
-                    sx={{
-                      mt: 2,
-                      mb: 3,
+                  <Divider sx={{ mt: 2, mb: 3 }} />
+                  <Sortable
+                    items={formikProps.values.items}
+                    Component={itemJSX}
+                    formikProps={formikProps}
+                    onChange={(items: any[]) => {
+                      // console.log(items);
+                      // formikProps.values.items = items;
+                      // formikProps.setValues(formikProps.values)
+                      formikProps.setFieldValue('items', items)
                     }}
                   />
-
-                  <FieldArray
+                  {/*<FieldArray
                     name={'items'}
-                    render={(arrayHelpers: ArrayHelpers) => (
-                      <Box>
-                        {formikProps.values.items.map((item, index) => {
-                          return (
-                            <Stack
-                              direction={'row'}
-                              spacing={2}
-                              mb={2}
-                              key={index}
-                            >
-                              <Box>
-                                <ActionButton
-                                  onClick={() => {
-                                    // open(data.id)
-                                  }}
-                                  icon="apps"
-                                  tooltip={'Drag'}
-                                />
-                              </Box>
-                              <Box>
-                                <Input
-                                  label={'Name'}
-                                  fast="true"
-                                  name={`items.${index}.name`}
-                                  value={`items.${index}.name` || ''}
-                                  size={'small'}
-                                  onChange={() => {}}
-                                  onBlur={formikProps.handleChange}
-                                />
-                              </Box>
-                              <Box>
-                                <Input
-                                  label={'Unit'}
-                                  fast="true"
-                                  name={`items.${index}.unit`}
-                                  value={`items.${index}.unit`}
-                                  size={'small'}
-                                  // onBlur={formikProps.handleChange}
-                                />
-                              </Box>
-                              <Box>
-                                <Input
-                                  label={'Quantity'}
-                                  fast="true"
-                                  name={`items.${index}.quantity`}
-                                  value={`items.${index}.quantity`}
-                                  size={'small'}
-                                  // onBlur={formikProps.handleChange}
-                                />
-                              </Box>
-                              <Box>
-                                <Input
-                                  label={'Gross amount'}
-                                  fast="true"
-                                  name={`items.${index}.grossAmount`}
-                                  value={`items.${index}.grossAmount`}
-                                  size={'small'}
-                                  // onBlur={formikProps.handleChange}
-                                />
-                              </Box>
-                              <Box>
-                                <Input
-                                  label={'Net amount'}
-                                  fast="true"
-                                  name={`items.${index}.netAmount`}
-                                  value={`items.${index}.netAmount`}
-                                  size={'small'}
-                                  // onBlur={formikProps.handleChange}
-                                />
-                              </Box>
-                              <Box>
-                                <Input
-                                  label={'Net price'}
-                                  fast="true"
-                                  name={`items.${index}.netPrice`}
-                                  value={`items.${index}.netPrice`}
-                                  size={'small'}
-                                  // onBlur={formikProps.handleChange}
-                                />
-                              </Box>
-                              <Box>
-                                <Input
-                                  label={'Tax amount'}
-                                  fast="true"
-                                  name={`items.${index}.taxAmount`}
-                                  value={`items.${index}.taxAmount`}
-                                  size={'small'}
-                                  // onBlur={formikProps.handleChange}
-                                />
-                              </Box>
-                              <Box>
-                                <Input
-                                  label={'Tax rate'}
-                                  fast="true"
-                                  name={`items.${index}.taxRate`}
-                                  value={`items.${index}.taxRate`}
-                                  size={'small'}
-                                  // onBlur={formikProps.handleChange}
-                                />
-                              </Box>
-
-                              <Box justifyContent={'flex-end'}>
-                                <ActionButton
-                                  onClick={() => {
-                                    // arrayHelpers.remove(index);
-                                    formikProps.values.items.splice(index, 1)
-                                    formikProps.values.items.forEach(
-                                      (item, i) => {
-                                        item.pos = i
-                                      }
-                                    )
-                                    formikProps.setValues(formikProps.values)
-                                    console.log(formikProps.values.items)
-                                  }}
-                                  icon="delete"
-                                  tooltip={'Remove'}
-                                />
-                              </Box>
-                            </Stack>
-                          )
-                        })}
-                      </Box>
-                    )}
-                  />
+                    render={(arrayHelpers: ArrayHelpers) => {*/}
+                  {/* }}
+                  />*/}
                 </Box>
               </DialogContent>
               <DialogActions>

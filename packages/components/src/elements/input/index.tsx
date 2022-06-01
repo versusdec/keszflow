@@ -56,6 +56,7 @@ const CustomInput: React.FC<FieldProps & TextFieldProps> = (props) => {
         onChange={handleOnChange}
         onBlur={() => {
           props.form.setFieldValue(props.field.name, value)
+          // console.log(props);
         }}
       />
       {/*{error && <p>error</p>}*/}
