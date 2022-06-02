@@ -32,10 +32,13 @@ import {
 import { Input } from '../../elements/input'
 import { ActionButton } from '../../elements/actionButton'
 import Sortable from '../Sortable'
+import { useInvoice } from '../../../../panel/hooks/useInvoice'
 
 interface CreateModalProps {
   open: boolean
   onClose: () => void
+  item?: Invoice
+  id?: number
 }
 
 export const useCreateModal = () => {
@@ -79,11 +82,29 @@ export interface Invoice {
   seller: SellerInfo
   buyer: SellerInfo
   dates: DatesInfo
+  payment: 'cash' | 'bank' | string
   items: ItemInfo[]
 }
 
-export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
-  const invoiceValues: Invoice = {
+export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
+  const res = id && useInvoice(id)
+
+  const item = res && res.data
+  const isFetching = res && res.isFetching
+  const isError = res && res.isError
+
+  const defaultItem: ItemInfo = {
+    pos: 0,
+    name: '',
+    unit: '',
+    quantity: '',
+    netPrice: '',
+    taxRate: '',
+    netAmount: '',
+    taxAmount: '',
+    grossAmount: '',
+  }
+  const invoiceValues: Invoice = item || {
     no: '',
     seller: {
       name: '',
@@ -100,67 +121,12 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
       address_line_3: '',
     },
     dates: {
-      issue: '2022-05-20T14:27:20.000Z',
+      issue: null,
       end: null,
       due: null,
     },
-    items: [
-      {
-        pos: 0,
-        name: '1',
-        unit: 'kg',
-        quantity: 10,
-        netPrice: 125,
-        taxRate: '',
-        netAmount: '',
-        taxAmount: '',
-        grossAmount: '',
-      },
-      {
-        pos: 1,
-        name: '2',
-        unit: 'pcs',
-        quantity: 12,
-        netPrice: 1232,
-        taxRate: '',
-        netAmount: '',
-        taxAmount: '',
-        grossAmount: '',
-      },
-      {
-        pos: 2,
-        name: '3',
-        unit: 'hrs',
-        quantity: 43,
-        netPrice: 23,
-        taxRate: '',
-        netAmount: '',
-        taxAmount: '',
-        grossAmount: '',
-      },
-      {
-        pos: 3,
-        name: '4',
-        unit: 'gr',
-        quantity: 123,
-        netPrice: 435,
-        taxRate: '',
-        netAmount: '',
-        taxAmount: '',
-        grossAmount: '',
-      },
-      {
-        pos: 4,
-        name: '5',
-        unit: 'ml',
-        quantity: 250,
-        netPrice: 50,
-        taxRate: '',
-        netAmount: '',
-        taxAmount: '',
-        grossAmount: '',
-      },
-    ],
+    payment: 'cash',
+    items: [defaultItem],
   }
 
   const validationSchema = Yup.object({
@@ -191,13 +157,7 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
     return (
       <Stack direction={'row'} spacing={2} mb={2} key={index}>
         <Box>
-          <ActionButton
-            onClick={() => {
-              // open(data.id)
-            }}
-            icon="apps"
-            tooltip={'Drag'}
-          />
+          <ActionButton onClick={() => {}} icon="apps" tooltip={'Drag'} />
         </Box>
         <Box>
           <Input
@@ -226,12 +186,13 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
             size={'small'}
           />
         </Box>
+
         <Box>
           <Input
-            label={'Gross amount'}
+            label={'Net price'}
             fast="true"
-            name={`items.${index}.grossAmount`}
-            value={`items.${index}.grossAmount`}
+            name={`items.${index}.netPrice`}
+            value={`items.${index}.netPrice`}
             size={'small'}
           />
         </Box>
@@ -246,10 +207,10 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
         </Box>
         <Box>
           <Input
-            label={'Net price'}
+            label={'Tax rate'}
             fast="true"
-            name={`items.${index}.netPrice`}
-            value={`items.${index}.netPrice`}
+            name={`items.${index}.taxRate`}
+            value={`items.${index}.taxRate`}
             size={'small'}
           />
         </Box>
@@ -264,23 +225,21 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
         </Box>
         <Box>
           <Input
-            label={'Tax rate'}
+            label={'Gross amount'}
             fast="true"
-            name={`items.${index}.taxRate`}
-            value={`items.${index}.taxRate`}
+            name={`items.${index}.grossAmount`}
+            value={`items.${index}.grossAmount`}
             size={'small'}
           />
         </Box>
-
         <Box justifyContent={'flex-end'}>
           <ActionButton
             onClick={() => {
-              // arrayHelpers.remove(index);
-              // console.log(formikProps.values.items[index])
-              formikProps.values.items.splice(index, 1)
-              formikProps.setFieldValue('items', formikProps.values.items)
-              // formikProps.setValues(formikProps.values)
+              const newItems = [...formikProps.values.items]
+              newItems.splice(index, 1)
+              formikProps.setFieldValue('items', newItems)
             }}
+            disabled={formikProps.values.items.length === 1}
             icon="delete"
             tooltip={'Remove'}
           />
@@ -288,11 +247,7 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
       </Stack>
     )
   }
-  /*  const handleChange = (items: any[]) => {
-    formikProps.setFieldValue('items', items)
-  }*/
-
-  return (
+  const ModalJSX = (
     <>
       <Dialog
         open={open}
@@ -314,7 +269,6 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                 item.pos = i
               })
             console.log(values)
-
             formikHelpers.setSubmitting(false)
           }}
         >
@@ -361,7 +315,6 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                         value={formikProps.values.seller.country}
                         label={'country'}
                         onChange={(e) => {
-                          console.log(e.target.value)
                           formikProps.setFieldValue(
                             'seller.country',
                             e.target.value
@@ -391,10 +344,9 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                       <Select
                         id={'buyer.country'}
                         name={'buyer.country'}
-                        value={formikProps.values.seller.country}
+                        value={formikProps.values.buyer.country}
                         label={'country'}
                         onChange={(e) => {
-                          console.log(e.target.value)
                           formikProps.setFieldValue(
                             'buyer.country',
                             e.target.value
@@ -408,6 +360,21 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                   </Stack>
                   <Divider sx={{ mt: 2, mb: 3 }} />
                   <Stack direction="row" spacing={2}>
+                    <FormControl>
+                      <InputLabel id="payment">Payment method</InputLabel>
+                      <Select
+                        id={'payment'}
+                        name={'payment'}
+                        value={formikProps.values.payment}
+                        label={'Payment method'}
+                        onChange={(e) => {
+                          formikProps.setFieldValue('payment', e.target.value)
+                        }}
+                      >
+                        <MenuItem value={'cash'}>Cash</MenuItem>
+                        <MenuItem value={'bank'}>Bank</MenuItem>
+                      </Select>
+                    </FormControl>
                     <DatePicker
                       label="Issue date"
                       // inputFormat="DD.MM.yyyy"
@@ -457,7 +424,8 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                       variant={'contained'}
                       sx={{}}
                       onClick={() => {
-                        formikProps.values.items.push({
+                        const newItems = [...formikProps.values.items]
+                        newItems.push({
                           pos: formikProps.values.items.length,
                           name: '',
                           unit: '',
@@ -468,8 +436,7 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                           taxAmount: '',
                           grossAmount: '',
                         })
-                        formikProps.setValues(formikProps.values)
-                        console.log(formikProps.values.items)
+                        formikProps.setFieldValue('items', newItems)
                       }}
                     >
                       Add
@@ -481,17 +448,9 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
                     Component={itemJSX}
                     formikProps={formikProps}
                     onChange={(items: any[]) => {
-                      // console.log(items);
-                      // formikProps.values.items = items;
-                      // formikProps.setValues(formikProps.values)
                       formikProps.setFieldValue('items', items)
                     }}
                   />
-                  {/*<FieldArray
-                    name={'items'}
-                    render={(arrayHelpers: ArrayHelpers) => {*/}
-                  {/* }}
-                  />*/}
                 </Box>
               </DialogContent>
               <DialogActions>
@@ -505,4 +464,5 @@ export const InvoiceCreate = ({ open, onClose }: CreateModalProps) => {
       </Dialog>
     </>
   )
+  return <>{!isFetching && ModalJSX}</>
 }

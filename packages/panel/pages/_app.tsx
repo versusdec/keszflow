@@ -27,6 +27,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          flexBasis: 210,
+        },
+      },
+    },
   },
 })
 

@@ -23,22 +23,21 @@ export const ActionButton = ({
   disabled,
 }: ActionButtonProps) => {
   const IconComponent = getIcon(icon)
-  return (
-    <Tooltip title={tooltip}>
-      <IconButton
-        sx={{
-          cursor: 'pointer',
-        }}
-        onClick={onClick}
-        disabled={!!disabled}
-      >
-        <IconComponent
-          color={'primary'}
-          sx={{ fontSize: 16, color: !!disabled ? 'inherit' : '' }}
-        />
-      </IconButton>
-    </Tooltip>
+  const IconJSX = (
+    <IconButton
+      sx={{
+        cursor: 'pointer',
+      }}
+      onClick={onClick}
+      disabled={!!disabled}
+    >
+      <IconComponent
+        color={'primary'}
+        sx={{ fontSize: 16, color: !!disabled ? 'inherit' : '' }}
+      />
+    </IconButton>
   )
+  return disabled ? IconJSX : <Tooltip title={tooltip}>{IconJSX}</Tooltip>
 }
 
 const getIcon = (icon: ActionButtonProps['icon']): SvgIconComponent => {

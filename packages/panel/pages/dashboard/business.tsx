@@ -1,17 +1,5 @@
-import React, { useState } from 'react'
-import {
-  Avatar,
-  Box,
-  Button,
-  Dialog,
-  DialogTitle,
-  Grid,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-} from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { InvoiceList } from '@keszflow/components'
 import { useInvoices } from '../../hooks/useInvoices'
 import {
@@ -20,8 +8,14 @@ import {
 } from '@keszflow/components/src/components/Invoices/Create'
 
 export const BusinessDashboard = () => {
+  const [itemId, setItemId] = useState(0)
   const { data } = useInvoices()
   const { open, handleCreateModal } = useCreateModal()
+
+  const openInvoiceHandler = (id: number) => {
+    setItemId(id)
+    handleCreateModal()
+  }
 
   return (
     <>
@@ -35,15 +29,21 @@ export const BusinessDashboard = () => {
               <Button variant="contained" onClick={() => {}}>
                 upload
               </Button>
-              <Button variant="contained" onClick={handleCreateModal}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  setItemId(0)
+                  handleCreateModal()
+                }}
+              >
                 create
               </Button>
             </Grid>
           </Box>
         </Grid>
       </Grid>
-      <InvoiceList invoices={data} />
-      <InvoiceCreate open={open} onClose={handleCreateModal} />
+      <InvoiceList invoices={data} openInvoiceHandler={openInvoiceHandler} />
+      <InvoiceCreate open={open} onClose={handleCreateModal} id={itemId} />
     </>
   )
 }

@@ -1,12 +1,13 @@
 import { useQuery } from 'react-query'
+import { Invoice } from '@keszflow/components/src/components/Invoices/Create'
 
 export const useInvoice = (id: number) => {
-  const { data, isFetching, isError } = useQuery(['invoices/get.json'], {
-    enabled: true,
-  })
-  return {
-    invoice: data,
-    isFetching,
-    isError,
-  }
+  const { data, isFetching, isError } = useQuery<Invoice>(
+    ['invoices/get2.json', id],
+    {
+      enabled: true,
+    }
+  )
+
+  return { data, isFetching, isError }
 }

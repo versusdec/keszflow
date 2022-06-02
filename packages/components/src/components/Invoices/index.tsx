@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import React from 'react'
 import {
   Paper,
   Table,
@@ -7,16 +7,22 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Modal,
-  Box,
-  Typography,
 } from '@mui/material'
 import { ActionButton } from '../../elements/actionButton'
-import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
 import { invoiceData, useInvoices } from '@keszflow/panel/hooks/useInvoices'
-import { Invoice } from './Invoice'
 
-export const Item = ({ data, open }: { data: invoiceData; open: any }) => {
+export interface IList {
+  invoices: invoiceData[] | undefined
+  openInvoiceHandler: (id: number) => void
+}
+
+export const Item = ({
+  data,
+  open,
+}: {
+  data: invoiceData
+  open: (id: number) => void
+}) => {
   return (
     <>
       <TableRow>
@@ -46,14 +52,7 @@ export const Item = ({ data, open }: { data: invoiceData; open: any }) => {
   )
 }
 
-export const List = ({ invoices }: { invoices: invoiceData[] | undefined }) => {
-  const [active, setActive] = useState(0)
-  const { invoice } = useInvoice(active)
-
-  const openHandler = (id: number) => {
-    setActive(id)
-  }
-
+export const List = ({ invoices, openInvoiceHandler }: IList) => {
   return (
     <>
       <TableContainer component={Paper}>
@@ -71,12 +70,15 @@ export const List = ({ invoices }: { invoices: invoiceData[] | undefined }) => {
           <TableBody>
             {invoices &&
               invoices.map((invoice) => (
-                <Item key={invoice.id} data={invoice} open={openHandler} />
+                <Item
+                  key={invoice.id}
+                  data={invoice}
+                  open={openInvoiceHandler}
+                />
               ))}
           </TableBody>
         </Table>
       </TableContainer>
-      {!!active && <Invoice id={active} openHandler={openHandler} />}
     </>
   )
 }

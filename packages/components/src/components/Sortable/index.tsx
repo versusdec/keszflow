@@ -23,11 +23,9 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
   const dragOverItem = useRef(-1)
 
   useEffect(() => {
-    console.log('items changed')
     setList(items)
   }, [items])
-
-  console.log(list)
+  //todo drag on icon (unable to select values in input with mouse)
   const dragStart = (e: React.MouseEvent<HTMLElement>, position: number) => {
     dragItem.current = position
   }
@@ -43,7 +41,6 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
     copyListItems.splice(dragOverItem.current, 0, dragItemContent)
     dragItem.current = -1
     dragOverItem.current = -1
-    // setList(copyListItems);
     if (onChange) {
       onChange(copyListItems)
     } else {
@@ -61,28 +58,12 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
         key={index}
         draggable
       >
-        <Component item={item} index={index} />
+        <Component item={item} index={index} {...rest} />
       </Box>
     ))
   }, [list])
 
-  return (
-    <>
-      {list &&
-        list.map((item, index) => (
-          <Box
-            onDragStart={(e) => dragStart(e, index)}
-            onDragEnter={(e) => dragEnter(e, index)}
-            onDragOver={(e) => e.preventDefault()}
-            onDragEnd={drop}
-            key={index}
-            draggable
-          >
-            <Component item={item} index={index} {...rest} />
-          </Box>
-        ))}
-    </>
-  )
+  return <>{list && ListJSX}</>
 }
 
 export default Sortable
