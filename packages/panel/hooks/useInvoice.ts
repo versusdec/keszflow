@@ -6,6 +6,7 @@ export const useInvoice = (id: number) => {
     ['invoices/get2.json', id],
     {
       enabled: true,
+      refetchOnWindowFocus: false,
     }
   )
 

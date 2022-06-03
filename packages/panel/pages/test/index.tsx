@@ -9,8 +9,14 @@ import { View } from '@keszflow/components'
 import Link from 'next/link'
 
 import Sortable from '@keszflow/components/src/components/Sortable'
-import { Box, Paper, TextField } from '@mui/material'
+import { Box, Paper, TextField, IconButton, Stack } from '@mui/material'
+import { AppsOutlined } from '@mui/icons-material'
 import { Input } from '@keszflow/components/src/elements/input'
+import { Document, Page, pdfjs } from 'react-pdf'
+import { PdfJs } from '@react-pdf-viewer/core'
+import PdfDocument = PdfJs.PdfDocument
+// import pdf worker as a url, see `next.config.js` and `pdf-worker.js`
+// import workerSrc from "../../pdf-worker.js";
 
 const items = [
   {
@@ -71,17 +77,34 @@ const items = [
 ]
 
 const Test = () => {
+  const [file, setFile] = useState<String | ArrayBuffer | null>(null)
+  const [numPages, setNumPages] = useState<any>(null)
+
+  function onFileChange(event: React.ChangeEvent<any>) {
+    setFile(event.target.files[0])
+    console.log(file)
+  }
+
+  function onDocumentLoadSuccess({ nextNumPages }: any) {
+    setNumPages(nextNumPages)
+  }
+  // console.log(file);
+
   const itemJSX = ({ item }: any) => {
     return (
       <Box component={Paper} p={2} mb={2}>
-        <Box>Name: {item.name}</Box>
-        <TextField defaultValue={item.unit} label="Unit" variant="outlined" />
+        <Stack spacing={2} direction={'row'} alignItems={'center'}>
+          <Box>
+            <IconButton size={'small'}>
+              <AppsOutlined fontSize={'small'} />
+            </IconButton>
+          </Box>
+          <Box>
+            <Box>Name: {item.name}</Box>
+          </Box>
+        </Stack>
       </Box>
     )
-  }
-
-  const handleChange = (items: any[]) => {
-    console.log(items)
   }
 
   return (
@@ -89,7 +112,18 @@ const Test = () => {
       <h1>TEST</h1>
       <Link href="/">HOME</Link>
       <br />
-
+      <p>select file:</p>
+      <input type="file" onChange={onFileChange} />
+      <br />
+      <br />
+      {file && (
+        <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
+          {Array.from(new Array(numPages), (el, index) => (
+            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+          ))}
+        </Document>
+      )}
+      <br />
       <Sortable items={items} Component={itemJSX} />
     </>
   )

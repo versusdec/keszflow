@@ -32,7 +32,7 @@ import {
 import { Input } from '../../elements/input'
 import { ActionButton } from '../../elements/actionButton'
 import Sortable from '../Sortable'
-import { useInvoice } from '../../../../panel/hooks/useInvoice'
+import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
 
 interface CreateModalProps {
   open: boolean
@@ -42,13 +42,13 @@ interface CreateModalProps {
 }
 
 export const useCreateModal = () => {
-  const [open, setOpen] = useState(false)
+  const [createModalOpen, setCreateModalOpen] = useState(false)
 
   const handleCreateModal = () => {
-    setOpen(!open)
+    setCreateModalOpen(!createModalOpen)
   }
 
-  return { open, handleCreateModal }
+  return { createModalOpen, handleCreateModal }
 }
 
 interface DatesInfo {
@@ -161,6 +161,7 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
         </Box>
         <Box>
           <Input
+            draggable={false}
             label={'Name'}
             fast="true"
             name={`items.${index}.name`}

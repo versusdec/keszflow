@@ -6,14 +6,19 @@ import {
   InvoiceCreate,
   useCreateModal,
 } from '@keszflow/components/src/components/Invoices/Create'
+import {
+  InvoiceUpload,
+  useUploadModal,
+} from '@keszflow/components/src/components/Invoices/Upload'
 
 export const BusinessDashboard = () => {
-  const [itemId, setItemId] = useState(0)
+  const [createItemId, setCreateItemId] = useState(0)
   const { data } = useInvoices()
-  const { open, handleCreateModal } = useCreateModal()
+  const { createModalOpen, handleCreateModal } = useCreateModal()
+  const { uploadModalOpen, handleUploadModal } = useUploadModal()
 
   const openInvoiceHandler = (id: number) => {
-    setItemId(id)
+    setCreateItemId(id)
     handleCreateModal()
   }
 
@@ -26,13 +31,19 @@ export const BusinessDashboard = () => {
         <Grid item>
           <Box>
             <Grid container gap={2}>
-              <Button variant="contained" onClick={() => {}}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  // setItemId(0)
+                  handleUploadModal()
+                }}
+              >
                 upload
               </Button>
               <Button
                 variant="contained"
                 onClick={() => {
-                  setItemId(0)
+                  setCreateItemId(0)
                   handleCreateModal()
                 }}
               >
@@ -43,7 +54,12 @@ export const BusinessDashboard = () => {
         </Grid>
       </Grid>
       <InvoiceList invoices={data} openInvoiceHandler={openInvoiceHandler} />
-      <InvoiceCreate open={open} onClose={handleCreateModal} id={itemId} />
+      <InvoiceCreate
+        open={createModalOpen}
+        onClose={handleCreateModal}
+        id={createItemId}
+      />
+      <InvoiceUpload open={uploadModalOpen} onClose={handleUploadModal} />
     </>
   )
 }

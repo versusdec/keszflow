@@ -1,11 +1,11 @@
 import React, {
   useState,
   useRef,
-  ReactElement,
-  ReactComponentElement,
   useEffect,
   useCallback,
   useMemo,
+  PropsWithChildren,
+  FC,
 } from 'react'
 import { Box } from '@mui/material'
 
@@ -19,13 +19,20 @@ export interface ISortable {
 
 const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
   const [list, setList] = useState<any[]>(items)
+  const [draggable, setDraggable] = useState(true)
   const dragItem = useRef(-1)
   const dragOverItem = useRef(-1)
 
   useEffect(() => {
     setList(items)
   }, [items])
-  //todo drag on icon (unable to select values in input with mouse)
+
+  const isDraggable = (e: React.MouseEvent<HTMLElement>) => {
+    const { nodeName } = e.target as HTMLElement
+    if (nodeName === 'INPUT') setDraggable(false)
+    else setDraggable(true)
+  }
+
   const dragStart = (e: React.MouseEvent<HTMLElement>, position: number) => {
     dragItem.current = position
   }
@@ -55,13 +62,14 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
         onDragEnter={(e) => dragEnter(e, index)}
         onDragOver={(e) => e.preventDefault()}
         onDragEnd={drop}
+        onPointerDown={(e) => isDraggable(e)}
         key={index}
-        draggable
+        draggable={draggable}
       >
         <Component item={item} index={index} {...rest} />
       </Box>
     ))
-  }, [list])
+  }, [list, draggable])
 
   return <>{list && ListJSX}</>
 }
