@@ -13,10 +13,7 @@ import { Box, Paper, TextField, IconButton, Stack } from '@mui/material'
 import { AppsOutlined } from '@mui/icons-material'
 import { Input } from '@keszflow/components/src/elements/input'
 import { Document, Page, pdfjs } from 'react-pdf'
-import { PdfJs } from '@react-pdf-viewer/core'
-import PdfDocument = PdfJs.PdfDocument
-// import pdf worker as a url, see `next.config.js` and `pdf-worker.js`
-// import workerSrc from "../../pdf-worker.js";
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js'
 
 const items = [
   {
