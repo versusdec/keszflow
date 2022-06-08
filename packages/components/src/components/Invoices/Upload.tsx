@@ -36,6 +36,8 @@ import {
 import { Input } from '../../elements/input'
 import { ActionButton } from '../../elements/actionButton'
 import Sortable from '../Sortable'
+import { Document, Page } from 'react-pdf'
+import { Invoice } from './Create'
 
 interface UploadModalProps {
   open: boolean
@@ -75,6 +77,10 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   const onDrop = useCallback((acceptedFiles, fileRejections) => {
     if (acceptedFiles.length) setFiles(acceptedFiles)
   }, [])
+
+  function onDocumentLoadSuccess({ numPages }: any) {
+    setPages(numPages)
+  }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDrop,
@@ -118,7 +124,42 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
     </Box>
   )
 
-  const PreviewJSX = <></>
+  const PreviewJSX = !!files.length && (
+    <>
+      <Stack
+        direction={'row'}
+        spacing={2}
+        divider={<Divider orientation="vertical" flexItem />}
+      >
+        <Box>
+          <Document file={files[0]} onLoadSuccess={onDocumentLoadSuccess}>
+            {Array.from(new Array(pages), (el, index) => (
+              <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+            ))}
+          </Document>
+        </Box>
+        <Box>
+          <Formik
+            initialValues={['']}
+            // validationSchema={validationSchema}
+            // enableReinitialize={true}
+            onSubmit={(values: any, formikHelpers: FormikHelpers<any>) => {
+              console.log(values)
+              formikHelpers.setSubmitting(false)
+            }}
+          >
+            {(formikProps: FormikProps<any>) => (
+              <Form>
+                <Box>
+                  <Input label={'test'} name={'test'} />
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        </Box>
+      </Stack>
+    </>
+  )
 
   const ModalJSX = (
     <>
@@ -154,6 +195,9 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
         </DialogTitle>
         <DialogContent dividers>
           {!files.length && DropzoneJSX}
+
+          {!!files.length && PreviewJSX}
+
           {rejected && (
             <Snackbar
               open={rejected}
@@ -165,7 +209,6 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
               <Alert severity="warning">This file type is not supported!</Alert>
             </Snackbar>
           )}
-          {!!files.length && PreviewJSX}
         </DialogContent>
         <DialogActions>
           <Button type={'submit'} variant={'contained'} sx={{}}>

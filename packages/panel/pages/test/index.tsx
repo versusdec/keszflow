@@ -13,7 +13,6 @@ import { Box, Paper, TextField, IconButton, Stack } from '@mui/material'
 import { AppsOutlined } from '@mui/icons-material'
 import { Input } from '@keszflow/components/src/elements/input'
 import { Document, Page, pdfjs } from 'react-pdf'
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js'
 
 const items = [
   {
@@ -82,8 +81,9 @@ const Test = () => {
     console.log(file)
   }
 
-  function onDocumentLoadSuccess({ nextNumPages }: any) {
-    setNumPages(nextNumPages)
+  function onDocumentLoadSuccess({ numPages }: any) {
+    console.log(numPages)
+    setNumPages(numPages)
   }
   // console.log(file);
 

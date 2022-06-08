@@ -40,12 +40,12 @@ export const Item = ({
             tooltip={'Open'}
           />
           <ActionButton
-            onClick={(e) => {
-              console.log(e)
-            }}
-            icon="delete"
-            tooltip={'Delete'}
+            onClick={() => {}}
+            icon="download"
+            tooltip={'Download'}
           />
+
+          <ActionButton onClick={(e) => {}} icon="delete" tooltip={'Delete'} />
         </TableCell>
       </TableRow>
     </>

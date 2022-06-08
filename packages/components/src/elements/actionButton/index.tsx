@@ -7,11 +7,12 @@ import {
   DeleteOutline,
   AddOutlined,
   AppsOutlined,
+  FileDownloadOutlined,
 } from '@mui/icons-material'
 
 export interface ActionButtonProps {
   onClick: IconButtonProps['onClick']
-  icon: 'launch' | 'edit' | 'delete' | 'add' | 'apps'
+  icon: 'launch' | 'edit' | 'delete' | 'add' | 'apps' | 'download'
   tooltip: string
   disabled?: boolean
 }
@@ -52,6 +53,8 @@ const getIcon = (icon: ActionButtonProps['icon']): SvgIconComponent => {
       return AddOutlined
     case 'apps':
       return AppsOutlined
+    case 'download':
+      return FileDownloadOutlined
 
     default:
       throw new Error('no mapping')

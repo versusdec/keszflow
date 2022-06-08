@@ -7,6 +7,8 @@ import { View } from '@keszflow/components'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { pdfjs } from 'react-pdf'
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js'
 
 const theme = createTheme({
   components: {
