@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Paper } from '@mui/material'
 
 import FullCalendar from '@fullcalendar/react'
@@ -23,7 +23,7 @@ const CalendarJSX = ({
   onClick?: (info: any) => void
 }) => {
   const calRef = useRef(null)
-
+  const [initialView, setInitialView] = useState('dayGridMonth')
   return (
     <>
       <FullCalendar
@@ -34,9 +34,14 @@ const CalendarJSX = ({
         locale={'en'}
         ref={calRef}
         events={events}
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
+        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        initialView={initialView}
         displayEventTime={false}
+        headerToolbar={{
+          right: 'today prev,next',
+          center: 'title',
+          left: 'dayGridMonth,timeGridWeek,timeGridDay',
+        }}
       />
     </>
   )

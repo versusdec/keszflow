@@ -64,6 +64,10 @@ const theme = createTheme({
         '.fc .fc-daygrid-event': {
           cursor: 'pointer',
         },
+        '.fc .fc-timegrid-event': {
+          padding: '5px!important',
+          cursor: 'pointer!important',
+        },
       },
     },
     MuiFormControl: {
