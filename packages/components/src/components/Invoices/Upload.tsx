@@ -66,7 +66,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   const [rejected, setRejected] = useState(false)
   const [pages, setPages] = useState(false)
   const { files, setFiles } = useFile()
-  console.log(files)
+
   // console.log(file);
   // const res = id && useInvoice(id)
 

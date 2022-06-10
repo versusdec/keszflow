@@ -27,7 +27,16 @@ const nextConfig = {
 
 const withPlugins = require('next-compose-plugins')
 
-const withTM = require('next-transpile-modules')(['@keszflow/components'])
+const withTM = require('next-transpile-modules')([
+  '@keszflow/components',
+  '@fullcalendar/common',
+  '@babel/preset-react',
+  '@fullcalendar/common',
+  '@fullcalendar/daygrid',
+  '@fullcalendar/interaction',
+  '@fullcalendar/react',
+  '@fullcalendar/timegrid',
+])
 
 const plugins = [
   [

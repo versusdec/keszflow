@@ -10,7 +10,7 @@ export interface invoiceData {
 
 export const useInvoices = () => {
   const { data, isFetching, isError } = useQuery<invoiceData[]>(
-    ['invoices/list.json'],
+    ['invoices/list2.json'],
     {
       enabled: true,
     }

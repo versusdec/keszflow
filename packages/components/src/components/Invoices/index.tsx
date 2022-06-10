@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import { ActionButton } from '../../elements/actionButton'
 import { invoiceData, useInvoices } from '@keszflow/panel/hooks/useInvoices'
+import moment from 'moment'
 
 export interface IList {
   invoices: invoiceData[] | undefined
@@ -28,7 +29,9 @@ export const Item = ({
       <TableRow>
         <TableCell>{data.id}</TableCell>
         <TableCell align="left">{data.name}</TableCell>
-        <TableCell align="left">{data.date}</TableCell>
+        <TableCell align="left">
+          {moment(data.date, moment.ISO_8601).format('DD-MM-YYYY')}
+        </TableCell>
         <TableCell align="left">{data.total}</TableCell>
         <TableCell align="left">{data.status}</TableCell>
         <TableCell align="right">
@@ -44,7 +47,6 @@ export const Item = ({
             icon="download"
             tooltip={'Download'}
           />
-
           <ActionButton onClick={(e) => {}} icon="delete" tooltip={'Delete'} />
         </TableCell>
       </TableRow>

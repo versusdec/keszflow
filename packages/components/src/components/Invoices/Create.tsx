@@ -20,19 +20,13 @@ import { Close } from '@mui/icons-material'
 import * as Yup from 'yup'
 import moment from 'moment'
 import { DesktopDatePicker, DatePicker } from '@mui/x-date-pickers'
-import {
-  Formik,
-  Form,
-  FormikHelpers,
-  FormikProps,
-  FieldArray,
-  ArrayHelpers,
-} from 'formik'
+import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 
 import { Input } from '../../elements/input'
 import { ActionButton } from '../../elements/actionButton'
 import Sortable from '../Sortable'
 import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
+import { Loader } from '@keszflow/components/src/components/Loader'
 
 interface CreateModalProps {
   open: boolean
@@ -90,7 +84,7 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
   const res = id && useInvoice(id)
 
   const item = res && res.data
-  const isFetching = res && res.isFetching
+  const isFetching = res && res.fetching
   const isError = res && res.isError
 
   const defaultItem: ItemInfo = {
@@ -465,5 +459,10 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
       </Dialog>
     </>
   )
-  return <>{!isFetching && ModalJSX}</>
+  return (
+    <>
+      {!isFetching && ModalJSX}
+      {!!isFetching && <Loader />}
+    </>
+  )
 }

@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from '@mui/material'
 
 export const Loader = () => {
-  return (
+  const loader = (
     <Box
       sx={{
         position: 'absolute',
@@ -16,7 +16,9 @@ export const Loader = () => {
         alignItems: 'center',
       }}
     >
-      <CircularProgress />
+      <CircularProgress disableShrink />
     </Box>
   )
+
+  return <>{loader}</>
 }

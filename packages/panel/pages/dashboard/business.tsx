@@ -10,6 +10,7 @@ import {
   InvoiceUpload,
   useUploadModal,
 } from '@keszflow/components/src/components/Invoices/Upload'
+import Link from 'next/link'
 
 export const BusinessDashboard = () => {
   const [createItemId, setCreateItemId] = useState(0)
@@ -31,6 +32,9 @@ export const BusinessDashboard = () => {
         <Grid item>
           <Box>
             <Grid container gap={2}>
+              <Link href={'/calendar/'}>
+                <Button variant={'contained'}>Calendar</Button>
+              </Link>
               <Button
                 variant="contained"
                 onClick={() => {
