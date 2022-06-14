@@ -1,6 +1,10 @@
-import { Box, Paper, Typography } from '@mui/material'
+import React from 'react'
+import { Box, Typography } from '@mui/material'
+
+const projectStartYear = 2022
 
 export const Footer = () => {
+  const currentYear = new Date().getFullYear()
   return (
     <Box
       component={'footer'}
@@ -15,7 +19,9 @@ export const Footer = () => {
       }}
     >
       <Typography variant="caption">
-        All rights reserved. {new Date().getFullYear()} ©
+        Keszflow Business{' '}
+        {currentYear > projectStartYear ? `2022–${currentYear}` : currentYear}{' '}
+        &copy; IONE Software Sp. z o.o. All rights reserved.
       </Typography>
     </Box>
   )
