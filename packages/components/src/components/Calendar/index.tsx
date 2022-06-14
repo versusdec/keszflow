@@ -5,6 +5,7 @@ import FullCalendar from '@fullcalendar/react'
 // The import order DOES MATTER here. If you change it, you'll get an error!
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import locales from '@fullcalendar/core/locales-all'
 
@@ -23,7 +24,9 @@ const CalendarJSX = ({
   onClick?: (info: any) => void
 }) => {
   const calRef = useRef(null)
-  const [initialView, setInitialView] = useState('dayGridMonth')
+  // const [initialView, setInitialView] = useState('dayGridMonth')
+  const locale = 'en'
+
   return (
     <>
       <FullCalendar
@@ -31,16 +34,24 @@ const CalendarJSX = ({
           onClick && onClick(info.event)
         }}
         locales={locales}
-        locale={'en'}
+        locale={locale}
         ref={calRef}
         events={events}
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView={initialView}
+        plugins={[dayGridPlugin, listPlugin, interactionPlugin]}
+        initialView={'dayGridMonth'}
         displayEventTime={false}
+        buttonText={{
+          listWeek:
+            locales.find(({ code }) => code === locale)?.buttonText?.week ||
+            'week',
+          listDay:
+            locales.find(({ code }) => code === locale)?.buttonText?.day ||
+            'day',
+        }}
         headerToolbar={{
           right: 'today prev,next',
           center: 'title',
-          left: 'dayGridMonth,timeGridWeek,timeGridDay',
+          left: 'dayGridMonth,listWeek,listDay',
         }}
       />
     </>

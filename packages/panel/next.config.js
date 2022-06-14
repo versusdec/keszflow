@@ -33,6 +33,7 @@ const withTM = require('next-transpile-modules')([
   '@babel/preset-react',
   '@fullcalendar/common',
   '@fullcalendar/daygrid',
+  '@fullcalendar/list',
   '@fullcalendar/interaction',
   '@fullcalendar/react',
   '@fullcalendar/timegrid',
