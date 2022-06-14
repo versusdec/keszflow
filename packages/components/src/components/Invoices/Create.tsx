@@ -17,9 +17,8 @@ import {
   InputLabel,
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
-import * as Yup from 'yup'
 import moment from 'moment'
-import { DesktopDatePicker, DatePicker } from '@mui/x-date-pickers'
+import { DatePicker } from '@mui/x-date-pickers'
 import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 
 import { Input } from '../../elements/input'
@@ -27,13 +26,6 @@ import { ActionButton } from '../../elements/actionButton'
 import Sortable from '../Sortable'
 import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
 import { Loader } from '@keszflow/components/src/components/Loader'
-
-interface CreateModalProps {
-  open: boolean
-  onClose: () => void
-  item?: Invoice
-  id?: number
-}
 
 export const useCreateModal = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false)
@@ -80,12 +72,18 @@ export interface Invoice {
   items: ItemInfo[]
 }
 
-export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
-  const res = id && useInvoice(id)
+interface CreateModalProps {
+  open: boolean
+  onClose: () => void
+  item?: Invoice
+  id?: number
+}
 
-  const item = res && res.data
-  const isFetching = res && res.fetching
-  const isError = res && res.isError
+export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
+  const res = useInvoice(id)
+
+  const item = res.data
+  const isFetching = res.isFetching
 
   const defaultItem: ItemInfo = {
     pos: 0,
@@ -123,31 +121,31 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
     items: [defaultItem],
   }
 
-  const validationSchema = Yup.object({
-    dates: Yup.object({
-      issue: Yup.date().nullable(),
-    }),
-    client: Yup.string().required('This field is required'),
-    seller: Yup.string().required('This field is required'),
-    create_date: Yup.string().required('This field is required'),
-    payment_date: Yup.string().required('This field is required'),
-    payment_type: Yup.string()
-      .oneOf(['bank', 'cash'])
-      .required('This field is required'),
-    items: Yup.array().of(
-      Yup.object({
-        name: Yup.string().required('This field is required'),
-        amount: Yup.number().required('This field is required'),
-        price: Yup.number().required('This field is required'),
-        netto: Yup.number().required('This field is required'),
-        vat: Yup.number().required('This field is required'),
-        quota: Yup.number().required('This field is required'),
-        brutto: Yup.number().required('This field is required'),
-      })
-    ),
-  })
+  // const validationSchema = Yup.object({
+  //   dates: Yup.object({
+  //     issue: Yup.date().nullable(),
+  //   }),
+  //   client: Yup.string().required('This field is required'),
+  //   seller: Yup.string().required('This field is required'),
+  //   create_date: Yup.string().required('This field is required'),
+  //   payment_date: Yup.string().required('This field is required'),
+  //   payment_type: Yup.string()
+  //     .oneOf(['bank', 'cash'])
+  //     .required('This field is required'),
+  //   items: Yup.array().of(
+  //     Yup.object({
+  //       name: Yup.string().required('This field is required'),
+  //       amount: Yup.number().required('This field is required'),
+  //       price: Yup.number().required('This field is required'),
+  //       netto: Yup.number().required('This field is required'),
+  //       vat: Yup.number().required('This field is required'),
+  //       quota: Yup.number().required('This field is required'),
+  //       brutto: Yup.number().required('This field is required'),
+  //     })
+  //   ),
+  // })
 
-  const itemJSX = ({ item, index, formikProps }: any) => {
+  const itemJSX = ({ index, formikProps }: any) => {
     return (
       <Stack direction={'row'} spacing={2} mb={2} key={index}>
         <Box>
@@ -260,7 +258,7 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
             formikHelpers: FormikHelpers<Invoice>
           ) => {
             values.items &&
-              values.items.map((item, i) => {
+              values.items.forEach((item, i) => {
                 item.pos = i
               })
             console.log(values)
@@ -459,10 +457,5 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
       </Dialog>
     </>
   )
-  return (
-    <>
-      {!isFetching && ModalJSX}
-      {!!isFetching && <Loader />}
-    </>
-  )
+  return isFetching ? <Loader /> : ModalJSX
 }
