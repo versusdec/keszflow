@@ -29,8 +29,5 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
     'no-unused-vars': 0,
     '@typescript-eslint/no-unused-vars': 0,
-    // "@next/next/no-html-link-for-pages": ["error", "packages/panel/pages/"],
-    // "@next/next/link-passhref": 0
   },
-  // ignorePatterns: ['packages/components/']
 }

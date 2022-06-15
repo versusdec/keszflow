@@ -24,6 +24,10 @@ const theme = createTheme({
         html: {
           height: '100%',
         },
+        a: {
+          textDecoration: 'none',
+          color: globalTheme.palette.primary.dark,
+        },
         '#__next': {
           height: '100%',
         },
@@ -80,7 +84,7 @@ const theme = createTheme({
   },
 })
 
-//@todo prevent layouts rerender
+// @todo prevent layouts rerender
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode

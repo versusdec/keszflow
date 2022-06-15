@@ -7,8 +7,6 @@ import { Input } from '../../elements/input'
 import * as Yup from 'yup'
 import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 
-const unusedVariableTest = 0
-
 export const SignInJSX = () => {
   const drawerWidth = 375
 
