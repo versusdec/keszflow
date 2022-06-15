@@ -11,33 +11,18 @@ import {
   Divider,
   DialogActions,
   Typography,
-  TextField,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
   Paper,
   Snackbar,
   Alert,
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
-import * as Yup from 'yup'
-import moment from 'moment'
-import { DesktopDatePicker, DatePicker } from '@mui/x-date-pickers'
-import {
-  Formik,
-  Form,
-  FormikHelpers,
-  FormikProps,
-  FieldArray,
-  ArrayHelpers,
-} from 'formik'
+// import * as Yup from 'yup'
+// import moment from 'moment'
+// import { DesktopDatePicker, DatePicker } from '@mui/x-date-pickers'
+import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 
 import { Input } from '../../elements/input'
-import { ActionButton } from '../../elements/actionButton'
-import Sortable from '../Sortable'
 import { Document, Page } from 'react-pdf'
-import { Invoice } from './Create'
 
 interface UploadModalProps {
   open: boolean
@@ -83,7 +68,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: onDrop,
+    onDrop,
     onDropRejected: () => {
       setRejected(true)
     },

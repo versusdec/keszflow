@@ -1,17 +1,12 @@
-import React, {
-  PropsWithChildren,
-  ReactElement,
-  useCallback,
-  useState,
-} from 'react'
-import type { FC } from 'react'
+import React, { ReactElement, useState } from 'react'
+// import type { FC } from 'react'
 import { View } from '@keszflow/components'
 import Link from 'next/link'
 
 import Sortable from '@keszflow/components/src/components/Sortable'
 import { Box, Paper, TextField, IconButton, Stack } from '@mui/material'
 import { AppsOutlined } from '@mui/icons-material'
-import { Input } from '@keszflow/components/src/elements/input'
+// import { Input } from '@keszflow/components/src/elements/input'
 import { Document, Page, pdfjs } from 'react-pdf'
 
 const items = [

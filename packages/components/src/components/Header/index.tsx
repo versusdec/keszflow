@@ -30,7 +30,7 @@ export const Header = () => {
       sx={{
         position: 'sticky',
         top: 0,
-        zIndex: 10,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Box sx={{ flexGrow: 1 }}>
@@ -41,7 +41,14 @@ export const Header = () => {
               component="div"
               sx={{ flexGrow: 1 }}
             >
-              <Link href="/">logo go here</Link>
+              <Link href="/">
+                <img
+                  src="/img/keszflow_logo_full.png"
+                  alt=""
+                  height={60}
+                  style={{ cursor: 'pointer' }}
+                />
+              </Link>
             </Typography>
 
             <IconButton

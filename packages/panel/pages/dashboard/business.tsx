@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { InvoiceList } from '@keszflow/components'
 import { useInvoices } from '../../hooks/useInvoices'
@@ -32,7 +32,7 @@ export const BusinessDashboard = () => {
         <Grid item>
           <Box>
             <Grid container gap={2}>
-              <Link href={'/calendar/'}>
+              <Link href={'/calendar/'} passHref>
                 <Button variant={'contained'}>Calendar</Button>
               </Link>
               <Button

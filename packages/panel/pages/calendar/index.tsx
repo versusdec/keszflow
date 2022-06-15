@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Box, Button, Grid, Paper, Typography } from '@mui/material'
+import React, { useState } from 'react'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import Link from 'next/link'
 import { useInvoices } from '../../hooks/useInvoices'
 import moment from 'moment'
@@ -47,7 +47,7 @@ const MyCalendar = () => {
         </Grid>
         <Grid item>
           <Box>
-            <Link href={'/'}>
+            <Link href={'/'} passHref>
               <Button variant={'contained'}>Dashboard</Button>
             </Link>
           </Box>
