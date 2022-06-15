@@ -23,9 +23,5 @@ module.exports = {
       rootDir: 'packages/panel/',
     },
   },
-  rules: {
-    'react/react-in-jsx-scope': 0,
-    'react/no-unescaped-entities': 0,
-    'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx'] }],
-  },
+  rules: {},
 }
