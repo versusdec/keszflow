@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react'
+import React, { useState, useRef, useEffect, useMemo, useContext } from 'react'
 import { Box } from '@mui/material'
+import { AppContext } from '../../layouts/View'
 
 export interface ISortable {
   items: any[]
@@ -14,6 +15,8 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
   const [draggable, setDraggable] = useState(true)
   const dragItem = useRef(-1)
   const dragOverItem = useRef(-1)
+  const state = useContext(AppContext)
+  console.log(state?.store)
 
   useEffect(() => {
     setList(items)
@@ -26,6 +29,7 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
   }
 
   const dragStart = (e: React.MouseEvent<HTMLElement>, position: number) => {
+    state?.setStore({ ...state?.store, sortableDragging: true })
     dragItem.current = position
   }
 
@@ -34,6 +38,8 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
   }
 
   const drop = (e: React.MouseEvent<HTMLElement>) => {
+    state?.setStore({ ...state?.store, sortableDragging: false })
+
     const copyListItems = [...list]
     const dragItemContent = copyListItems[dragItem.current]
     copyListItems.splice(dragItem.current, 1)
@@ -57,13 +63,14 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
         onPointerDown={(e) => isDraggable(e)}
         key={index}
         draggable={draggable}
+        className={'sortable-item'}
       >
         <Component item={item} index={index} {...rest} />
       </Box>
     ))
   }, [list, draggable])
 
-  return <>{list && ListJSX}</>
+  return <Box className={'sortable-list'}>{list && ListJSX}</Box>
 }
 
 export default Sortable

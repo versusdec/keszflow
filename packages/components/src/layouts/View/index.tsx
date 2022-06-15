@@ -1,4 +1,11 @@
-import React, { ReactElement } from 'react'
+import React, {
+  createContext,
+  ReactElement,
+  SetStateAction,
+  useEffect,
+  useState,
+  Dispatch,
+} from 'react'
 import { Footer, Header } from '@keszflow/components'
 import Head from 'next/head'
 import { Box } from '@mui/material'
@@ -9,48 +16,71 @@ interface Props {
   title?: string
 }
 
+// Dispatch<SetStateAction<boolean>>
+
+type AppContextState = { sortableDragging: boolean }
+
+type AppContextValue = {
+  store: AppContextState
+  setStore: Dispatch<SetStateAction<AppContextState>>
+}
+
+const defaultStore = { sortableDragging: false }
+
+export const AppContext = createContext<AppContextValue | undefined>(undefined)
+
 export default function Layout(props: Props) {
   const { uploadModalOpen, handleUploadModal } = useUploadModal()
+  const [sortable, setSortable] = useState(false)
+  const [store, setStore] = useState(defaultStore)
 
   return (
     <>
-      <Box
-        onDragEnter={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          handleUploadModal()
-        }}
-      >
-        <Head>
-          <title>
-            {props.title ? props.title + ' | Keszflow' : 'Keszflow'}{' '}
-          </title>
-          <link rel="icon" href="/img/keszflow_logo.png" type="image/png" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          />
-        </Head>
+      <AppContext.Provider value={{ store, setStore }}>
         <Box
-          sx={{
-            bgcolor: 'background.paper',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
+          onDragEnter={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            !store.sortableDragging && handleUploadModal()
+          }}
+          onDragEnd={() => {
+            console.log('end')
+          }}
+          onDragLeave={() => {
+            console.log('leave')
           }}
         >
-          <Header />
+          <Head>
+            <title>
+              {props.title ? props.title + ' | Keszflow' : 'Keszflow'}{' '}
+            </title>
+            <link rel="icon" href="/img/keszflow_logo.png" type="image/png" />
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            />
+          </Head>
           <Box
-            component="main"
-            m={3}
-            sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+            sx={{
+              bgcolor: 'background.paper',
+              minHeight: '100vh',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
           >
-            {props.children}
+            <Header />
+            <Box
+              component="main"
+              m={3}
+              sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+            >
+              {props.children}
+            </Box>
+            <Footer />
           </Box>
-          <Footer />
         </Box>
-      </Box>
-      <InvoiceUpload open={uploadModalOpen} onClose={handleUploadModal} />
+        <InvoiceUpload open={uploadModalOpen} onClose={handleUploadModal} />
+      </AppContext.Provider>
     </>
   )
 }
