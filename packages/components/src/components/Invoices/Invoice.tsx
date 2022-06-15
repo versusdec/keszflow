@@ -1,15 +1,11 @@
-import React from 'react'
 import {
-  Paper,
-  Modal,
   Box,
-  Typography,
   IconButton,
   DialogTitle,
   DialogContent,
   Dialog,
 } from '@mui/material'
-import { Close, CloseOutlined } from '@mui/icons-material'
+import { Close } from '@mui/icons-material'
 
 export const getInvoice = () => {}
 

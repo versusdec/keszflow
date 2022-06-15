@@ -7,8 +7,6 @@ import React, {
 import { FieldProps, getIn, Field, FastField } from 'formik'
 import { TextFieldProps, TextField } from '@mui/material'
 
-// import {} from '@mui/icons-material'
-
 const CustomInput: React.FC<FieldProps & TextFieldProps> = (props) => {
   const [value, setValue] = useState('')
   const isTouched = getIn(props.form.touched, props.field.name)
@@ -48,10 +46,8 @@ const CustomInput: React.FC<FieldProps & TextFieldProps> = (props) => {
         onChange={handleOnChange}
         onBlur={() => {
           props.form.setFieldValue(props.field.name, value)
-          // console.log(props);
         }}
       />
-      {/* {error && <p>error</p>} */}
     </>
   )
 }

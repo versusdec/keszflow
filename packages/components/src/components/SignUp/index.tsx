@@ -1,11 +1,9 @@
-import React from 'react'
 import { Box, Typography, Drawer, Button } from '@mui/material'
 import Link from 'next/link'
-// import {Logout, AccountCircle} from '@mui/icons-material'
-// import Image from 'next/image'
 import { Input } from '../../elements/input'
 import * as Yup from 'yup'
 import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
+import { KeszflowBusinessLogo } from '../KeszflowBusinessLogo'
 
 export const SignUpJSX = () => {
   const drawerWidth = 375
@@ -118,16 +116,7 @@ export const SignUpJSX = () => {
             alignItems: 'center',
           }}
         >
-          <Box
-            sx={{
-              width: 365,
-            }}
-          >
-            <img
-              src={'/img/keszflow_logo_full.png'}
-              style={{ width: '100%' }}
-            />
-          </Box>
+          <KeszflowBusinessLogo width={365} />
         </Box>
       </Box>
     </>

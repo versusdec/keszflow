@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { Footer, Header } from '@keszflow/components'
 import Head from 'next/head'
 import { Box } from '@mui/material'
@@ -54,9 +54,3 @@ export default function Layout(props: Props) {
     </>
   )
 }
-
-/* Layout.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <Layout>{page}</Layout>
-    )
-} */

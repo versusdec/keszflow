@@ -1,13 +1,11 @@
 import React, { ReactElement, useState } from 'react'
-// import type { FC } from 'react'
 import { View } from '@keszflow/components'
 import Link from 'next/link'
 
 import Sortable from '@keszflow/components/src/components/Sortable'
-import { Box, Paper, TextField, IconButton, Stack } from '@mui/material'
+import { Box, Paper, IconButton, Stack } from '@mui/material'
 import { AppsOutlined } from '@mui/icons-material'
-// import { Input } from '@keszflow/components/src/elements/input'
-import { Document, Page, pdfjs } from 'react-pdf'
+import { Document, Page } from 'react-pdf'
 
 const items = [
   {
@@ -80,7 +78,6 @@ const Test = () => {
     console.log(numPages)
     setNumPages(numPages)
   }
-  // console.log(file);
 
   const itemJSX = ({ item }: any) => {
     return (
