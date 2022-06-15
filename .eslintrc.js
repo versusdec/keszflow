@@ -23,5 +23,8 @@ module.exports = {
       rootDir: 'packages/panel/',
     },
   },
-  rules: {},
+  rules: {
+    // eslint error 'React' must be in scope when using JSX fix
+    'react/react-in-jsx-scope': 0,
+  },
 }

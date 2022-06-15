@@ -9,7 +9,6 @@ import {
 } from '@mui/material'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-// import { useEffect, useState } from 'react'
 
 export const Sidebar = () => {
   const { pathname } = useRouter()
