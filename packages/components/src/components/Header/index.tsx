@@ -42,8 +42,10 @@ export const Header = () => {
               component="div"
               sx={{ flexGrow: 1 }}
             >
-              <Link href="/">
-                <KeszflowBusinessLogo height={40} />
+              <Link href="/" passHref>
+                <a>
+                  <KeszflowBusinessLogo height={40} />
+                </a>
               </Link>
             </Typography>
 

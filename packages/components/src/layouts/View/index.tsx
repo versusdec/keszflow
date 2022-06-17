@@ -3,7 +3,6 @@ import { Footer, Header } from '@keszflow/components'
 import Head from 'next/head'
 import { Box } from '@mui/material'
 import { InvoiceUpload, useUploadModal } from '../../components/Invoices/Upload'
-
 interface Props {
   children?: ReactElement
   title?: string
@@ -33,7 +32,6 @@ export default function Layout(props: Props) {
         </Head>
         <Box
           sx={{
-            bgcolor: 'background.paper',
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
@@ -54,9 +52,3 @@ export default function Layout(props: Props) {
     </>
   )
 }
-
-/* Layout.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <Layout>{page}</Layout>
-    )
-} */
