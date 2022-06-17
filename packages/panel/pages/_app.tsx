@@ -1,13 +1,12 @@
-import React, { ReactElement, ReactNode } from 'react'
-import { NextPage } from 'next'
-import { AppProps } from 'next/app'
+import React, { ReactElement } from 'react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { View } from '@keszflow/components'
+import { AuthenticatedLayout } from '@keszflow/components'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { pdfjs } from 'react-pdf'
+import { AppPropsWithLayout } from '../types'
 
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js'
 
@@ -23,6 +22,10 @@ const theme = createTheme({
         },
         html: {
           height: '100%',
+        },
+        a: {
+          textDecoration: 'none',
+          color: globalTheme.palette.primary.dark,
         },
         '#__next': {
           height: '100%',
@@ -80,15 +83,7 @@ const theme = createTheme({
   },
 })
 
-//@todo prevent layouts rerender
-
-type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
-
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+// @todo prevent layouts rerender
 
 const defaultQueryFn = async ({
   queryKey,
@@ -107,18 +102,21 @@ const queryClient = new QueryClient({
   },
 })
 
+const getDefaultLayout = (page: ReactElement) => (
+  <AuthenticatedLayout>{page}</AuthenticatedLayout>
+)
+
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  return (
-    <View>
-      <LocalizationProvider dateAdapter={AdapterMoment}>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline>
-              <Component {...pageProps} />
-            </CssBaseline>
-          </ThemeProvider>
-        </QueryClientProvider>
-      </LocalizationProvider>
-    </View>
+  const getLayout = Component.getLayout ?? getDefaultLayout
+  return getLayout(
+    <LocalizationProvider dateAdapter={AdapterMoment}>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline>
+            <Component {...pageProps} />
+          </CssBaseline>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </LocalizationProvider>
   )
 }

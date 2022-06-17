@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import {
   Box,
@@ -11,33 +11,16 @@ import {
   Divider,
   DialogActions,
   Typography,
-  TextField,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
   Paper,
   Snackbar,
   Alert,
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
-import * as Yup from 'yup'
-import moment from 'moment'
-import { DesktopDatePicker, DatePicker } from '@mui/x-date-pickers'
-import {
-  Formik,
-  Form,
-  FormikHelpers,
-  FormikProps,
-  FieldArray,
-  ArrayHelpers,
-} from 'formik'
+
+import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 
 import { Input } from '../../elements/input'
-import { ActionButton } from '../../elements/actionButton'
-import Sortable from '../Sortable'
 import { Document, Page } from 'react-pdf'
-import { Invoice } from './Create'
 
 interface UploadModalProps {
   open: boolean
@@ -67,13 +50,6 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   const [pages, setPages] = useState(false)
   const { files, setFiles } = useFile()
 
-  // console.log(file);
-  // const res = id && useInvoice(id)
-
-  // const item = res && res.data
-  // const isFetching = res && res.isFetching
-  // const isError = res && res.isError
-
   const onDrop = useCallback((acceptedFiles, fileRejections) => {
     if (acceptedFiles.length) setFiles(acceptedFiles)
   }, [])
@@ -83,7 +59,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop: onDrop,
+    onDrop,
     onDropRejected: () => {
       setRejected(true)
     },

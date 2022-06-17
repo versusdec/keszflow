@@ -5,5 +5,5 @@ import { useInvoices } from '../../hooks/useInvoices'
 export const AccountantDashboard = () => {
   const { data } = useInvoices()
 
-  return <InvoiceList invoices={data} />
+  return <InvoiceList openInvoiceHandler={() => {}} invoices={data} />
 }

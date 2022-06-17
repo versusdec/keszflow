@@ -18,5 +18,13 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint'],
-  rules: {},
+  settings: {
+    next: {
+      rootDir: 'packages/panel/',
+    },
+  },
+  rules: {
+    // eslint error 'React' must be in scope when using JSX fix
+    'react/react-in-jsx-scope': 0,
+  },
 }

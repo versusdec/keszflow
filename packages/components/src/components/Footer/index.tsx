@@ -1,4 +1,3 @@
-import React from 'react'
 import { Box, Typography } from '@mui/material'
 
 const projectStartYear = 2022
@@ -15,7 +14,7 @@ export const Footer = () => {
         bottom: 0,
         bgcolor: 'grey.100',
         boxShadow: '0 5px 10px 0px black',
-        zIndex: 1,
+        zIndex: (theme) => theme.zIndex.drawer + 1,
       }}
     >
       <Typography variant="caption">
