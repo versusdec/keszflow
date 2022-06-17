@@ -57,6 +57,9 @@ const theme = createTheme(palette, {
         a: {
           textDecoration: 'none',
           color: palette.palette.primary.dark,
+          '&:hover': {
+            color: palette.palette.secondary.main,
+          },
         },
         '#__next': {
           height: '100%',
