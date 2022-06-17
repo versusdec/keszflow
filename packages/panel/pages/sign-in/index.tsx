@@ -1,14 +1,8 @@
-import React from 'react'
-// import { Box, Button, Grid, Paper, Typography } from '@mui/material'
-// import Link from 'next/link'
-import { SignInJSX } from '@keszflow/components/src/components/SignIn'
+import React, { ReactElement } from 'react'
 
-const signIn = () => {
-  return (
-    <>
-      <SignInJSX />
-    </>
-  )
-}
-
-export default signIn
+import { PublicLayout, SignInJSX } from '@keszflow/components'
+import { NextPageWithLayout } from '../../types'
+;(SignInJSX as NextPageWithLayout).getLayout = (page: ReactElement) => (
+  <PublicLayout>{page}</PublicLayout>
+)
+export default SignInJSX

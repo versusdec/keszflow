@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import {
   Box,
@@ -16,9 +16,7 @@ import {
   Alert,
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
-// import * as Yup from 'yup'
-// import moment from 'moment'
-// import { DesktopDatePicker, DatePicker } from '@mui/x-date-pickers'
+
 import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 
 import { Input } from '../../elements/input'
@@ -51,13 +49,6 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   const [rejected, setRejected] = useState(false)
   const [pages, setPages] = useState(false)
   const { files, setFiles } = useFile()
-
-  // console.log(file);
-  // const res = id && useInvoice(id)
-
-  // const item = res && res.data
-  // const isFetching = res && res.isFetching
-  // const isError = res && res.isError
 
   const onDrop = useCallback((acceptedFiles, fileRejections) => {
     if (acceptedFiles.length) setFiles(acceptedFiles)

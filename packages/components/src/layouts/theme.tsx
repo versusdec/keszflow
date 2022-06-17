@@ -1,5 +1,6 @@
 import { createTheme } from '@mui/material/styles'
 
+// todo mode switch
 const mode = 'light'
 
 const palette = createTheme({
@@ -26,8 +27,8 @@ const palette = createTheme({
       : {
           // palette values for dark mode
           primary: {
-            main: '#212121',
-            light: '#212121',
+            main: '#455A64',
+            light: '#757575',
             dark: '#212121',
           },
           secondary: {
@@ -56,9 +57,9 @@ const theme = createTheme(palette, {
         },
         a: {
           textDecoration: 'none',
-          color: palette.palette.primary.dark,
-          '&:hover': {
-            color: palette.palette.secondary.main,
+          color: palette.palette.primary.main,
+          '&:not(.MuiButton-root):hover': {
+            color: palette.palette.secondary.dark,
           },
         },
         '#__next': {
@@ -75,7 +76,7 @@ const theme = createTheme(palette, {
           textTransform: 'uppercase!important',
           padding: '6px 16px!important',
           border: 'none!important',
-          color: palette.palette.text.primary + '!important',
+          color: '#FFFFFF' + '!important',
           boxShadow:
             '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
         },

@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Paper,
   Table,
@@ -9,7 +8,7 @@ import {
   TableBody,
 } from '@mui/material'
 import { ActionButton } from '../../elements/actionButton'
-import { invoiceData, useInvoices } from '@keszflow/panel/hooks/useInvoices'
+import { invoiceData } from '@keszflow/panel/hooks/useInvoices'
 import moment from 'moment'
 
 export interface IList {

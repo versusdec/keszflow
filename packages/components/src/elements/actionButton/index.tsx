@@ -1,4 +1,3 @@
-import React from 'react'
 import { IconButton, IconButtonProps, Tooltip } from '@mui/material'
 import {
   SvgIconComponent,
@@ -34,7 +33,7 @@ export const ActionButton = ({
     >
       <IconComponent
         color={'primary'}
-        sx={{ fontSize: 16, color: !!disabled ? 'inherit' : '' }}
+        sx={{ fontSize: 16, color: disabled ? 'inherit' : '' }}
       />
     </IconButton>
   )

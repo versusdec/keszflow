@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react'
-import { Footer, Header } from '@keszflow/components'
+import { ReactElement } from 'react'
 import Head from 'next/head'
+import { Footer, Header } from '@keszflow/components'
 import { Box } from '@mui/material'
 import { InvoiceUpload, useUploadModal } from '../../components/Invoices/Upload'
 interface Props {
@@ -8,11 +8,19 @@ interface Props {
   title?: string
 }
 
-export default function Layout(props: Props) {
+export default function AuthenticatedLayout(props: Props) {
   const { uploadModalOpen, handleUploadModal } = useUploadModal()
 
   return (
     <>
+      <Head>
+        <title>{props.title ? props.title + ' | Keszflow' : 'Keszflow'} </title>
+        <link rel="icon" href="/img/keszflow_logo.png" type="image/png" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+      </Head>
       <Box
         onDragEnter={(e) => {
           e.preventDefault()
@@ -20,16 +28,6 @@ export default function Layout(props: Props) {
           handleUploadModal()
         }}
       >
-        <Head>
-          <title>
-            {props.title ? props.title + ' | Keszflow' : 'Keszflow'}{' '}
-          </title>
-          <link rel="icon" href="/img/keszflow_logo.png" type="image/png" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          />
-        </Head>
         <Box
           sx={{
             minHeight: '100vh',
@@ -45,10 +43,10 @@ export default function Layout(props: Props) {
           >
             {props.children}
           </Box>
+          <InvoiceUpload open={uploadModalOpen} onClose={handleUploadModal} />
           <Footer />
         </Box>
       </Box>
-      <InvoiceUpload open={uploadModalOpen} onClose={handleUploadModal} />
     </>
   )
 }
