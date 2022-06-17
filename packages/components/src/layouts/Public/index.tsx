@@ -46,6 +46,7 @@ export default function PublicLayout(props: Props) {
               flexDirection: 'column',
               justifyContent: 'center',
               p: 3,
+              bgcolor: 'background.paper',
             },
           }}
         >

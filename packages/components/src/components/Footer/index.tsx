@@ -12,7 +12,7 @@ export const Footer = () => {
       sx={{
         position: 'sticky',
         bottom: 0,
-        bgcolor: 'grey.100',
+        bgcolor: 'primary.light',
         boxShadow: '0 5px 10px 0px black',
         zIndex: (theme) => theme.zIndex.drawer + 1,
       }}

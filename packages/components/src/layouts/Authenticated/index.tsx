@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { Footer, Header } from '@keszflow/components'
 import { Box } from '@mui/material'
 import { InvoiceUpload, useUploadModal } from '../../components/Invoices/Upload'
-
 interface Props {
   children?: ReactElement
   title?: string
@@ -31,7 +30,6 @@ export default function AuthenticatedLayout(props: Props) {
       >
         <Box
           sx={{
-            bgcolor: 'background.paper',
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',

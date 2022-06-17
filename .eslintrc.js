@@ -26,5 +26,7 @@ module.exports = {
   rules: {
     // eslint error 'React' must be in scope when using JSX fix
     'react/react-in-jsx-scope': 0,
+    // eslint error `'` can be escaped with `&apos;` fix
+    'react/no-unescaped-entities': 0,
   },
 }
