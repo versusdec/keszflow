@@ -16,7 +16,6 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
   const dragItem = useRef(-1)
   const dragOverItem = useRef(-1)
   const state = useContext(AppContext)
-  console.log(state?.store)
 
   useEffect(() => {
     setList(items)

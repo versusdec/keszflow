@@ -43,12 +43,6 @@ export default function AuthenticatedLayout(props: Props) {
             e.stopPropagation()
             !store.sortableDragging && handleUploadModal()
           }}
-          onDragEnd={() => {
-            console.log('end')
-          }}
-          onDragLeave={() => {
-            console.log('leave')
-          }}
         >
           <Head>
             <title>
