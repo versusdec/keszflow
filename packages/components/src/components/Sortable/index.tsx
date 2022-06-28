@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo, useContext } from 'react'
 import { Box } from '@mui/material'
-import { AppContext } from '../../layouts/View'
+import { AppContext } from '@keszflow/components'
 
 export interface ISortable {
   items: any[]
