@@ -30,7 +30,7 @@ const Page404 = () => {
           4{' '}
           <Box
             sx={{
-              animation: 'bounce 3s ease-in-out infinite',
+              animation: 'bounce 3s ease infinite',
               m: '0 20px',
               '@keyframes bounce': {
                 '0%': {
@@ -46,8 +46,15 @@ const Page404 = () => {
                   transform: 'translate(0, -10%)',
                 },
                 '20%': {
+                  transform: 'translate(0, 5%)',
+                },
+                '25%': {
+                  transform: 'translate(0, -5%)',
+                },
+                '30%': {
                   transform: 'translate(0, 0%)',
                 },
+
                 '100%': {
                   transform: 'translate(0, 0)',
                 },
@@ -72,8 +79,23 @@ const Page404 = () => {
           position: 'absolute',
           zIndex: '-1',
           right: '-50%',
-          top: '-50%',
+          top: '-66%',
           transform: 'rotate(70deg)',
+        }}
+      ></Box>
+      <Box
+        sx={{
+          width: '100%',
+          height: '100vw',
+          bgcolor: 'transparent',
+          position: 'absolute',
+          zIndex: '-1',
+          left: '-50%',
+          bottom: '-100%',
+          border: 'solid',
+          borderRadius: '100%',
+          borderWidth: '50px',
+          borderColor: 'primary.light',
         }}
       ></Box>
     </Box>
