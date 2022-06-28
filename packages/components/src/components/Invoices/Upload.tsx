@@ -16,11 +16,8 @@ import {
   Alert,
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
-
-import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
-
-import { Input } from '../../elements/input'
 import { Document, Page } from 'react-pdf'
+import { InvoiceForm } from './Form'
 
 interface UploadModalProps {
   open: boolean
@@ -115,23 +112,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
           </Document>
         </Box>
         <Box>
-          <Formik
-            initialValues={['']}
-            // validationSchema={validationSchema}
-            // enableReinitialize={true}
-            onSubmit={(values: any, formikHelpers: FormikHelpers<any>) => {
-              console.log(values)
-              formikHelpers.setSubmitting(false)
-            }}
-          >
-            {(formikProps: FormikProps<any>) => (
-              <Form>
-                <Box>
-                  <Input label={'test'} name={'test'} />
-                </Box>
-              </Form>
-            )}
-          </Formik>
+          <InvoiceForm invoice={undefined} list={true} />
         </Box>
       </Stack>
     </>
