@@ -16,7 +16,7 @@ export const Loader = () => {
         alignItems: 'center',
       }}
     >
-      <CircularProgress disableShrink />
+      <CircularProgress disableShrink color={'secondary'} />
     </Box>
   )
 

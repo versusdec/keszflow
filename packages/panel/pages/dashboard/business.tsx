@@ -18,9 +18,18 @@ export const BusinessDashboard = () => {
   const { createModalOpen, handleCreateModal } = useCreateModal()
   const { uploadModalOpen, handleUploadModal } = useUploadModal()
 
-  const openInvoiceHandler = (id: number) => {
+  const openInvoiceHandler = (id: number, type: string) => {
     setCreateItemId(id)
-    handleCreateModal()
+    switch (type) {
+      case 'created':
+        handleCreateModal()
+        break
+      case 'uploaded':
+        handleUploadModal()
+        break
+      default:
+        break
+    }
   }
 
   return (
@@ -38,7 +47,7 @@ export const BusinessDashboard = () => {
               <Button
                 variant="contained"
                 onClick={() => {
-                  // setItemId(0)
+                  setCreateItemId(0)
                   handleUploadModal()
                 }}
               >
@@ -63,7 +72,11 @@ export const BusinessDashboard = () => {
         onClose={handleCreateModal}
         id={createItemId}
       />
-      <InvoiceUpload open={uploadModalOpen} onClose={handleUploadModal} />
+      <InvoiceUpload
+        open={uploadModalOpen}
+        onClose={handleUploadModal}
+        id={createItemId}
+      />
     </>
   )
 }
