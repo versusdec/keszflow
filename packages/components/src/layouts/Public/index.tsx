@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import Head from 'next/head'
+import { Head } from '@keszflow/components'
 import { Box, Drawer } from '@mui/material'
 import { KeszflowBusinessLogo } from '../../components/KeszflowBusinessLogo'
 
@@ -13,14 +13,7 @@ export default function PublicLayout(props: Props) {
 
   return (
     <>
-      <Head>
-        <title>{props.title ? props.title + ' | Keszflow' : 'Keszflow'} </title>
-        <link rel="icon" href="/img/keszflow_logo.png" type="image/png" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
-      </Head>
+      <Head title={props.title} />
       <Box
         sx={{
           position: 'absolute',
