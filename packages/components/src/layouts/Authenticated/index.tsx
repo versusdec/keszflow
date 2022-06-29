@@ -5,8 +5,8 @@ import React, {
   useState,
   Dispatch,
 } from 'react'
-import Head from 'next/head'
 import {
+  Head,
   Footer,
   Header,
   InvoiceUpload,
@@ -44,16 +44,7 @@ export default function AuthenticatedLayout(props: Props) {
             !store.sortableDragging && handleUploadModal()
           }}
         >
-          <Head>
-            <title>
-              {props.title ? props.title + ' | Keszflow' : 'Keszflow'}{' '}
-            </title>
-            <link rel="icon" href="/img/keszflow_logo.png" type="image/png" />
-            <link
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            />
-          </Head>
+          <Head title={props.title} />
           <Box
             sx={{
               bgcolor: 'background.paper',
