@@ -1,46 +1,71 @@
-import { ReactElement } from 'react'
-import { Head, Footer, Header } from '@keszflow/components'
-
+import React, {
+  createContext,
+  ReactElement,
+  SetStateAction,
+  useState,
+  Dispatch,
+} from 'react'
+import {
+  Head,
+  Footer,
+  Header,
+  InvoiceUpload,
+  useUploadModal,
+} from '@keszflow/components'
 import { Box } from '@mui/material'
-import { InvoiceUpload, useUploadModal } from '../../components/Invoices/Upload'
 
 interface Props {
   children?: ReactElement
   title?: string
 }
 
+type AppContextState = { sortableDragging: boolean }
+
+type AppContextValue = {
+  store: AppContextState
+  setStore: Dispatch<SetStateAction<AppContextState>>
+}
+
+const defaultStore = { sortableDragging: false }
+
+export const AppContext = createContext<AppContextValue | undefined>(undefined)
+
 export default function AuthenticatedLayout(props: Props) {
   const { uploadModalOpen, handleUploadModal } = useUploadModal()
+  const [store, setStore] = useState(defaultStore)
 
   return (
     <>
-      <Head title={props.title} />
-      <Box
-        onDragEnter={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          handleUploadModal()
-        }}
-      >
+      <AppContext.Provider value={{ store, setStore }}>
         <Box
-          sx={{
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
+          onDragEnter={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            !store.sortableDragging && handleUploadModal()
           }}
         >
-          <Header />
+          <Head title={props.title} />
           <Box
-            component="main"
-            m={3}
-            sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+            sx={{
+              bgcolor: 'background.paper',
+              minHeight: '100vh',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
           >
-            {props.children}
+            <Header />
+            <Box
+              component="main"
+              m={3}
+              sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+            >
+              {props.children}
+            </Box>
+            <Footer />
           </Box>
-          <InvoiceUpload open={uploadModalOpen} onClose={handleUploadModal} />
-          <Footer />
         </Box>
-      </Box>
+        <InvoiceUpload open={uploadModalOpen} onClose={handleUploadModal} />
+      </AppContext.Provider>
     </>
   )
 }
