@@ -78,9 +78,3 @@ export default function AuthenticatedLayout(props: Props) {
     </>
   )
 }
-
-/* Layout.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <Layout>{page}</Layout>
-    )
-} */
