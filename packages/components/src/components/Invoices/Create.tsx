@@ -10,7 +10,7 @@ import {
 import { Close } from '@mui/icons-material'
 import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
 import { Loader } from '@keszflow/components/src/components/Loader'
-import { InvoiceForm } from './Form'
+import { InvoiceForm, useForm } from './Form'
 
 export const useCreateModal = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false)
@@ -64,6 +64,7 @@ interface CreateModalProps {
 }
 
 export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
+  const { formRef, handleSubmit } = useForm()
   const res = useInvoice(id)
 
   const item = res.data
@@ -94,10 +95,16 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
           Create Invoice
         </DialogTitle>
         <DialogContent dividers>
-          <InvoiceForm invoice={item} />
+          <InvoiceForm invoice={item} innerRef={formRef} />
         </DialogContent>
         <DialogActions>
-          <Button type={'submit'} variant={'contained'} sx={{}}>
+          <Button
+            type={'submit'}
+            variant={'contained'}
+            onClick={() => {
+              handleSubmit()
+            }}
+          >
             Save
           </Button>
         </DialogActions>
