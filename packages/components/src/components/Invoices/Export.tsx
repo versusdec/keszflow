@@ -7,10 +7,17 @@ import {
   DialogTitle,
   IconButton,
   Box,
+  TextField,
+  Stack,
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
-import { Input } from '../../elements/input'
+import { DatePicker } from '@mui/x-date-pickers'
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
+import moment from 'moment'
 
 export const useExport = () => {
   const [exportModalOpen, setExportModalOpen] = useState(false)
@@ -29,7 +36,7 @@ export interface IExport {
 export interface IExportValues {
   start: string | null
   end: string | null
-  type: 'pdf' | 'doc' | 'docx' | string
+  type: 'pdf' | 'doc' | 'docx'
 }
 
 export const Export = ({ open, onClose, onConfirm }: IExport) => {
@@ -76,17 +83,58 @@ export const Export = ({ open, onClose, onConfirm }: IExport) => {
             }}
             innerRef={formRef}
           >
-            <Form>
-              <Box>
-                <Input type={'date'} name={'start'} />
-              </Box>
-              <Box>
-                <Input type={'date'} name={'end'} />
-              </Box>
-              <Box>
-                <Input type={'select'} name={'type'} />
-              </Box>
-            </Form>
+            {(formikProps: FormikProps<any>) => (
+              <Form>
+                <Stack spacing={2}>
+                  <Box>
+                    <DatePicker
+                      label="Start date"
+                      inputFormat="DD/MM/yyyy"
+                      value={formikProps.values.start}
+                      onChange={(val) => {
+                        formikProps.setFieldValue(
+                          'start',
+                          moment(val).toISOString()
+                        )
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </Box>
+                  <Box>
+                    <DatePicker
+                      label="End date"
+                      inputFormat="DD/MM/yyyy"
+                      value={formikProps.values.end}
+                      onChange={(val) => {
+                        formikProps.setFieldValue(
+                          'end',
+                          moment(val).toISOString()
+                        )
+                      }}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </Box>
+                  <Box>
+                    <FormControl sx={{ width: '100%' }}>
+                      <InputLabel id="type">Type</InputLabel>
+                      <Select
+                        id={'type'}
+                        name={'type'}
+                        value={formikProps.values.type}
+                        label={'type'}
+                        onChange={(e) => {
+                          formikProps.setFieldValue('type', e.target.value)
+                        }}
+                      >
+                        <MenuItem value={'pdf'}>PDF</MenuItem>
+                        <MenuItem value={'doc'}>DOC</MenuItem>
+                        <MenuItem value={'docx'}>DOCX</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </Stack>
+              </Form>
+            )}
           </Formik>
         </DialogContent>
         <DialogActions>
