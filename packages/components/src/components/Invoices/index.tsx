@@ -13,7 +13,7 @@ import moment from 'moment'
 
 export interface IList {
   invoices: invoiceData[] | undefined
-  openInvoiceHandler: (id: number) => void
+  openInvoiceHandler: (id: number, type: string) => void
 }
 
 export const Item = ({
@@ -21,7 +21,7 @@ export const Item = ({
   open,
 }: {
   data: invoiceData
-  open: (id: number) => void
+  open: (id: number, type: string) => void
 }) => {
   return (
     <>
@@ -36,7 +36,7 @@ export const Item = ({
         <TableCell align="right">
           <ActionButton
             onClick={() => {
-              open(data.id)
+              open(data.id, data.type)
             }}
             icon="launch"
             tooltip={'Open'}

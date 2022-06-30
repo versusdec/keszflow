@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import {
   Box,
@@ -18,6 +18,8 @@ import {
 import { Close } from '@mui/icons-material'
 import { Document, Page } from 'react-pdf'
 import { InvoiceForm } from './Form'
+import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
+import { Loader } from '../Loader'
 
 interface UploadModalProps {
   open: boolean
@@ -37,7 +39,7 @@ export const useUploadModal = () => {
 }
 
 export const useFile = () => {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState<any>([])
 
   return { files, setFiles }
 }
@@ -46,6 +48,17 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   const [rejected, setRejected] = useState(false)
   const [pages, setPages] = useState(false)
   const { files, setFiles } = useFile()
+
+  const res = useInvoice(id)
+
+  const item = res.data
+  const isFetching = res.isFetching
+
+  useEffect(() => {
+    if (item && item.file) {
+      setFiles([item.file])
+    }
+  }, [item])
 
   const onDrop = useCallback((acceptedFiles, fileRejections) => {
     if (acceptedFiles.length) setFiles(acceptedFiles)
@@ -66,7 +79,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
     multiple: false,
   })
 
-  const DropzoneJSX = (
+  const DropzoneJSX = !files.length && (
     <Box {...getRootProps()} sx={{ height: '100%' }}>
       <Paper
         sx={{
@@ -104,15 +117,18 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
         spacing={2}
         divider={<Divider orientation="vertical" flexItem />}
       >
-        <Box>
-          <Document file={files[0]} onLoadSuccess={onDocumentLoadSuccess}>
+        <Box id={'print-target'}>
+          <Document
+            file={files[0] || item?.file}
+            onLoadSuccess={onDocumentLoadSuccess}
+          >
             {Array.from(new Array(pages), (el, index) => (
               <Page key={`page_${index + 1}`} pageNumber={index + 1} />
             ))}
           </Document>
         </Box>
         <Box>
-          <InvoiceForm invoice={undefined} list={true} />
+          <InvoiceForm invoice={item} list={true} />
         </Box>
       </Stack>
     </>
@@ -151,9 +167,9 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
           Upload Invoice
         </DialogTitle>
         <DialogContent dividers>
-          {!files.length && DropzoneJSX}
+          {DropzoneJSX}
 
-          {!!files.length && PreviewJSX}
+          {PreviewJSX}
 
           {rejected && (
             <Snackbar
@@ -168,6 +184,26 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
           )}
         </DialogContent>
         <DialogActions>
+          <Button
+            type={'button'}
+            variant={'contained'}
+            disabled={!files.length}
+            onClick={(event) => {
+              event.preventDefault()
+              const iframe = document.createElement('iframe')
+              iframe.style.display = 'none'
+              iframe.src = files[0]
+              iframe.id = 'iframe-to-print'
+              document.body.appendChild(iframe)
+              const print =
+                document.querySelector<HTMLIFrameElement>('#iframe-to-print')!
+              const content = print.contentWindow!
+              content.focus()
+              content.print()
+            }}
+          >
+            Print
+          </Button>
           <Button type={'submit'} variant={'contained'} sx={{}}>
             Save
           </Button>
@@ -175,5 +211,5 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
       </Dialog>
     </>
   )
-  return <>{ModalJSX}</>
+  return isFetching ? <Loader /> : ModalJSX
 }

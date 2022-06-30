@@ -39,6 +39,7 @@ export const InvoiceForm = ({
 
   const invoiceValues: IInvoice = invoice || {
     no: '',
+    file: '',
     seller: {
       name: '',
       country: 'Poland',

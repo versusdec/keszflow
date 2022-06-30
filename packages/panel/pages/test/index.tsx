@@ -1,5 +1,4 @@
-import React, { ReactElement, useState } from 'react'
-import { View } from '@keszflow/components'
+import React, { useState } from 'react'
 import Link from 'next/link'
 
 import Sortable from '@keszflow/components/src/components/Sortable'
@@ -66,7 +65,7 @@ const items = [
 ]
 
 const Test = () => {
-  const [file, setFile] = useState<String | ArrayBuffer | null>(null)
+  const [file, setFile] = useState<String | ArrayBuffer | null>('/invoice.pdf')
   const [numPages, setNumPages] = useState<any>(null)
 
   function onFileChange(event: React.ChangeEvent<any>) {
@@ -116,10 +115,6 @@ const Test = () => {
       <Sortable items={items} Component={itemJSX} />
     </>
   )
-}
-
-Test.getLayout = function getLayout(page: ReactElement) {
-  return <View title={'Test'}>{page}</View>
 }
 
 export default Test

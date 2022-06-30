@@ -48,6 +48,7 @@ export interface ISellerInfo {
 
 export interface IInvoice {
   no: string
+  file: string
   seller: ISellerInfo
   buyer: ISellerInfo
   dates: IDatesInfo
