@@ -11,12 +11,17 @@ import {
   useUploadModal,
 } from '@keszflow/components/src/components/Invoices/Upload'
 import Link from 'next/link'
+import {
+  Export,
+  useExport,
+} from '@keszflow/components/src/components/Invoices/Export'
 
 export const BusinessDashboard = () => {
   const [createItemId, setCreateItemId] = useState(0)
   const { data } = useInvoices()
   const { createModalOpen, handleCreateModal } = useCreateModal()
   const { uploadModalOpen, handleUploadModal } = useUploadModal()
+  const { exportModalOpen, handleExportModal } = useExport()
 
   const openInvoiceHandler = (id: number, type: string) => {
     setCreateItemId(id)
@@ -47,12 +52,21 @@ export const BusinessDashboard = () => {
               <Button
                 variant="contained"
                 onClick={() => {
+                  handleExportModal()
+                }}
+              >
+                export
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
                   setCreateItemId(0)
                   handleUploadModal()
                 }}
               >
                 upload
               </Button>
+
               <Button
                 variant="contained"
                 onClick={() => {
@@ -77,6 +91,7 @@ export const BusinessDashboard = () => {
         onClose={handleUploadModal}
         id={createItemId}
       />
+      <Export open={exportModalOpen} onClose={handleExportModal} />
     </>
   )
 }
