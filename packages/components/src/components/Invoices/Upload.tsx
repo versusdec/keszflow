@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import {
   Box,
@@ -17,7 +17,6 @@ import {
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import { Document, Page } from 'react-pdf'
-// import { printPlugin, RenderPrintProps } from '@react-pdf-viewer/print';
 import { InvoiceForm } from './Form'
 import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
 import { Loader } from '../Loader'
@@ -40,7 +39,7 @@ export const useUploadModal = () => {
 }
 
 export const useFile = () => {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState<any>([])
 
   return { files, setFiles }
 }
@@ -54,6 +53,12 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
 
   const item = res.data
   const isFetching = res.isFetching
+
+  useEffect(() => {
+    if (item && item.file) {
+      setFiles([item.file])
+    }
+  }, [item])
 
   const onDrop = useCallback((acceptedFiles, fileRejections) => {
     if (acceptedFiles.length) setFiles(acceptedFiles)
@@ -74,7 +79,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
     multiple: false,
   })
 
-  const DropzoneJSX = !files.length && !item && (
+  const DropzoneJSX = !files.length && (
     <Box {...getRootProps()} sx={{ height: '100%' }}>
       <Paper
         sx={{
@@ -105,14 +110,14 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
     </Box>
   )
 
-  const PreviewJSX = (!!files.length || item) && (
+  const PreviewJSX = !!files.length && (
     <>
       <Stack
         direction={'row'}
         spacing={2}
         divider={<Divider orientation="vertical" flexItem />}
       >
-        <Box>
+        <Box id={'print-target'}>
           <Document
             file={files[0] || item?.file}
             onLoadSuccess={onDocumentLoadSuccess}
@@ -179,7 +184,24 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button type={'button'} variant={'contained'} onClick={() => {}}>
+          <Button
+            type={'button'}
+            variant={'contained'}
+            disabled={!files.length}
+            onClick={(event) => {
+              event.preventDefault()
+              const iframe = document.createElement('iframe')
+              iframe.style.display = 'none'
+              iframe.src = files[0]
+              iframe.id = 'iframe-to-print'
+              document.body.appendChild(iframe)
+              const print =
+                document.querySelector<HTMLIFrameElement>('#iframe-to-print')!
+              const content = print.contentWindow!
+              content.focus()
+              content.print()
+            }}
+          >
             Print
           </Button>
           <Button type={'submit'} variant={'contained'} sx={{}}>
