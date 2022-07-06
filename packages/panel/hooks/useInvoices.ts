@@ -14,6 +14,7 @@ export const useInvoices = () => {
     ['invoices/list4.json'],
     {
       enabled: true,
+      refetchOnWindowFocus: false,
     }
   )
 

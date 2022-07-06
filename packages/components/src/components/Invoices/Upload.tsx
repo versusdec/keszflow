@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import {
   Box,
@@ -50,17 +50,10 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   const { files, setFiles } = useFile()
 
   const res = useInvoice(id)
-
   const item = res.data
   const isFetching = res.isFetching
 
-  useEffect(() => {
-    if (item && item.file) {
-      setFiles([item.file])
-    }
-  }, [item])
-
-  const onDrop = useCallback((acceptedFiles, fileRejections) => {
+  const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length) setFiles(acceptedFiles)
   }, [])
 
@@ -79,7 +72,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
     multiple: false,
   })
 
-  const DropzoneJSX = !files.length && (
+  const DropzoneJSX = !files.length && !item?.file && (
     <Box {...getRootProps()} sx={{ height: '100%' }}>
       <Paper
         sx={{
@@ -110,17 +103,58 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
     </Box>
   )
 
-  const PreviewJSX = !!files.length && (
+  const PreviewJSX = (!!files.length || item?.file) && (
     <>
       <Stack
         direction={'row'}
         spacing={2}
         divider={<Divider orientation="vertical" flexItem />}
       >
-        <Box id={'print-target'}>
+        <Box
+          id={'print-target'}
+          sx={{
+            width: '45%',
+            flexShrink: 0,
+            '& canvas': {
+              width: '100%!important',
+            },
+          }}
+        >
           <Document
             file={files[0] || item?.file}
             onLoadSuccess={onDocumentLoadSuccess}
+            loading={() => {
+              return (
+                <Box
+                  p={3}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography variant={'h5'}>
+                    Loading file. Please wait.
+                  </Typography>
+                </Box>
+              )
+            }}
+            error={() => {
+              return (
+                <Box
+                  p={3}
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography variant={'h5'}>
+                    Failed to load PDF file.
+                  </Typography>
+                </Box>
+              )
+            }}
           >
             {Array.from(new Array(pages), (el, index) => (
               <Page key={`page_${index + 1}`} pageNumber={index + 1} />
@@ -128,7 +162,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
           </Document>
         </Box>
         <Box>
-          <InvoiceForm invoice={item} list={true} />
+          <InvoiceForm invoice={item} list={true} type={'upload'} />
         </Box>
       </Stack>
     </>

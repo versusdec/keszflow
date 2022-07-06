@@ -133,7 +133,7 @@ const theme = createTheme(palette, {
         },
       },
     },
-    MuiFormControl: {
+    MuiTextField: {
       styleOverrides: {
         root: {
           flexBasis: 210,

@@ -5,10 +5,7 @@ import {
   Divider,
   Typography,
   TextField,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
+  InputAdornment,
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
@@ -16,14 +13,27 @@ import { Input } from '../../elements/input'
 import { ActionButton } from '../../elements/actionButton'
 import Sortable from '../Sortable'
 import { IInvoice, IItemInfo } from './Create'
+import { useUser } from '@keszflow/panel/hooks/useUser'
+import { useState } from 'react'
 
 export const InvoiceForm = ({
   invoice,
   list,
+  type,
 }: {
   invoice: IInvoice | undefined
   list?: boolean
+  type?: 'upload' | 'create'
 }) => {
+  interface IAdornment {
+    [x: string]: boolean | object
+  }
+
+  const { user } = useUser()
+  // temp hardcode
+  let role = user?.role
+  role = 'accountant'
+
   const defaultItem: IItemInfo = {
     pos: 0,
     name: '',
@@ -35,6 +45,8 @@ export const InvoiceForm = ({
     taxAmount: '',
     grossAmount: '',
   }
+
+  const [adornmentValues, setAdornmentValues] = useState<IAdornment>({})
 
   const invoiceValues: IInvoice = invoice || {
     no: '',
@@ -62,8 +74,7 @@ export const InvoiceForm = ({
     items: [defaultItem],
   }
 
-  // for future implementation
-  /* const validationSchema = Yup.object({
+   const validationSchema = Yup.object({
     dates: Yup.object({
       issue: Yup.date().nullable(),
     }),
@@ -85,9 +96,39 @@ export const InvoiceForm = ({
         brutto: Yup.number().required('This field is required'),
       })
     ),
-  }) */
+  })
 
-  const itemJSX = ({ index, formikProps }: any) => {
+  const Adornment = (name: string) => {
+    const isCorrect = adornmentValues[name]
+
+    return {
+      endAdornment: role === 'accountant' && type === 'upload' && (
+        <InputAdornment position="end">
+          <ActionButton
+            tooltip={'Correct'}
+            color={isCorrect ? 'success' : 'error'}
+            onClick={() => {
+              setAdornmentValues((prev) => {
+                return {
+                  ...prev,
+                  [name]: !prev[name],
+                }
+              })
+            }}
+            icon={'check'}
+          />
+        </InputAdornment>
+      ),
+    }
+  }
+
+  const itemJSX = ({
+    index,
+    formikProps,
+  }: {
+    index: number
+    formikProps: FormikProps<IInvoice>
+  }) => {
     return (
       <>
         <Stack
@@ -113,6 +154,7 @@ export const InvoiceForm = ({
               name={`items.${index}.name`}
               value={`items.${index}.name` || ''}
               size={'small'}
+              InputProps={Adornment(`items.${index}.name`)}
             />
           </Box>
           <Box>
@@ -122,6 +164,7 @@ export const InvoiceForm = ({
               name={`items.${index}.unit`}
               value={`items.${index}.unit`}
               size={'small'}
+              InputProps={Adornment(`items.${index}.unit`)}
             />
           </Box>
           <Box>
@@ -131,6 +174,7 @@ export const InvoiceForm = ({
               name={`items.${index}.quantity`}
               value={`items.${index}.quantity`}
               size={'small'}
+              InputProps={Adornment(`items.${index}.quantity`)}
             />
           </Box>
 
@@ -141,6 +185,7 @@ export const InvoiceForm = ({
               name={`items.${index}.netPrice`}
               value={`items.${index}.netPrice`}
               size={'small'}
+              InputProps={Adornment(`items.${index}.netPrice`)}
             />
           </Box>
           <Box>
@@ -150,6 +195,7 @@ export const InvoiceForm = ({
               name={`items.${index}.netAmount`}
               value={`items.${index}.netAmount`}
               size={'small'}
+              InputProps={Adornment(`items.${index}.netAmount`)}
             />
           </Box>
           <Box>
@@ -159,6 +205,7 @@ export const InvoiceForm = ({
               name={`items.${index}.taxRate`}
               value={`items.${index}.taxRate`}
               size={'small'}
+              InputProps={Adornment(`items.${index}.taxRate`)}
             />
           </Box>
           <Box>
@@ -168,6 +215,7 @@ export const InvoiceForm = ({
               name={`items.${index}.taxAmount`}
               value={`items.${index}.taxAmount`}
               size={'small'}
+              InputProps={Adornment(`items.${index}.taxAmount`)}
             />
           </Box>
           <Box>
@@ -177,6 +225,7 @@ export const InvoiceForm = ({
               name={`items.${index}.grossAmount`}
               value={`items.${index}.grossAmount`}
               size={'small'}
+              InputProps={Adornment(`items.${index}.grossAmount`)}
             />
           </Box>
           <Box justifyContent={'flex-end'}>
@@ -201,7 +250,7 @@ export const InvoiceForm = ({
     <>
       <Formik
         initialValues={invoiceValues}
-        // validationSchema={validationSchema}
+        validationSchema={validationSchema}
         onSubmit={(
           values: IInvoice,
           formikHelpers: FormikHelpers<IInvoice>
@@ -213,91 +262,128 @@ export const InvoiceForm = ({
           console.log(values)
           formikHelpers.setSubmitting(false)
         }}
+        innerRef={ref}
       >
         {(formikProps: FormikProps<IInvoice>) => (
           <Form>
             <Box sx={{}}>
               <Stack spacing={2} direction={'row'}>
-                <Input label={'Number'} required name={'no'} />
+                <Input
+                  label={'Number'}
+                  name={'no'}
+                  required
+                  InputProps={Adornment('no')}
+                />
               </Stack>
               <Box sx={{ mt: 2, mb: 3 }}>
                 <Typography variant={'h6'}>Seller</Typography>
                 <Divider />
               </Box>
               <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 2 }}>
-                <Input label={'Name'} required name={'seller.name'} />
+                <Input
+                  label={'Name'}
+                  required
+                  name={'seller.name'}
+                  InputProps={Adornment('seller.name')}
+                />
                 <Input
                   label={'Address 1'}
                   required
                   name={'seller.address_line_1'}
+                  InputProps={Adornment('seller.address_line_1')}
                 />
-                <Input label={'Address 2'} name={'seller.address_line_2'} />
-                <Input label={'Address 3'} name={'seller.address_line_3'} />
-                <FormControl>
-                  <InputLabel id="seller.country">Country</InputLabel>
-                  <Select
-                    id={'seller.country'}
-                    name={'seller.country'}
-                    value={formikProps.values.seller.country}
-                    label={'country'}
-                    onChange={(e) => {
-                      formikProps.setFieldValue(
-                        'seller.country',
-                        e.target.value
-                      )
-                    }}
-                  >
-                    <MenuItem value={'poland'}>Poland</MenuItem>
-                    <MenuItem value={'ukraine'}>Ukraine</MenuItem>
-                  </Select>
-                </FormControl>
+                <Input
+                  label={'Address 2'}
+                  name={'seller.address_line_2'}
+                  InputProps={Adornment('seller.address_line_2')}
+                />
+                <Input
+                  label={'Address 3'}
+                  name={'seller.address_line_3'}
+                  InputProps={Adornment('seller.address_line_3')}
+                />
+                <Input
+                  select
+                  options={[
+                    {
+                      label: 'Poland',
+                      value: 'poland',
+                    },
+                    {
+                      label: 'Ukraine',
+                      value: 'ukraine',
+                    },
+                  ]}
+                  label={'Country'}
+                  name={'seller.country'}
+                  value={formikProps.values.seller.country}
+                  adornment={Adornment('seller.country')}
+                />
               </Stack>
               <Box sx={{ mt: 2, mb: 3 }}>
                 <Typography variant={'h6'}>Buyer</Typography>
                 <Divider />
               </Box>
               <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 2 }}>
-                <Input label={'Name'} required name={'buyer.name'} />
+                <Input
+                  label={'Name'}
+                  required
+                  name={'buyer.name'}
+                  InputProps={Adornment('buyer.name')}
+                />
                 <Input
                   label={'Address 1'}
                   required
                   name={'buyer.address_line_1'}
+                  InputProps={Adornment('buyer.address_line_1')}
                 />
-                <Input label={'Address 2'} name={'buyer.address_line_2'} />
-                <Input label={'Address 3'} name={'buyer.address_line_3'} />
-                <FormControl>
-                  <InputLabel id="buyer.country">Country</InputLabel>
-                  <Select
-                    id={'buyer.country'}
-                    name={'buyer.country'}
-                    value={formikProps.values.buyer.country}
-                    label={'country'}
-                    onChange={(e) => {
-                      formikProps.setFieldValue('buyer.country', e.target.value)
-                    }}
-                  >
-                    <MenuItem value={'poland'}>Poland</MenuItem>
-                    <MenuItem value={'ukraine'}>Ukraine</MenuItem>
-                  </Select>
-                </FormControl>
+                <Input
+                  label={'Address 2'}
+                  name={'buyer.address_line_2'}
+                  InputProps={Adornment('buyer.address_line_2')}
+                />
+                <Input
+                  label={'Address 3'}
+                  name={'buyer.address_line_3'}
+                  InputProps={Adornment('buyer.address_line_3')}
+                />
+                <Input
+                  select
+                  options={[
+                    {
+                      label: 'Poland',
+                      value: 'poland',
+                    },
+                    {
+                      label: 'Ukraine',
+                      value: 'ukraine',
+                    },
+                  ]}
+                  label={'Country'}
+                  value={formikProps.values.buyer.country}
+                  name={'buyer.country'}
+                  adornment={Adornment('buyer.country')}
+                />
               </Stack>
               <Divider sx={{ mt: 2, mb: 3 }} />
               <Stack direction="row" sx={{ flexWrap: 'wrap', gap: 2 }}>
-                <FormControl>
-                  <InputLabel id="payment">Payment method</InputLabel>
-                  <Select
-                    id={'payment'}
-                    name={'payment'}
-                    value={formikProps.values.payment}
-                    label={'Payment method'}
-                    onChange={(e) => {
-                      formikProps.setFieldValue('payment', e.target.value)
-                    }}
-                  >
-                    <MenuItem value={'cash'}>Cash</MenuItem>
-                    <MenuItem value={'bank'}>Bank</MenuItem>
-                  </Select>
-                </FormControl>
+                <Input
+                  select
+                  options={[
+                    {
+                      label: 'Cash',
+                      value: 'cash',
+                    },
+                    {
+                      label: 'Bank',
+                      value: 'bank',
+                    },
+                  ]}
+                  label={'Payment'}
+                  value={formikProps.values.payment}
+                  name={'payment'}
+                  adornment={Adornment('payment')}
+                />
                 <DatePicker
                   label="Issue date"
                   value={formikProps.values.dates.issue}
@@ -363,7 +449,9 @@ export const InvoiceForm = ({
                 </Button>
               </Stack>
               <Divider sx={{ mt: 2, mb: 3 }} />
+
               <Sortable
+                deps={adornmentValues}
                 items={formikProps.values.items}
                 Component={itemJSX}
                 formikProps={formikProps}

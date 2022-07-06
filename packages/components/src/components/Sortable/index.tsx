@@ -16,10 +16,9 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
   const dragItem = useRef(-1)
   const dragOverItem = useRef(-1)
   const state = useContext(AppContext)
-
   useEffect(() => {
     setList(items)
-  }, [items])
+  }, [items, rest.deps])
 
   const isDraggable = (e: React.MouseEvent<HTMLElement>) => {
     const { nodeName } = e.target as HTMLElement
@@ -67,7 +66,7 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
         <Component item={item} index={index} {...rest} />
       </Box>
     ))
-  }, [list, draggable])
+  }, [list, draggable, rest.deps])
 
   return <Box className={'sortable-list'}>{list && ListJSX}</Box>
 }

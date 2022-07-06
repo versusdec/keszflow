@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Sortable from '@keszflow/components/src/components/Sortable'
 import { Box, Paper, IconButton, Stack } from '@mui/material'
 import { AppsOutlined } from '@mui/icons-material'
-import { Document, Page } from 'react-pdf'
 
 const items = [
   {
@@ -66,16 +65,10 @@ const items = [
 
 const Test = () => {
   const [file, setFile] = useState<String | ArrayBuffer | null>('/invoice.pdf')
-  const [numPages, setNumPages] = useState<any>(null)
 
   function onFileChange(event: React.ChangeEvent<any>) {
     setFile(event.target.files[0])
     console.log(file)
-  }
-
-  function onDocumentLoadSuccess({ numPages }: any) {
-    console.log(numPages)
-    setNumPages(numPages)
   }
 
   const itemJSX = ({ item }: any) => {
@@ -102,16 +95,7 @@ const Test = () => {
       <br />
       <p>select file:</p>
       <input type="file" onChange={onFileChange} />
-      <br />
-      <br />
-      {file && (
-        <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
-          {Array.from(new Array(numPages), (el, index) => (
-            <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-          ))}
-        </Document>
-      )}
-      <br />
+
       <Sortable items={items} Component={itemJSX} />
     </>
   )
