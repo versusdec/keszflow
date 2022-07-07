@@ -222,11 +222,19 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
             type={'button'}
             variant={'contained'}
             disabled={!files.length}
-            onClick={(event) => {
+            onClick={async (event) => {
+              event.stopPropagation()
               event.preventDefault()
+              const clearFrames =
+                document.querySelector<HTMLIFrameElement>('#iframe-to-print')
+              clearFrames?.remove()
+              const data = await fetch(files[0]).then((res) => res.blob())
+              const blob = new Blob([data], { type: 'application/pdf' })
+              const url = URL.createObjectURL(blob)
+              console.log(url)
               const iframe = document.createElement('iframe')
               iframe.style.display = 'none'
-              iframe.src = files[0]
+              iframe.src = url
               iframe.id = 'iframe-to-print'
               document.body.appendChild(iframe)
               const print =
