@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { AuthenticatedLayout } from '@keszflow/components'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { pdfjs } from 'react-pdf'
 import { AppPropsWithLayout } from '../types'
 import theme from '@keszflow/components/src/layouts/theme'
@@ -37,7 +37,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <LocalizationProvider dateAdapter={AdapterMoment}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <QueryClientProvider client={queryClient}>
             <CssBaseline>{getLayout(<Component {...pageProps} />)}</CssBaseline>
           </QueryClientProvider>

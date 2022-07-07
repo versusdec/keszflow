@@ -10,7 +10,6 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material'
-import moment from 'moment'
 import { DatePicker } from '@mui/x-date-pickers'
 import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 import { Input } from '../../elements/input'
@@ -42,14 +41,14 @@ export const InvoiceForm = ({
     file: '',
     seller: {
       name: '',
-      country: 'Poland',
+      country: 'poland',
       address_line_1: '',
       address_line_2: '',
       address_line_3: '',
     },
     buyer: {
       name: '',
-      country: 'Poland',
+      country: 'poland',
       address_line_1: '',
       address_line_2: '',
       address_line_3: '',
@@ -203,7 +202,6 @@ export const InvoiceForm = ({
       <Formik
         initialValues={invoiceValues}
         // validationSchema={validationSchema}
-        // enableReinitialize={true}
         onSubmit={(
           values: IInvoice,
           formikHelpers: FormikHelpers<IInvoice>
@@ -249,8 +247,8 @@ export const InvoiceForm = ({
                       )
                     }}
                   >
-                    <MenuItem value={'Poland'}>Poland</MenuItem>
-                    <MenuItem value={'Ukraine'}>Ukraine</MenuItem>
+                    <MenuItem value={'poland'}>Poland</MenuItem>
+                    <MenuItem value={'ukraine'}>Ukraine</MenuItem>
                   </Select>
                 </FormControl>
               </Stack>
@@ -278,8 +276,8 @@ export const InvoiceForm = ({
                       formikProps.setFieldValue('buyer.country', e.target.value)
                     }}
                   >
-                    <MenuItem value={'Poland'}>Poland</MenuItem>
-                    <MenuItem value={'Ukraine'}>Ukraine</MenuItem>
+                    <MenuItem value={'poland'}>Poland</MenuItem>
+                    <MenuItem value={'ukraine'}>Ukraine</MenuItem>
                   </Select>
                 </FormControl>
               </Stack>
@@ -302,13 +300,10 @@ export const InvoiceForm = ({
                 </FormControl>
                 <DatePicker
                   label="Issue date"
-                  // inputFormat="DD.MM.yyyy"
                   value={formikProps.values.dates.issue}
                   onChange={(val) => {
-                    formikProps.setFieldValue(
-                      'dates.issue',
-                      moment(val).toISOString()
-                    )
+                    const date = val && new Date(val).toISOString()
+                    formikProps.setFieldValue('dates.issue', date)
                   }}
                   renderInput={(params) => (
                     <TextField {...params} className={'dates_issue'} />
@@ -316,13 +311,10 @@ export const InvoiceForm = ({
                 />
                 <DatePicker
                   label="End date"
-                  // inputFormat="DD.MM.yyyy"
                   value={formikProps.values.dates.end}
                   onChange={(val) => {
-                    formikProps.setFieldValue(
-                      'dates.end',
-                      moment(val).toISOString()
-                    )
+                    const date = val && new Date(val).toISOString()
+                    formikProps.setFieldValue('dates.end', date)
                   }}
                   renderInput={(params) => (
                     <TextField {...params} className={'dates_end'} />
@@ -330,13 +322,10 @@ export const InvoiceForm = ({
                 />
                 <DatePicker
                   label="Due date"
-                  // inputFormat="DD.MM.yyyy"
                   value={formikProps.values.dates.due}
                   onChange={(val) => {
-                    formikProps.setFieldValue(
-                      'dates.due',
-                      moment(val).toISOString()
-                    )
+                    const date = val && new Date(val).toISOString()
+                    formikProps.setFieldValue('dates.due', date)
                   }}
                   renderInput={(params) => (
                     <TextField {...params} className={'dates_due'} />

@@ -40,7 +40,7 @@ export interface IItemInfo {
 
 export interface ISellerInfo {
   name: string
-  country: 'Poland' | 'Ukraine'
+  country: 'poland' | 'ukraine'
   address_line_1: string
   address_line_2?: string
   address_line_3?: string

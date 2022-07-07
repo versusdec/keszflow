@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { ActionButton } from '../../elements/actionButton'
 import { invoiceData } from '@keszflow/panel/hooks/useInvoices'
-import moment from 'moment'
+import { format } from 'date-fns'
 
 export interface IList {
   invoices: invoiceData[] | undefined
@@ -29,7 +29,7 @@ export const Item = ({
         <TableCell>{data.id}</TableCell>
         <TableCell align="left">{data.name}</TableCell>
         <TableCell align="left">
-          {moment(data.date, moment.ISO_8601).format('DD-MM-YYYY')}
+          {format(new Date(data.date), 'dd.MM.yyyy')}
         </TableCell>
         <TableCell align="left">{data.total}</TableCell>
         <TableCell align="left">{data.status}</TableCell>

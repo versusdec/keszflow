@@ -17,7 +17,7 @@ import {
 import { Close } from '@mui/icons-material'
 import { DatePicker } from '@mui/x-date-pickers'
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik'
-import moment from 'moment'
+import { format, startOfDay } from 'date-fns'
 
 export const useExport = () => {
   const [exportModalOpen, setExportModalOpen] = useState(false)
@@ -89,12 +89,15 @@ export const Export = ({ open, onClose, onConfirm }: IExport) => {
                   <Box>
                     <DatePicker
                       label="Start date"
-                      inputFormat="DD/MM/yyyy"
+                      inputFormat="dd/MM/yyyy"
                       value={formikProps.values.start}
                       onChange={(val) => {
                         formikProps.setFieldValue(
                           'start',
-                          moment(val).toISOString()
+                          format(
+                            startOfDay(new Date(val)),
+                            "yyyy-MM-dd'T'HH:mm:ss'Z'"
+                          )
                         )
                       }}
                       renderInput={(params) => <TextField {...params} />}
@@ -103,12 +106,15 @@ export const Export = ({ open, onClose, onConfirm }: IExport) => {
                   <Box>
                     <DatePicker
                       label="End date"
-                      inputFormat="DD/MM/yyyy"
+                      inputFormat="dd/MM/yyyy"
                       value={formikProps.values.end}
                       onChange={(val) => {
                         formikProps.setFieldValue(
                           'end',
-                          moment(val).toISOString()
+                          format(
+                            startOfDay(new Date(val)),
+                            "yyyy-MM-dd'T'HH:mm:ss'Z'"
+                          )
                         )
                       }}
                       renderInput={(params) => <TextField {...params} />}
