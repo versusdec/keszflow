@@ -10,16 +10,20 @@ export default {
       table: { disabled: true },
     },
     icon: {
-      control: { type: 'string' },
+      defaultValue: 'edit',
+      options: ['edit', 'delete', 'launch', 'add', 'apps', 'download', 'check'],
+      control: { type: 'select' },
     },
     tooltip: {
-      control: { type: 'string' },
+      variant: 'Tooltip text',
+      control: { type: 'text' },
     },
     disabled: {
       control: { type: 'boolean' },
     },
     color: {
-      control: { type: 'string' },
+      control: { type: 'color' },
+      defaultValue: 'primary',
     },
   },
 } as Meta
