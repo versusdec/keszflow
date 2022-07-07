@@ -14,9 +14,10 @@ import { ActionButton } from '../../elements/actionButton'
 import Sortable from '../Sortable'
 import { IInvoice, IItemInfo } from './Create'
 import { useUser } from '@keszflow/panel/hooks/useUser'
-import { useState } from 'react'
+import {ForwardedRef, forwardRef, useState} from 'react'
+import * as Yup from 'yup'
 
-export const InvoiceForm = ({
+export const InvoiceForm = forwardRef(({
   invoice,
   list,
   type,
@@ -24,7 +25,7 @@ export const InvoiceForm = ({
   invoice: IInvoice | undefined
   list?: boolean
   type?: 'upload' | 'create'
-}) => {
+}, ref: ForwardedRef<any>) => {
   interface IAdornment {
     [x: string]: boolean | object
   }
@@ -466,3 +467,5 @@ export const InvoiceForm = ({
     </>
   )
 }
+)
+InvoiceForm.displayName = "Invoice Form"

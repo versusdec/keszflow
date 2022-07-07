@@ -95,7 +95,7 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
           Create Invoice
         </DialogTitle>
         <DialogContent dividers>
-          <InvoiceForm invoice={item} innerRef={formRef} />
+          <InvoiceForm invoice={item} ref={formRef} />
         </DialogContent>
         <DialogActions>
           <Button
@@ -111,5 +111,6 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
       </Dialog>
     </>
   )
+
   return isFetching ? <Loader /> : ModalJSX
 }
