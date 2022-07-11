@@ -26,24 +26,21 @@ interface IMonth {
 }
 
 function getWeeks(currentDay: Date) {
-  const date = new Date(
-    Date.UTC(currentDay.getFullYear(), currentDay.getMonth(), 1)
-  )
+  const date = new Date(currentDay.getFullYear(), currentDay.getMonth(), 1)
   const weeks: Array<Array<Date>> = []
   const days = []
   while (date.getMonth() === currentDay.getMonth()) {
-    days.push(
-      new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
-    )
+    days.push(new Date(date.getFullYear(), date.getMonth(), date.getDate()))
     date.setDate(date.getDate() + 1)
   }
 
   let w: Array<Date> = []
   days.forEach((d, i, a) => {
-    const day = d.getDay()
-    if (day !== 0) {
+    const day = dateFns.getISODay(d)
+
+    if (day !== 7) {
       w.push(d)
-    } else if (day === 0) {
+    } else if (day === 7) {
       w.push(d)
       weeks.push(w)
       w = []
@@ -72,6 +69,7 @@ const EventsContext = createContext<IEvArr>({
 
 const MonthView = ({ currentDay }: IMonth) => {
   const weeks = getWeeks(currentDay)
+  console.log(weeks)
   const { events, onClick } = useContext(EventsContext)
 
   const WeekJSX = ({ week }: { week: Date[] }) => {
@@ -363,7 +361,6 @@ const CalendarJSX = ({
   events: any[] | undefined
   onClick?: (info: any) => void
 }) => {
-  // const locale = 'en';
   const [view, setView] = useState('month')
   const today = dateFns.startOfDay(new Date())
   const [currentDay, setCurrentDay] = useState<Date>(today)
@@ -386,6 +383,7 @@ const CalendarJSX = ({
   useEffect(() => {
     setEves(getEvents(events))
   }, [events])
+  console.log(eves)
 
   const getCurrentWeek = useCallback(
     (currentDay: Date) => {
