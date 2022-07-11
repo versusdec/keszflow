@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Box, Button, Grid, Typography, Stack } from '@mui/material'
 import Link from 'next/link'
 import { useInvoices } from '../../hooks/useInvoices'
-import moment from 'moment'
-import dynamic from 'next/dynamic'
 import {
   InvoiceCreate,
   useCreateModal,
@@ -12,29 +10,13 @@ import {
   Export,
   useExport,
 } from '@keszflow/components/src/components/Invoices/Export'
-
-const CalendarJSX = dynamic(
-  () => import('@keszflow/components/src/components/Calendar'),
-  {
-    ssr: false,
-  }
-)
+import { Calendar } from '@keszflow/components'
 
 const MyCalendar = () => {
   const { data } = useInvoices()
   const [createItemId, setCreateItemId] = useState(0)
   const { createModalOpen, handleCreateModal } = useCreateModal()
   const { exportModalOpen, handleExportModal } = useExport()
-
-  const events =
-    data &&
-    data.map((item) => {
-      return {
-        id: item.id,
-        title: item.name,
-        start: moment(item.date).toISOString(),
-      }
-    })
 
   const clickHandler = (info: any) => {
     const id = parseInt(info.id)
@@ -70,7 +52,7 @@ const MyCalendar = () => {
           </Stack>
         </Grid>
       </Grid>
-      <CalendarJSX events={events} onClick={clickHandler} />
+      <Calendar events={data} onClick={clickHandler} />
       <InvoiceCreate
         open={createModalOpen}
         onClose={handleCreateModal}

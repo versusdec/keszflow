@@ -16,12 +16,38 @@ const palette = createTheme({
           },
           secondary: {
             main: '#536DFE',
-            light: '#536DFE',
-            dark: '#536DFE',
+            light: '#7589FE',
+            dark: '#3151FE',
           },
           text: {
             primary: '#212121',
             secondary: '#757575',
+          },
+          pastel: {
+            primary: {
+              100: '#f0f3f5',
+              200: '#d2dbe0',
+              300: '#b4c3cb',
+              400: '#95abb6',
+              500: '#7794a1',
+              600: '#5e7a88',
+              700: '#495f6a',
+              800: '#34444b',
+              900: '#1f292d',
+              1000: '#0a0e0f',
+            },
+            secondary: {
+              100: '#e6e9ff',
+              200: '#b3beff',
+              300: '#8093fe',
+              400: '#4e68fe',
+              500: '#1b3dfe',
+              600: '#0124e4',
+              700: '#011cb1',
+              800: '#01147f',
+              900: '#000c4c',
+              1000: '#000419',
+            },
           },
         }
       : {
@@ -33,8 +59,8 @@ const palette = createTheme({
           },
           secondary: {
             main: '#536DFE',
-            light: '#536DFE',
-            dark: '#536DFE',
+            light: '#7589FE',
+            dark: '#3151FE',
           },
           text: {
             primary: '#888888',
