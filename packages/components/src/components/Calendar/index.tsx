@@ -69,7 +69,6 @@ const EventsContext = createContext<IEvArr>({
 
 const MonthView = ({ currentDay }: IMonth) => {
   const weeks = getWeeks(currentDay)
-  console.log(weeks)
   const { events, onClick } = useContext(EventsContext)
 
   const WeekJSX = ({ week }: { week: Date[] }) => {
@@ -383,7 +382,6 @@ const CalendarJSX = ({
   useEffect(() => {
     setEves(getEvents(events))
   }, [events])
-  console.log(eves)
 
   const getCurrentWeek = useCallback(
     (currentDay: Date) => {
