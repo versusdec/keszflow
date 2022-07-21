@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import {
   Box,
   Stack,
@@ -15,66 +14,80 @@ import { ActionButton } from '../../elements/actionButton'
 import Sortable from '../Sortable'
 import { IInvoice, IItemInfo } from './Create'
 import { useUser } from '@keszflow/panel/hooks/useUser'
-import {ForwardedRef, forwardRef, useState} from 'react'
+import { ForwardedRef, forwardRef, useRef, useState } from 'react'
 import * as Yup from 'yup'
 
-export const InvoiceForm = forwardRef(({
-  invoice,
-  list,
-  type,
-}: {
-  invoice: IInvoice | undefined
-  list?: boolean
-  type?: 'upload' | 'create'
-}, ref: ForwardedRef<any>) => {
-  interface IAdornment {
-    [x: string]: boolean | object
+export const useForm = () => {
+  const formRef = useRef<FormikProps<any>>(null)
+  const handleSubmit = () => {
+    const form = formRef.current!
+    form.handleSubmit()
   }
 
-  const { user } = useUser()
-  // temp hardcode
-  let role = user?.role
-  role = 'accountant'
+  return { formRef, handleSubmit }
+}
 
-  const defaultItem: IItemInfo = {
-    pos: 0,
-    name: '',
-    unit: '',
-    quantity: '',
-    netPrice: '',
-    taxRate: '',
-    netAmount: '',
-    taxAmount: '',
-    grossAmount: '',
-  }
+export const InvoiceForm = forwardRef(
+  (
+    {
+      invoice,
+      list,
+      type,
+    }: {
+      invoice: IInvoice | undefined
+      list?: boolean
+      type?: 'upload' | 'create'
+    },
+    ref: ForwardedRef<any>
+  ) => {
+    interface IAdornment {
+      [x: string]: boolean | object
+    }
 
-  const [adornmentValues, setAdornmentValues] = useState<IAdornment>({})
+    const { user } = useUser()
+    // temp hardcode
+    let role = user?.role
+    role = 'accountant'
 
-  const invoiceValues: IInvoice = invoice || {
-    no: '',
-    file: '',
-    seller: {
+    const defaultItem: IItemInfo = {
+      pos: 0,
       name: '',
-      country: 'poland',
-      address_line_1: '',
-      address_line_2: '',
-      address_line_3: '',
-    },
-    buyer: {
-      name: '',
-      country: 'poland',
-      address_line_1: '',
-      address_line_2: '',
-      address_line_3: '',
-    },
-    dates: {
-      issue: null,
-      end: null,
-      due: null,
-    },
-    payment: 'cash',
-    items: [defaultItem],
-  }
+      unit: '',
+      quantity: '',
+      netPrice: '',
+      taxRate: '',
+      netAmount: '',
+      taxAmount: '',
+      grossAmount: '',
+    }
+
+    const [adornmentValues, setAdornmentValues] = useState<IAdornment>({})
+
+    const invoiceValues: IInvoice = invoice || {
+      no: '',
+      file: '',
+      seller: {
+        name: '',
+        country: 'poland',
+        address_line_1: '',
+        address_line_2: '',
+        address_line_3: '',
+      },
+      buyer: {
+        name: '',
+        country: 'poland',
+        address_line_1: '',
+        address_line_2: '',
+        address_line_3: '',
+      },
+      dates: {
+        issue: null,
+        end: null,
+        due: null,
+      },
+      payment: 'cash',
+      items: [defaultItem],
+    }
 
     const validationSchema = Yup.object({
       no: Yup.string().required('This field is required'),
@@ -112,153 +125,153 @@ export const InvoiceForm = forwardRef(({
       ),
     })
 
-  const Adornment = (name: string) => {
-    const isCorrect = adornmentValues[name]
+    const Adornment = (name: string) => {
+      const isCorrect = adornmentValues[name]
 
-    return {
-      endAdornment: role === 'accountant' && type === 'upload' && (
-        <InputAdornment position="end">
-          <ActionButton
-            tooltip={'Correct'}
-            color={isCorrect ? 'success' : 'error'}
-            onClick={() => {
-              setAdornmentValues((prev) => {
-                return {
-                  ...prev,
-                  [name]: !prev[name],
-                }
-              })
-            }}
-            icon={'check'}
-          />
-        </InputAdornment>
-      ),
-    }
-  }
-
-  const itemJSX = ({
-    index,
-    formikProps,
-  }: {
-    index: number
-    formikProps: FormikProps<IInvoice>
-  }) => {
-    return (
-      <>
-        <Stack
-          direction={'row'}
-          sx={{ flexWrap: list ? 'wrap' : 'nowrap', gap: 2 }}
-          mt={2}
-          mb={2}
-          key={index}
-        >
-          <Box
-            sx={{
-              width: list ? '100%' : 'auto',
-              flexShrink: 0,
-            }}
-          >
-            <ActionButton onClick={() => {}} icon="apps" tooltip={'Drag'} />
-          </Box>
-          <Box>
-            <Input
-              draggable={false}
-              label={'Name'}
-              fast="true"
-              name={`items.${index}.name`}
-              value={`items.${index}.name` || ''}
-              size={'small'}
-              InputProps={Adornment(`items.${index}.name`)}
-            />
-          </Box>
-          <Box>
-            <Input
-              label={'Unit'}
-              fast="true"
-              name={`items.${index}.unit`}
-              value={`items.${index}.unit`}
-              size={'small'}
-              InputProps={Adornment(`items.${index}.unit`)}
-            />
-          </Box>
-          <Box>
-            <Input
-              label={'Quantity'}
-              fast="true"
-              name={`items.${index}.quantity`}
-              value={`items.${index}.quantity`}
-              size={'small'}
-              InputProps={Adornment(`items.${index}.quantity`)}
-            />
-          </Box>
-
-          <Box>
-            <Input
-              label={'Net price'}
-              fast="true"
-              name={`items.${index}.netPrice`}
-              value={`items.${index}.netPrice`}
-              size={'small'}
-              InputProps={Adornment(`items.${index}.netPrice`)}
-            />
-          </Box>
-          <Box>
-            <Input
-              label={'Net amount'}
-              fast="true"
-              name={`items.${index}.netAmount`}
-              value={`items.${index}.netAmount`}
-              size={'small'}
-              InputProps={Adornment(`items.${index}.netAmount`)}
-            />
-          </Box>
-          <Box>
-            <Input
-              label={'Tax rate'}
-              fast="true"
-              name={`items.${index}.taxRate`}
-              value={`items.${index}.taxRate`}
-              size={'small'}
-              InputProps={Adornment(`items.${index}.taxRate`)}
-            />
-          </Box>
-          <Box>
-            <Input
-              label={'Tax amount'}
-              fast="true"
-              name={`items.${index}.taxAmount`}
-              value={`items.${index}.taxAmount`}
-              size={'small'}
-              InputProps={Adornment(`items.${index}.taxAmount`)}
-            />
-          </Box>
-          <Box>
-            <Input
-              label={'Gross amount'}
-              fast="true"
-              name={`items.${index}.grossAmount`}
-              value={`items.${index}.grossAmount`}
-              size={'small'}
-              InputProps={Adornment(`items.${index}.grossAmount`)}
-            />
-          </Box>
-          <Box justifyContent={'flex-end'}>
+      return {
+        endAdornment: role === 'accountant' && type === 'upload' && (
+          <InputAdornment position="end">
             <ActionButton
+              tooltip={'Correct'}
+              color={isCorrect ? 'success' : 'error'}
               onClick={() => {
-                const newItems = [...formikProps.values.items]
-                newItems.splice(index, 1)
-                formikProps.setFieldValue('items', newItems)
+                setAdornmentValues((prev) => {
+                  return {
+                    ...prev,
+                    [name]: !prev[name],
+                  }
+                })
               }}
-              disabled={formikProps.values.items.length === 1}
-              icon="delete"
-              tooltip={'Remove'}
+              icon={'check'}
             />
-          </Box>
-        </Stack>
-        <Divider />
-      </>
-    )
-  }
+          </InputAdornment>
+        ),
+      }
+    }
+
+    const itemJSX = ({
+      index,
+      formikProps,
+    }: {
+      index: number
+      formikProps: FormikProps<IInvoice>
+    }) => {
+      return (
+        <>
+          <Stack
+            direction={'row'}
+            sx={{ flexWrap: list ? 'wrap' : 'nowrap', gap: 2 }}
+            mt={2}
+            mb={2}
+            key={index}
+          >
+            <Box
+              sx={{
+                width: list ? '100%' : 'auto',
+                flexShrink: 0,
+              }}
+            >
+              <ActionButton onClick={() => {}} icon="apps" tooltip={'Drag'} />
+            </Box>
+            <Box>
+              <Input
+                draggable={false}
+                label={'Name'}
+                fast="true"
+                name={`items.${index}.name`}
+                value={`items.${index}.name` || ''}
+                size={'small'}
+                InputProps={Adornment(`items.${index}.name`)}
+              />
+            </Box>
+            <Box>
+              <Input
+                label={'Unit'}
+                fast="true"
+                name={`items.${index}.unit`}
+                value={`items.${index}.unit`}
+                size={'small'}
+                InputProps={Adornment(`items.${index}.unit`)}
+              />
+            </Box>
+            <Box>
+              <Input
+                label={'Quantity'}
+                fast="true"
+                name={`items.${index}.quantity`}
+                value={`items.${index}.quantity`}
+                size={'small'}
+                InputProps={Adornment(`items.${index}.quantity`)}
+              />
+            </Box>
+
+            <Box>
+              <Input
+                label={'Net price'}
+                fast="true"
+                name={`items.${index}.netPrice`}
+                value={`items.${index}.netPrice`}
+                size={'small'}
+                InputProps={Adornment(`items.${index}.netPrice`)}
+              />
+            </Box>
+            <Box>
+              <Input
+                label={'Net amount'}
+                fast="true"
+                name={`items.${index}.netAmount`}
+                value={`items.${index}.netAmount`}
+                size={'small'}
+                InputProps={Adornment(`items.${index}.netAmount`)}
+              />
+            </Box>
+            <Box>
+              <Input
+                label={'Tax rate'}
+                fast="true"
+                name={`items.${index}.taxRate`}
+                value={`items.${index}.taxRate`}
+                size={'small'}
+                InputProps={Adornment(`items.${index}.taxRate`)}
+              />
+            </Box>
+            <Box>
+              <Input
+                label={'Tax amount'}
+                fast="true"
+                name={`items.${index}.taxAmount`}
+                value={`items.${index}.taxAmount`}
+                size={'small'}
+                InputProps={Adornment(`items.${index}.taxAmount`)}
+              />
+            </Box>
+            <Box>
+              <Input
+                label={'Gross amount'}
+                fast="true"
+                name={`items.${index}.grossAmount`}
+                value={`items.${index}.grossAmount`}
+                size={'small'}
+                InputProps={Adornment(`items.${index}.grossAmount`)}
+              />
+            </Box>
+            <Box justifyContent={'flex-end'}>
+              <ActionButton
+                onClick={() => {
+                  const newItems = [...formikProps.values.items]
+                  newItems.splice(index, 1)
+                  formikProps.setFieldValue('items', newItems)
+                }}
+                disabled={formikProps.values.items.length === 1}
+                icon="delete"
+                tooltip={'Remove'}
+              />
+            </Box>
+          </Stack>
+          <Divider />
+        </>
+      )
+    }
 
   return (
     <>
@@ -405,9 +418,9 @@ export const InvoiceForm = forwardRef(({
                     const date = val && new Date(val).toISOString()
                     formikProps.setFieldValue('dates.issue', date)
                   }}
-                  renderInput={(params) => (
-                    <TextField {...params} className={'dates_issue'} />
-                  )}
+                  renderInput={(params) => (<TextField {...params} className={'dates_issue'} />)}
+                  InputAdornmentProps={{ position: 'start' }}
+                  InputProps={Adornment('dates.issue')}
                 />
                 <DatePicker
                   label="End date"
@@ -416,9 +429,9 @@ export const InvoiceForm = forwardRef(({
                     const date = val && new Date(val).toISOString()
                     formikProps.setFieldValue('dates.end', date)
                   }}
-                  renderInput={(params) => (
-                    <TextField {...params} className={'dates_end'} />
-                  )}
+                  renderInput={(params) => (<TextField {...params} className={'dates_end'} />)}
+                  InputAdornmentProps={{ position: 'start' }}
+                  InputProps={Adornment('dates.end')}
                 />
                 <DatePicker
                   label="Due date"
@@ -427,9 +440,9 @@ export const InvoiceForm = forwardRef(({
                     const date = val && new Date(val).toISOString()
                     formikProps.setFieldValue('dates.due', date)
                   }}
-                  renderInput={(params) => (
-                    <TextField {...params} className={'dates_due'} />
-                  )}
+                  renderInput={(params) => (<TextField {...params} className={'dates_due'} />)}
+                  InputAdornmentProps={{ position: 'start' }}
+                  InputProps={Adornment('dates.due')}
                 />
               </Stack>
               <Divider sx={{ mt: 2, mb: 3 }} />
@@ -464,21 +477,21 @@ export const InvoiceForm = forwardRef(({
               </Stack>
               <Divider sx={{ mt: 2, mb: 3 }} />
 
-              <Sortable
-                deps={adornmentValues}
-                items={formikProps.values.items}
-                Component={itemJSX}
-                formikProps={formikProps}
-                onChange={(items: any[]) => {
-                  formikProps.setFieldValue('items', items)
-                }}
-              />
-            </Box>
-          </Form>
-        )}
-      </Formik>
-    </>
-  )
-}
+                <Sortable
+                  deps={adornmentValues}
+                  items={formikProps.values.items}
+                  Component={itemJSX}
+                  formikProps={formikProps}
+                  onChange={(items: any[]) => {
+                    formikProps.setFieldValue('items', items)
+                  }}
+                />
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      </>
+    )
+  }
 )
-InvoiceForm.displayName = "Invoice Form"
+InvoiceForm.displayName = 'Invoice Form'
