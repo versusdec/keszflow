@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   Box,
   Stack,
@@ -75,29 +76,41 @@ export const InvoiceForm = forwardRef(({
     items: [defaultItem],
   }
 
-   const validationSchema = Yup.object({
-    dates: Yup.object({
-      issue: Yup.date().nullable(),
-    }),
-    client: Yup.string().required('This field is required'),
-    seller: Yup.string().required('This field is required'),
-    create_date: Yup.string().required('This field is required'),
-    payment_date: Yup.string().required('This field is required'),
-    payment_type: Yup.string()
-      .oneOf(['bank', 'cash'])
-      .required('This field is required'),
-    items: Yup.array().of(
-      Yup.object({
+    const validationSchema = Yup.object({
+      no: Yup.string().required('This field is required'),
+      dates: Yup.object({
+        issue: Yup.date().nullable(),
+        end: Yup.date().nullable(),
+        due: Yup.date().nullable(),
+      }),
+      buyer: Yup.object({
         name: Yup.string().required('This field is required'),
-        amount: Yup.number().required('This field is required'),
-        price: Yup.number().required('This field is required'),
-        netto: Yup.number().required('This field is required'),
-        vat: Yup.number().required('This field is required'),
-        quota: Yup.number().required('This field is required'),
-        brutto: Yup.number().required('This field is required'),
-      })
-    ),
-  })
+        address_line_1: Yup.string().required('This field is required'),
+        address_line_2: Yup.string(),
+        address_line_3: Yup.string(),
+        country: Yup.string().oneOf(['poland', 'ukraine']),
+      }),
+      seller: Yup.object({
+        name: Yup.string().required('This field is required'),
+        address_line_1: Yup.string().required('This field is required'),
+        address_line_2: Yup.string(),
+        address_line_3: Yup.string(),
+        country: Yup.string().oneOf(['poland', 'ukraine']),
+      }),
+      payment_type: Yup.string().oneOf(['bank', 'cash']),
+      items: Yup.array().of(
+        Yup.object({
+          name: Yup.string(),
+          unit: Yup.string(),
+          quantity: Yup.number(),
+          net_price: Yup.number(),
+          net_amount: Yup.number(),
+          tax_rate: Yup.number(),
+          tax_amount: Yup.number(),
+          gross_amount: Yup.number(),
+        })
+      ),
+    })
 
   const Adornment = (name: string) => {
     const isCorrect = adornmentValues[name]

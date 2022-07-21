@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import {
   Box,
@@ -52,6 +52,12 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
   const res = useInvoice(id)
   const item = res.data
   const isFetching = res.isFetching
+
+  useEffect(() => {
+    if (item && item.file) {
+      setFiles([item.file])
+    }
+  }, [item])
 
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles.length) setFiles(acceptedFiles)
@@ -228,10 +234,11 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
               const clearFrames =
                 document.querySelector<HTMLIFrameElement>('#iframe-to-print')
               clearFrames?.remove()
-              const data = await fetch(files[0]).then((res) => res.blob())
+              const data = await fetch(
+                typeof files[0] === 'string' ? files[0] : files[0].path
+              ).then((res) => res.blob())
               const blob = new Blob([data], { type: 'application/pdf' })
               const url = URL.createObjectURL(blob)
-              console.log(url)
               const iframe = document.createElement('iframe')
               iframe.style.display = 'none'
               iframe.src = url
