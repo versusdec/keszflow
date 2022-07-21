@@ -25,7 +25,7 @@ export const Item = ({
 }) => {
   return (
     <>
-      <TableRow>
+      <TableRow data-testid={`list_item_${data.id}`}>
         <TableCell>{data.id}</TableCell>
         <TableCell align="left">{data.name}</TableCell>
         <TableCell align="left">
@@ -35,6 +35,7 @@ export const Item = ({
         <TableCell align="left">{data.status}</TableCell>
         <TableCell align="right">
           <ActionButton
+            data-testid={`open_${data.id}`}
             onClick={() => {
               open(data.id, data.type)
             }}
@@ -42,11 +43,17 @@ export const Item = ({
             tooltip={'Open'}
           />
           <ActionButton
+            data-testid={`download_${data.id}`}
             onClick={() => {}}
             icon="download"
             tooltip={'Download'}
           />
-          <ActionButton onClick={(e) => {}} icon="delete" tooltip={'Delete'} />
+          <ActionButton
+            data-testid={`delete_${data.id}`}
+            onClick={(e) => {}}
+            icon="delete"
+            tooltip={'Delete'}
+          />
         </TableCell>
       </TableRow>
     </>
@@ -56,7 +63,7 @@ export const Item = ({
 export const List = ({ invoices, openInvoiceHandler }: IList) => {
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} data-testid={'list_container'}>
         <Table sx={{}}>
           <TableHead>
             <TableRow>

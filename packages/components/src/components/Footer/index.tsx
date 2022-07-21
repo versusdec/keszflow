@@ -6,6 +6,7 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear()
   return (
     <Box
+      data-testid={'footer'}
       component={'footer'}
       p={2}
       mt={2}

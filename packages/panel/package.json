@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next build && next export"
+    "export": "next build && next export",
+    "playwright": "npx playwright test",
+    "playwright:headed": "npx playwright test --headed",
+    "playwright:codegen": "npx playwright codegen"
   },
   "author": "IONE Software Sp. z o.o. [Ltd]",
   "license": "ISC",
@@ -43,6 +46,7 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
+    "@playwright/test": "^1.23.4",
     "@types/node": "17.0.23",
     "@types/pdfjs-dist": "2.10.378",
     "@types/react": "17.0.43",
@@ -51,6 +55,7 @@
     "copy-webpack-plugin": "11.0.0",
     "eslint": "8.12.0",
     "eslint-config-next": "12.1.4",
+    "playwright": "1.23.4",
     "typescript": "4.6.3"
   }
 }

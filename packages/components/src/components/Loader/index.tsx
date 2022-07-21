@@ -3,6 +3,7 @@ import { Box, CircularProgress } from '@mui/material'
 export const Loader = () => {
   const loader = (
     <Box
+      data-testid={'loader'}
       sx={{
         position: 'absolute',
         bottom: 0,

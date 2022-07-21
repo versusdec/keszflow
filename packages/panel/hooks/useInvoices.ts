@@ -6,11 +6,11 @@ export interface invoiceData {
   name: string
   total: number
   status: string
-  type: 'created' | 'uploaded'
+  type: 'created' | 'uploaded' | string
 }
 
 export const useInvoices = () => {
-  const { data, isFetching, isError } = useQuery<invoiceData[]>(
+  const { data, isFetching, isError, isSuccess } = useQuery<invoiceData[]>(
     ['invoices/list4.json'],
     {
       enabled: true,
@@ -21,5 +21,6 @@ export const useInvoices = () => {
     data,
     isFetching,
     isError,
+    isSuccess,
   }
 }

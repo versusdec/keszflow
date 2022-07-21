@@ -4,7 +4,11 @@ import { Input } from '../../elements/input'
 import * as Yup from 'yup'
 import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 
-export const SignInJSX = () => {
+export const SignInJSX = ({
+  handleSubmit,
+}: {
+  handleSubmit: (values: any) => void
+}) => {
   const initialValues = {
     login: '',
     password: '',
@@ -18,7 +22,7 @@ export const SignInJSX = () => {
   })
 
   return (
-    <>
+    <Box data-testid={'signin'}>
       <Typography variant={'h3'} mb={3}>
         SIGN IN
       </Typography>
@@ -27,19 +31,22 @@ export const SignInJSX = () => {
         validationSchema={validationSchema}
         onSubmit={(values: any, formikHelpers: FormikHelpers<any>) => {
           console.log(values)
+          handleSubmit(values)
           formikHelpers.setSubmitting(false)
         }}
       >
         {(formikProps: FormikProps<any>) => (
-          <Form>
+          <Form data-testid={'form'}>
             <Box sx={{}}>
               <Input
+                inputProps={{ 'data-testid': 'login' }}
                 label={'Login'}
                 margin={'normal'}
                 name={'login'}
                 fullWidth
               />
               <Input
+                inputProps={{ 'data-testid': 'password' }}
                 label={'Password'}
                 margin={'normal'}
                 name={'password'}
@@ -49,7 +56,12 @@ export const SignInJSX = () => {
               <Box>
                 <Link href={'/forgot'}>Forgot password?</Link>
               </Box>
-              <Button variant={'contained'} type={'submit'} sx={{ mt: 5 }}>
+              <Button
+                variant={'contained'}
+                type={'submit'}
+                sx={{ mt: 5 }}
+                data-testid={'submit'}
+              >
                 SIGN IN
               </Button>
               <Box sx={{ mt: 10 }}>
@@ -60,6 +72,6 @@ export const SignInJSX = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </Box>
   )
 }

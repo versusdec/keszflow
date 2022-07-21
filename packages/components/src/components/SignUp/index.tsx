@@ -4,7 +4,11 @@ import { Input } from '../../elements/input'
 import * as Yup from 'yup'
 import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
 
-export const SignUpJSX = () => {
+export const SignUpJSX = ({
+  handleSubmit,
+}: {
+  handleSubmit: (values: any) => void
+}) => {
   const initialValues = {
     email: '',
     password: '',
@@ -22,7 +26,7 @@ export const SignUpJSX = () => {
   })
 
   return (
-    <>
+    <Box data-testid={'signup'}>
       <Typography variant={'h3'} mb={3}>
         SIGN UP
       </Typography>
@@ -31,19 +35,26 @@ export const SignUpJSX = () => {
         validationSchema={validationSchema}
         onSubmit={(values: any, formikHelpers: FormikHelpers<any>) => {
           console.log(values)
+          handleSubmit(values)
           formikHelpers.setSubmitting(false)
         }}
       >
         {(formikProps: FormikProps<any>) => (
-          <Form>
+          <Form data-testid={'form'}>
             <Box sx={{}}>
               <Input
+                inputProps={{
+                  'data-testid': 'email',
+                }}
                 label={'Email'}
                 margin={'normal'}
                 name={'email'}
                 fullWidth
               />
               <Input
+                inputProps={{
+                  'data-testid': 'password',
+                }}
                 label={'Password'}
                 margin={'normal'}
                 name={'password'}
@@ -51,6 +62,9 @@ export const SignUpJSX = () => {
                 fullWidth
               />
               <Input
+                inputProps={{
+                  'data-testid': 'confirmPassword',
+                }}
                 label={'Confirm Password'}
                 margin={'normal'}
                 name={'confirmPassword'}
@@ -66,7 +80,12 @@ export const SignUpJSX = () => {
                   <Link href={'#'}>Rules</Link> of our service.
                 </Typography>
               </Box>
-              <Button variant={'contained'} type={'submit'} sx={{ mt: 3 }}>
+              <Button
+                data-testid={'submit'}
+                variant={'contained'}
+                type={'submit'}
+                sx={{ mt: 3 }}
+              >
                 SIGN UP
               </Button>
               <Box sx={{ mt: 10 }}>
@@ -76,6 +95,6 @@ export const SignUpJSX = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </Box>
   )
 }

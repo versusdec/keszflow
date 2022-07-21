@@ -9,7 +9,11 @@
     "dist:panel": "npm run export -w=@keszflow/panel",
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test:components": "npm run test --watchAll=false -w=@keszflow/components",
+    "playwright": "npm run playwright -w=@keszflow/panel",
+    "playwright:codegen": "npm run playwright:codegen -w=@keszflow/panel",
+    "playwright:headed": "npm run playwright:headed -w=@keszflow/panel"
   },
   "repository": {
     "type": "git",

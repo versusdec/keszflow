@@ -14,6 +14,7 @@ export interface ActionButtonProps {
   icon: 'launch' | 'edit' | 'delete' | 'add' | 'apps' | 'download'
   tooltip: string
   disabled?: boolean
+  [rest: string]: any
 }
 
 export const ActionButton = ({
@@ -21,15 +22,18 @@ export const ActionButton = ({
   icon,
   tooltip,
   disabled,
+  ...rest
 }: ActionButtonProps) => {
   const IconComponent = getIcon(icon)
   const IconJSX = (
     <IconButton
+      data-testid={'icon-btn'}
       sx={{
         cursor: 'pointer',
       }}
       onClick={onClick}
       disabled={!!disabled}
+      {...rest}
     >
       <IconComponent
         color={'primary'}
@@ -37,7 +41,13 @@ export const ActionButton = ({
       />
     </IconButton>
   )
-  return disabled ? IconJSX : <Tooltip title={tooltip}>{IconJSX}</Tooltip>
+  return disabled ? (
+    IconJSX
+  ) : (
+    <Tooltip data-testid={'tooltip'} title={tooltip}>
+      {IconJSX}
+    </Tooltip>
+  )
 }
 
 const getIcon = (icon: ActionButtonProps['icon']): SvgIconComponent => {

@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf \"./dist\"",
-    "build": "npm run clean && swc ./src --out-dir ./dist"
+    "build": "npm run clean && swc ./src --out-dir ./dist",
+    "test": "jest"
   },
   "author": "IONE Software Sp. z o.o. [Ltd]",
   "license": "ISC",
@@ -13,5 +14,24 @@
   "peerDependencies": {
     "react": "*",
     "typescript": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/preset-env": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^12.1.5",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/enzyme": "^3.10.12",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^28.1.4",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
+    "babel-jest": "^28.1.2",
+    "enzyme": "^3.11.0",
+    "jest": "^28.1.2",
+    "jest-environment-jsdom": "^28.1.2",
+    "react-test-renderer": "^17.0.2",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.2"
   }
 }

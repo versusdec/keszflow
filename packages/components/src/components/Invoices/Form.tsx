@@ -310,7 +310,9 @@ export const InvoiceForm = ({
                       moment(val).toISOString()
                     )
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField {...params} className={'dates_issue'} />
+                  )}
                 />
                 <DatePicker
                   label="End date"
@@ -322,7 +324,9 @@ export const InvoiceForm = ({
                       moment(val).toISOString()
                     )
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField {...params} className={'dates_end'} />
+                  )}
                 />
                 <DatePicker
                   label="Due date"
@@ -334,7 +338,9 @@ export const InvoiceForm = ({
                       moment(val).toISOString()
                     )
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  renderInput={(params) => (
+                    <TextField {...params} className={'dates_due'} />
+                  )}
                 />
               </Stack>
               <Divider sx={{ mt: 2, mb: 3 }} />
