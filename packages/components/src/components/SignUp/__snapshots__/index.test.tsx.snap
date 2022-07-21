@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sign Up Should render correctly with Shallow 1`] = `ShallowWrapper {}`;
+
+exports[`Sign Up Should render correctly with mount 1`] = `ReactWrapper {}`;
