@@ -14,12 +14,6 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import { useInvoices } from '../../hooks/useInvoices'
-import moment from 'moment'
-import dynamic from 'next/dynamic'
-import {
-  InvoiceCreate,
-  useCreateModal,
-} from '@keszflow/components/src/components/Invoices/Create'
 import {
   Export,
   useExport,
@@ -149,26 +143,17 @@ const MyCalendar = () => {
               <Box>
                 <b>Due date:</b>
                 <br />
-                {
-                  // @ts-ignore
-                  format(new Date(item.dates.due), 'dd.MM.yyyy')
-                }
+                {format(new Date(item.dates.due as string), 'dd.MM.yyyy')}
               </Box>
               <Box>
                 <b>End date:</b>
                 <br />{' '}
-                {
-                  // @ts-ignore
-                  format(new Date(item.dates.end), 'dd.MM.yyyy')
-                }
+                {format(new Date(item.dates.end as string), 'dd.MM.yyyy')}
               </Box>
               <Box>
                 <b>Issue date:</b>
                 <br />
-                {
-                  // @ts-ignore
-                  format(new Date(item.dates.issue), 'dd.MM.yyyy')
-                }
+                {format(new Date(item.dates.issue as string), 'dd.MM.yyyy')}
               </Box>
             </Stack>
             <Divider sx={{ mt: 2, mb: 2 }} />
