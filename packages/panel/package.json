@@ -33,7 +33,6 @@
     "@mui/material": "5.6.0",
     "@mui/x-data-grid": "5.9.0",
     "@mui/x-date-pickers": "5.0.0-alpha.2",
-    "@react-pdf-viewer/core": "3.3.3",
     "date-fns": "2.28.0",
     "formik": "2.2.9",
     "next": "12.1.4",
@@ -47,7 +46,7 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@playwright/test": "^1.23.4",
+    "@playwright/test": "1.23.4",
     "@types/node": "17.0.23",
     "@types/pdfjs-dist": "2.10.378",
     "@types/react": "17.0.43",

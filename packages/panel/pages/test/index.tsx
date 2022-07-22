@@ -9,11 +9,11 @@ const Test = () => {
 
   function onFileChange(event: React.ChangeEvent<any>) {
     setFile(event.target.files[0])
-    console.log(file)
   }
   function onDocumentLoadSuccess({ numPages }: any) {
     setPages(numPages)
   }
+
   return (
     <>
       <h1>TEST</h1>
@@ -24,8 +24,9 @@ const Test = () => {
 
       <Document
         // item?.file || files[0]
-        file={'/invoice.pdf'}
+        file={file}
         onLoadSuccess={onDocumentLoadSuccess}
+        onLoadError={console.error}
       >
         {Array.from(new Array(pages), (el, index) => (
           <Page key={`page_${index + 1}`} pageNumber={index + 1} />

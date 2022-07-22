@@ -108,7 +108,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
       </Paper>
     </Box>
   )
-  console.log(item?.file || files[0])
+
   const PreviewJSX = (!!files.length || item?.file) && (
     <>
       <Stack

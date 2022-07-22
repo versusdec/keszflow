@@ -9,7 +9,7 @@ import { pdfjs } from 'react-pdf'
 import { AppPropsWithLayout } from '../types'
 import theme from '@keszflow/components/src/layouts/theme'
 
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js'
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 const defaultQueryFn = async ({
   queryKey,
