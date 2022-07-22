@@ -10,7 +10,12 @@ export interface ISortable {
   [rest: string]: any
 }
 
-const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
+export const Sortable = ({
+  items,
+  Component,
+  onChange,
+  ...rest
+}: ISortable) => {
   const [list, setList] = useState<any[]>(items)
   const [draggable, setDraggable] = useState(true)
   const dragItem = useRef(-1)
@@ -35,7 +40,7 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
     dragOverItem.current = position
   }
 
-  const drop = (e: React.MouseEvent<HTMLElement>) => {
+  const drop = () => {
     state?.setStore({ ...state?.store, sortableDragging: false })
 
     const copyListItems = [...list]
@@ -70,5 +75,3 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) => {
 
   return <Box className={'sortable-list'}>{list && ListJSX}</Box>
 }
-
-export default Sortable

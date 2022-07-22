@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 import {
   Button,
   Dialog,
@@ -9,7 +10,7 @@ import {
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
-import { Loader } from '@keszflow/components/src/components/Loader'
+import { Loader } from '@keszflow/components'
 import { InvoiceForm, useForm } from './Form'
 
 export const useCreateModal = () => {
@@ -114,3 +115,15 @@ export const InvoiceCreate = ({ open, onClose, id }: CreateModalProps) => {
 
   return isFetching ? <Loader /> : ModalJSX
 }
+
+InvoiceCreate.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  id: PropTypes.number,
+}
+
+InvoiceCreate.defaultProps = {
+  open: false,
+  onClose: () => {},
+  id: 0,
+} as CreateModalProps

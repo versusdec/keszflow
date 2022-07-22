@@ -29,5 +29,8 @@ module.exports = {
     'react/react-in-jsx-scope': 0,
     // eslint error `'` can be escaped with `&apos;` fix
     'react/no-unescaped-entities': 0,
+    // enum as unused var error fix
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
   },
 }

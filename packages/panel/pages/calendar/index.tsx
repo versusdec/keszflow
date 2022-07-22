@@ -13,17 +13,16 @@ import {
   Divider,
 } from '@mui/material'
 import Link from 'next/link'
-import { useInvoices } from '../../hooks/useInvoices'
+import { useInvoices, useInvoice } from '@keszflow/panel/hooks'
 import {
+  Calendar,
+  Loader,
+  IInvoice,
   Export,
   useExport,
-} from '@keszflow/components/src/components/Invoices/Export'
-import { Calendar } from '@keszflow/components'
+} from '@keszflow/components'
 import { Close } from '@mui/icons-material'
-import { IInvoice } from '@keszflow/components/src/components/Invoices/Create'
-import { useInvoice } from '../../hooks/useInvoice'
 import { format } from 'date-fns'
-import { Loader } from '@keszflow/components/src/components/Loader'
 
 const MyCalendar = () => {
   const { data } = useInvoices()
@@ -184,6 +183,10 @@ const MyCalendar = () => {
       <Export open={exportModalOpen} onClose={handleExportModal} />
     </>
   )
+}
+
+MyCalendar.defaultProps = {
+  title: 'Calendar',
 }
 
 export default MyCalendar

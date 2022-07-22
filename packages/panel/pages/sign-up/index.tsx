@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react'
 
-import { PublicLayout, SignUpJSX } from '@keszflow/components'
+import { PublicLayout, SignUp } from '@keszflow/components'
 import { NextPageWithLayout } from '../../types'
-;(SignUpJSX as NextPageWithLayout).getLayout = (page: ReactElement) => (
+;(SignUp as unknown as NextPageWithLayout).getLayout = (page: ReactElement) => (
   <PublicLayout>{page}</PublicLayout>
 )
-export default SignUpJSX
+export default SignUp

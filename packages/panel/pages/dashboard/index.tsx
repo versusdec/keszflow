@@ -1,8 +1,8 @@
 import React from 'react'
-import { BusinessDashboard } from './business'
-import { AccountantDashboard } from './accountant'
+import BusinessDashboard from './business'
+import AccountantDashboard from './accountant'
 
-export default () => {
+const Dash = () => {
   // todo select dashboard based on user role
   const user = {
     id: 1,
@@ -18,3 +18,5 @@ export default () => {
       return <>public dashboard/redirect to login</>
   }
 }
+
+export default Dash

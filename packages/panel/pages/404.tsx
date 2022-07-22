@@ -82,7 +82,7 @@ const Page404 = () => {
           top: '-66%',
           transform: 'rotate(70deg)',
         }}
-      ></Box>
+      />
       <Box
         sx={{
           width: '100%',
@@ -97,11 +97,14 @@ const Page404 = () => {
           borderWidth: '50px',
           borderColor: 'primary.light',
         }}
-      ></Box>
+      />
     </Box>
   )
 }
 
+Page404.defaultProps = {
+  title: '404',
+}
 ;(Page404 as NextPageWithLayout).getLayout = function getLayout(
   page: ReactElement
 ) {

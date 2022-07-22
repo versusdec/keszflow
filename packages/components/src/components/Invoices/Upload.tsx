@@ -17,9 +17,9 @@ import {
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import { Document, Page } from 'react-pdf'
-import { InvoiceForm } from './Form'
-import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
-import { Loader } from '../Loader'
+import { InvoiceForm, Loader } from '@keszflow/components'
+import { useInvoice } from '@keszflow/panel/hooks'
+import { InvoiceTypes } from './Form'
 
 interface UploadModalProps {
   open: boolean
@@ -108,7 +108,7 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
       </Paper>
     </Box>
   )
-
+  console.log(item?.file || files[0])
   const PreviewJSX = (!!files.length || item?.file) && (
     <>
       <Stack
@@ -127,7 +127,8 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
           }}
         >
           <Document
-            file={files[0] || item?.file}
+            // item?.file || files[0]
+            file={'/invoice.pdf'}
             onLoadSuccess={onDocumentLoadSuccess}
             loading={() => {
               return (
@@ -168,7 +169,11 @@ export const InvoiceUpload = ({ open, onClose, id }: UploadModalProps) => {
           </Document>
         </Box>
         <Box>
-          <InvoiceForm invoice={item} list={true} type={'upload'} />
+          <InvoiceForm
+            invoice={item}
+            list={true}
+            type={InvoiceTypes.Uploaded}
+          />
         </Box>
       </Stack>
     </>

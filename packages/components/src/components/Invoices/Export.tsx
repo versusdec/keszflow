@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react'
+import PropTypes from 'prop-types'
 import {
   Button,
   Dialog,
@@ -39,7 +40,7 @@ export interface IExportValues {
   type: 'pdf' | 'doc' | 'docx'
 }
 
-export const Export = ({ open, onClose, onConfirm }: IExport) => {
+export const Export = ({ open, onClose }: IExport) => {
   const formRef = useRef<FormikProps<any>>(null)
 
   const initialValues: IExportValues = {
@@ -158,3 +159,15 @@ export const Export = ({ open, onClose, onConfirm }: IExport) => {
     </>
   )
 }
+
+Export.propTypes = {
+  open: PropTypes.bool,
+  onClose: PropTypes.func,
+  onConfirm: PropTypes.func,
+}
+
+Export.defaultProps = {
+  open: false,
+  onClose: () => {},
+  onConfirm: () => {},
+} as IExport

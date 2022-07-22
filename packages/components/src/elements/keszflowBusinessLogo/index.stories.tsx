@@ -1,10 +1,11 @@
+import React from 'react'
 import { Meta } from '@storybook/react'
 
-import { KeszflowBusinessLogo, ILogoProps } from './index'
+import { LogoLG, ILogoProps } from './index'
 
 export default {
   title: 'Keszflow Business Logo',
-  component: KeszflowBusinessLogo,
+  component: LogoLG,
   argTypes: {
     width: {
       control: { type: 'number', min: 1, step: 10 },
@@ -21,6 +22,6 @@ export default {
   },
 } as Meta
 
-const Template = (opts: ILogoProps) => <KeszflowBusinessLogo {...opts} />
+const Template = (opts: ILogoProps) => <LogoLG {...opts} />
 
 export const Basic = Template.bind({})

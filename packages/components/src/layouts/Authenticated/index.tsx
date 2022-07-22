@@ -33,6 +33,11 @@ export const AppContext = createContext<AppContextValue | undefined>(undefined)
 export default function AuthenticatedLayout(props: Props) {
   const { uploadModalOpen, handleUploadModal } = useUploadModal()
   const [store, setStore] = useState(defaultStore)
+  const title = props.title
+    ? props.title
+    : props.children?.props.title
+    ? props.children.props.title
+    : false
 
   return (
     <>
@@ -44,7 +49,7 @@ export default function AuthenticatedLayout(props: Props) {
             !store.sortableDragging && handleUploadModal()
           }}
         >
-          <Head title={props.title} />
+          <Head title={title} />
           <Box
             sx={{
               bgcolor: 'background.paper',

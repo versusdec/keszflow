@@ -1,7 +1,7 @@
-import { ReactElement } from 'react'
-import { Head } from '@keszflow/components'
+import React, { ReactElement } from 'react'
+import { Head, LogoLG } from '@keszflow/components'
 import { Box, Drawer } from '@mui/material'
-import { KeszflowBusinessLogo } from '../../components/KeszflowBusinessLogo'
+import { drawerWidth } from '@keszflow/panel/variables'
 
 interface Props {
   children?: ReactElement
@@ -9,11 +9,15 @@ interface Props {
 }
 
 export default function PublicLayout(props: Props) {
-  const drawerWidth = 500
+  const title = props.title
+    ? props.title
+    : props.children?.props.title
+    ? props.children.props.title
+    : false
 
   return (
     <>
-      <Head title={props.title} />
+      <Head title={title} />
       <Box
         sx={{
           position: 'absolute',
@@ -53,7 +57,7 @@ export default function PublicLayout(props: Props) {
             alignItems: 'center',
           }}
         >
-          <KeszflowBusinessLogo width={365} />
+          <LogoLG width={365} />
         </Box>
       </Box>
     </>

@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { Logout, AccountCircle } from '@mui/icons-material'
 import Link from 'next/link'
-import { KeszflowBusinessLogo } from '../KeszflowBusinessLogo'
+import { LogoLG } from '@keszflow/components'
 
 export const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -44,7 +44,7 @@ export const Header = () => {
             >
               <Link href="/" passHref>
                 <a>
-                  <KeszflowBusinessLogo height={40} />
+                  <LogoLG height={40} />
                 </a>
               </Link>
             </Typography>

@@ -1,10 +1,10 @@
 import { Box, Typography, Button } from '@mui/material'
 import Link from 'next/link'
-import { Input } from '../../elements/input'
+import { Input } from '@keszflow/components'
 import * as Yup from 'yup'
-import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
+import { Formik, Form, FormikHelpers } from 'formik'
 
-export const SignInJSX = ({
+export const SignIn = ({
   handleSubmit,
 }: {
   handleSubmit: (values: any) => void
@@ -35,7 +35,7 @@ export const SignInJSX = ({
           formikHelpers.setSubmitting(false)
         }}
       >
-        {(formikProps: FormikProps<any>) => (
+        {() => (
           <Form data-testid={'form'}>
             <Box sx={{}}>
               <Input
@@ -74,4 +74,8 @@ export const SignInJSX = ({
       </Formik>
     </Box>
   )
+}
+
+SignIn.defaultProps = {
+  title: 'Sign in',
 }

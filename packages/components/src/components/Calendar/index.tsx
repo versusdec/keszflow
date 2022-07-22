@@ -25,6 +25,15 @@ interface IMonth {
   currentDay: Date
 }
 
+type Event = {
+  [key: string]: any[]
+}
+
+interface IEvArr {
+  events?: Event
+  onClick?: (info: any) => void
+}
+
 function getWeeks(currentDay: Date) {
   const date = new Date(currentDay.getFullYear(), currentDay.getMonth(), 1)
   const weeks: Array<Array<Date>> = []
@@ -35,7 +44,7 @@ function getWeeks(currentDay: Date) {
   }
 
   let w: Array<Date> = []
-  days.forEach((d, i, a) => {
+  days.forEach((d) => {
     const day = dateFns.getISODay(d)
 
     if (day !== 7) {
@@ -53,15 +62,6 @@ function getWeeks(currentDay: Date) {
   return weeks
 }
 
-type Event = {
-  [key: string]: any[]
-}
-
-interface IEvArr {
-  events?: Event
-  onClick?: (info: any) => void
-}
-
 const EventsContext = createContext<IEvArr>({
   events: {},
   onClick: () => {},
@@ -75,29 +75,33 @@ const MonthView = ({ currentDay }: IMonth) => {
     const Days = week.map((day, index) => {
       return <DayJSX key={`day_${new Date().getTime() + index}`} day={day} />
     })
-    if (week[0].getDay() !== 1) {
-      for (let i = 1; i < week[0].getDay(); i++) {
-        Days.unshift(
-          <DayJSX key={'day_' + new Date(week[0]).getTime() + i} day={null} />
-        )
-      }
-    }
-    if (week[0].getDay() === 0) {
-      for (let i = 0; i <= 5; i++) {
-        Days.unshift(
-          <DayJSX key={'day_' + new Date(week[0]).getTime() + i} day={null} />
-        )
-      }
-    }
-    if (week[week.length - 1].getDay() !== 0) {
-      for (let i = 0; i < 7 - week[week.length - 1].getDay(); i++) {
-        Days.push(
-          <DayJSX
-            key={'day_' + new Date(week[week.length - 1]).getTime() + i}
-            day={null}
-          />
-        )
-      }
+    switch (true) {
+      case week[0].getDay() !== 1:
+        for (let i = 1; i < week[0].getDay(); i++) {
+          Days.unshift(
+            <DayJSX key={'day_' + new Date(week[0]).getTime() + i} day={null} />
+          )
+        }
+        break
+      case week[0].getDay() === 0:
+        for (let i = 0; i <= 5; i++) {
+          Days.unshift(
+            <DayJSX key={'day_' + new Date(week[0]).getTime() + i} day={null} />
+          )
+        }
+        break
+      case week[week.length - 1].getDay() !== 0:
+        for (let i = 0; i < 7 - week[week.length - 1].getDay(); i++) {
+          Days.push(
+            <DayJSX
+              key={'day_' + new Date(week[week.length - 1]).getTime() + i}
+              day={null}
+            />
+          )
+        }
+        break
+      default:
+        break
     }
 
     return (
@@ -319,7 +323,7 @@ const DayView = ({ currentDay }: { currentDay: Date }) => {
           borderBottom: evs ? '1px solid' : 'none',
           borderColor: 'primary.main',
           p: 2,
-          bgcolor: (theme) => {
+          bgcolor: () => {
             if (dateFns.format(new Date(currentDay), 'yyyy.MM.dd') === today) {
               return 'secondary.light'
             } else {
@@ -353,7 +357,7 @@ const DayView = ({ currentDay }: { currentDay: Date }) => {
   )
 }
 
-const CalendarJSX = ({
+export const Calendar = ({
   events,
   onClick,
 }: {
@@ -367,7 +371,7 @@ const CalendarJSX = ({
     (events: Array<any> | undefined) => {
       const ev: any = {}
       events &&
-        events.forEach((event, i) => {
+        events.forEach((event) => {
           if (!ev[dateFns.format(new Date(event.date), 'yyyy.MM.dd')]) {
             ev[dateFns.format(new Date(event.date), 'yyyy.MM.dd')] = []
           }
@@ -387,7 +391,7 @@ const CalendarJSX = ({
     (currentDay: Date) => {
       let currentWeek = 0
       const weeks = getWeeks(currentDay)
-      weeks.forEach((week, i, arr) => {
+      weeks.forEach((week, i) => {
         week.forEach((day) => {
           if (
             dateFns.format(day, 'd.mm.yyyy') ===
@@ -556,5 +560,3 @@ const CalendarJSX = ({
     </Box>
   )
 }
-
-export default CalendarJSX

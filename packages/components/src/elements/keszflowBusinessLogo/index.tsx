@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { Box } from '@mui/material'
 
 interface ILogoProps {
@@ -7,12 +8,7 @@ interface ILogoProps {
   colorSecondary?: string
 }
 
-const KeszflowBusinessLogoFull = ({
-  height,
-  width,
-  colorMain,
-  colorSecondary,
-}: ILogoProps) => (
+const LogoLG = ({ height, width, colorMain, colorSecondary }: ILogoProps) => (
   <Box
     sx={{
       '& svg': {
@@ -43,9 +39,14 @@ const KeszflowBusinessLogoFull = ({
   </Box>
 )
 
-KeszflowBusinessLogoFull.defaultProps = {
+LogoLG.propTypes = {
+  colorMain: PropTypes.string,
+  colorSecondary: PropTypes.string,
+}
+
+LogoLG.defaultProps = {
   colorMain: '#455A64',
   colorSecondary: '#FFFFFF',
 } as ILogoProps
 
-export { KeszflowBusinessLogoFull as KeszflowBusinessLogo, ILogoProps }
+export { LogoLG, ILogoProps }

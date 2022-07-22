@@ -2,9 +2,9 @@ import { Box, Typography, Button } from '@mui/material'
 import Link from 'next/link'
 import { Input } from '../../elements/input'
 import * as Yup from 'yup'
-import { Formik, Form, FormikHelpers, FormikProps } from 'formik'
+import { Formik, Form, FormikHelpers } from 'formik'
 
-export const SignUpJSX = ({
+export const SignUp = ({
   handleSubmit,
 }: {
   handleSubmit: (values: any) => void
@@ -39,7 +39,7 @@ export const SignUpJSX = ({
           formikHelpers.setSubmitting(false)
         }}
       >
-        {(formikProps: FormikProps<any>) => (
+        {() => (
           <Form data-testid={'form'}>
             <Box sx={{}}>
               <Input
@@ -97,4 +97,8 @@ export const SignUpJSX = ({
       </Formik>
     </Box>
   )
+}
+
+SignUp.defaultProps = {
+  title: 'Sign Up',
 }

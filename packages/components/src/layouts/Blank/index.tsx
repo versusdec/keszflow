@@ -9,9 +9,15 @@ interface Props {
 }
 
 export default function BlankLayout(props: Props) {
+  const title = props.title
+    ? props.title
+    : props.children?.props.title
+    ? props.children.props.title
+    : false
+
   return (
     <>
-      <Head title={props.title} />
+      <Head title={title} />
       <Box>{props.children}</Box>
     </>
   )

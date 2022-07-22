@@ -1,23 +1,21 @@
 import React, { useState } from 'react'
 import { Box, Button, Grid, Typography } from '@mui/material'
-import { InvoiceList } from '@keszflow/components'
-import { useInvoices } from '../../hooks/useInvoices'
+import { useInvoices } from '@keszflow/panel/hooks'
 import {
+  InvoiceList,
   InvoiceCreate,
   useCreateModal,
-} from '@keszflow/components/src/components/Invoices/Create'
-import {
   InvoiceUpload,
   useUploadModal,
-} from '@keszflow/components/src/components/Invoices/Upload'
-import Link from 'next/link'
-import {
   Export,
   useExport,
-} from '@keszflow/components/src/components/Invoices/Export'
+  InvoiceTypes,
+} from '@keszflow/components'
+import Link from 'next/link'
 
-export const BusinessDashboard = () => {
+const BusinessDashboard = () => {
   const [createItemId, setCreateItemId] = useState(0)
+  const [dataType, setDataType] = useState('')
   const { data } = useInvoices()
   const { createModalOpen, handleCreateModal } = useCreateModal()
   const { uploadModalOpen, handleUploadModal } = useUploadModal()
@@ -26,10 +24,12 @@ export const BusinessDashboard = () => {
   const openInvoiceHandler = (id: number, type: string) => {
     setCreateItemId(id)
     switch (type) {
-      case 'created':
+      case InvoiceTypes.Created:
+        setDataType(InvoiceTypes.Created)
         handleCreateModal()
         break
-      case 'uploaded':
+      case InvoiceTypes.Uploaded:
+        setDataType(InvoiceTypes.Uploaded)
         handleUploadModal()
         break
       default:
@@ -61,6 +61,7 @@ export const BusinessDashboard = () => {
                 variant="contained"
                 onClick={() => {
                   setCreateItemId(0)
+                  setDataType(InvoiceTypes.Uploaded)
                   handleUploadModal()
                 }}
               >
@@ -71,6 +72,7 @@ export const BusinessDashboard = () => {
                 variant="contained"
                 onClick={() => {
                   setCreateItemId(0)
+                  setDataType(InvoiceTypes.Created)
                   handleCreateModal()
                 }}
               >
@@ -81,17 +83,23 @@ export const BusinessDashboard = () => {
         </Grid>
       </Grid>
       <InvoiceList invoices={data} openInvoiceHandler={openInvoiceHandler} />
-      <InvoiceCreate
-        open={createModalOpen}
-        onClose={handleCreateModal}
-        id={createItemId}
-      />
-      <InvoiceUpload
-        open={uploadModalOpen}
-        onClose={handleUploadModal}
-        id={createItemId}
-      />
+      {dataType === InvoiceTypes.Created && (
+        <InvoiceCreate
+          open={createModalOpen}
+          onClose={handleCreateModal}
+          id={createItemId}
+        />
+      )}
+      {dataType === InvoiceTypes.Uploaded && (
+        <InvoiceUpload
+          open={uploadModalOpen}
+          onClose={handleUploadModal}
+          id={createItemId}
+        />
+      )}
       <Export open={exportModalOpen} onClose={handleExportModal} />
     </>
   )
 }
+
+export default BusinessDashboard

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { IconButton, IconButtonProps, Tooltip } from '@mui/material'
 import {
   SvgIconComponent,
@@ -10,22 +11,33 @@ import {
   CheckOutlined,
 } from '@mui/icons-material'
 
+export enum ActionButtonIcon {
+  Launch = 'launch',
+  Edit = 'edit',
+  Delete = 'delete',
+  Add = 'add',
+  Apps = 'apps',
+  Download = 'download',
+  Check = 'check',
+}
+
+export enum ActionButtonColor {
+  Action = 'action',
+  Success = 'success',
+  Disabled = 'disabled',
+  Inherit = 'inherit',
+  Primary = 'primary',
+  Secondary = 'secondary',
+  Error = 'error',
+  Info = 'info',
+}
+
 export interface ActionButtonProps {
   onClick: IconButtonProps['onClick']
-  icon: 'launch' | 'edit' | 'delete' | 'add' | 'apps' | 'download' | 'check'
+  icon: ActionButtonIcon
   tooltip: string
   disabled?: boolean
-  color?:
-    | 'action'
-    | 'disabled'
-    | 'inherit'
-    | 'primary'
-    | 'secondary'
-    | 'error'
-    | 'info'
-    | 'success'
-    | 'warning'
-    | undefined
+  color?: ActionButtonColor
   [rest: string]: any
 }
 
@@ -49,7 +61,7 @@ export const ActionButton = ({
       {...rest}
     >
       <IconComponent
-        color={color || 'primary'}
+        color={color}
         sx={{ fontSize: 16, color: disabled ? 'inherit' : '' }}
       />
     </IconButton>
@@ -63,21 +75,32 @@ export const ActionButton = ({
   )
 }
 
+ActionButton.propTypes = {
+  icon: PropTypes.string.isRequired,
+  tooltip: PropTypes.string,
+  disabled: PropTypes.bool,
+}
+
+ActionButton.defaultProps = {
+  color: ActionButtonColor.Primary,
+  disabled: false,
+}
+
 const getIcon = (icon: ActionButtonProps['icon']): SvgIconComponent => {
   switch (icon) {
-    case 'edit':
+    case ActionButtonIcon.Edit:
       return Edit
-    case 'delete':
+    case ActionButtonIcon.Delete:
       return DeleteOutline
-    case 'launch':
+    case ActionButtonIcon.Launch:
       return LaunchOutlined
-    case 'add':
+    case ActionButtonIcon.Add:
       return AddOutlined
-    case 'apps':
+    case ActionButtonIcon.Apps:
       return AppsOutlined
-    case 'download':
+    case ActionButtonIcon.Download:
       return FileDownloadOutlined
-    case 'check':
+    case ActionButtonIcon.Check:
       return CheckOutlined
 
     default:
