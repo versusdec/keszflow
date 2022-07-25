@@ -44,7 +44,11 @@ export const Header = () => {
             >
               <Link href="/" passHref>
                 <a>
-                  <LogoLG height={40} />
+                  <LogoLG
+                    height={40}
+                    colorMain={'pastel.primary.100'}
+                    colorSecondary={'primary.main'}
+                  />
                 </a>
               </Link>
             </Typography>

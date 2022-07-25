@@ -4,33 +4,28 @@ import { Input } from '@keszflow/components'
 import * as Yup from 'yup'
 import { Formik, Form, FormikHelpers } from 'formik'
 
-export const SignIn = ({
+export const Recover = ({
   handleSubmit,
 }: {
   handleSubmit: (values: any) => void
 }) => {
   const initialValues = {
-    login: '',
-    password: '',
+    email: '',
   }
 
   const validationSchema = Yup.object({
-    login: Yup.string().email().required('This field is required'),
-    password: Yup.string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('This field is required'),
+    email: Yup.string().email().required('This field is required'),
   })
 
   return (
-    <Box data-testid={'signin'}>
+    <Box data-testid={'recover'}>
       <Typography variant={'h3'} mb={3}>
-        SIGN IN
+        Recover password
       </Typography>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values: any, formikHelpers: FormikHelpers<any>) => {
-          console.log(values)
           handleSubmit(values)
           formikHelpers.setSubmitting(false)
         }}
@@ -39,22 +34,14 @@ export const SignIn = ({
           <Form data-testid={'form'}>
             <Box sx={{}}>
               <Input
-                inputProps={{ 'data-testid': 'login' }}
-                label={'Login'}
+                inputProps={{ 'data-testid': 'email' }}
+                label={'Email'}
                 margin={'normal'}
-                name={'login'}
-                fullWidth
-              />
-              <Input
-                inputProps={{ 'data-testid': 'password' }}
-                label={'Password'}
-                margin={'normal'}
-                name={'password'}
-                type={'password'}
+                name={'email'}
                 fullWidth
               />
               <Box>
-                <Link href={'/recover'}>Forgot password?</Link>
+                Return to <Link href={'/sign-in'}>login</Link> page
               </Box>
               <Button
                 variant={'contained'}
@@ -62,7 +49,7 @@ export const SignIn = ({
                 sx={{ mt: 5 }}
                 data-testid={'submit'}
               >
-                SIGN IN
+                send
               </Button>
               <Box sx={{ mt: 10 }}>
                 Don&apos;t have an account?
@@ -76,6 +63,6 @@ export const SignIn = ({
   )
 }
 
-SignIn.defaultProps = {
+Recover.defaultProps = {
   title: 'Sign in',
 }

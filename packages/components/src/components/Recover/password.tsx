@@ -1,34 +1,32 @@
 import { Box, Typography, Button } from '@mui/material'
 import Link from 'next/link'
-import { Input } from '../../elements/input'
+import { Input } from '@keszflow/components'
 import * as Yup from 'yup'
 import { Formik, Form, FormikHelpers } from 'formik'
 
-export const SignUp = ({
+export const Password = ({
   handleSubmit,
 }: {
-  handleSubmit: (values: any) => void
+  handleSubmit: (values: { password: string; confirmPassword: string }) => void
 }) => {
   const initialValues = {
-    email: '',
     password: '',
     confirmPassword: '',
   }
 
   const validationSchema = Yup.object({
-    email: Yup.string().email().required('This field is required'),
     password: Yup.string()
       .min(6, 'Password must be at least 6 characters')
-      .required('This field is required'),
+      .required('Enter password'),
     confirmPassword: Yup.string()
       .required('Please confirm your password')
       .oneOf([Yup.ref('password')], 'Passwords do not match'),
   })
 
   return (
-    <Box data-testid={'signup'}>
+    <Box data-testid={'password'}>
       <Typography variant={'h3'} mb={3}>
-        SIGN UP
+        Recover password
       </Typography>
       <Formik
         initialValues={initialValues}
@@ -42,53 +40,36 @@ export const SignUp = ({
           <Form data-testid={'form'}>
             <Box sx={{}}>
               <Input
-                inputProps={{
-                  'data-testid': 'email',
-                }}
-                label={'Email'}
-                margin={'normal'}
-                name={'email'}
-                fullWidth
-              />
-              <Input
-                inputProps={{
-                  'data-testid': 'password',
-                }}
-                label={'Password'}
+                inputProps={{ 'data-testid': 'password' }}
+                type={'password'}
+                label={'Enter new password'}
                 margin={'normal'}
                 name={'password'}
-                type={'password'}
                 fullWidth
               />
               <Input
-                inputProps={{
-                  'data-testid': 'confirmPassword',
-                }}
-                label={'Confirm Password'}
+                inputProps={{ 'data-testid': 'confirmPassword' }}
+                label={'Confirm password'}
+                type={'password'}
                 margin={'normal'}
                 name={'confirmPassword'}
-                type={'password'}
                 fullWidth
               />
 
               <Box>
-                <Typography variant={'caption'}>
-                  By pressing the button you confirm our{' '}
-                  <Link href={'#'}>Terms and Conditions</Link>,{' '}
-                  <Link href={'#'}>Privacy Policy</Link> and{' '}
-                  <Link href={'#'}>Rules</Link> of our service.
-                </Typography>
+                Return to <Link href={'/sign-in'}>login</Link> page
               </Box>
               <Button
-                data-testid={'submit'}
                 variant={'contained'}
                 type={'submit'}
-                sx={{ mt: 3 }}
+                sx={{ mt: 5 }}
+                data-testid={'submit'}
               >
-                SIGN UP
+                send
               </Button>
               <Box sx={{ mt: 10 }}>
-                Already have account? <Link href={'/sign-in'}>Sign in</Link>
+                Don&apos;t have an account?
+                <Link href={'/sign-up'}> Sign up</Link>
               </Box>
             </Box>
           </Form>
@@ -98,6 +79,6 @@ export const SignUp = ({
   )
 }
 
-SignUp.defaultProps = {
-  title: 'Sign Up',
+Password.defaultProps = {
+  title: 'Sign in',
 }
