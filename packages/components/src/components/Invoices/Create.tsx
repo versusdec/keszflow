@@ -9,9 +9,8 @@ import {
   IconButton,
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
-import { useInvoice } from '@keszflow/panel/hooks/useInvoice'
-import { Loader } from '@keszflow/components'
-import { InvoiceForm, useForm } from './Form'
+import { useInvoice } from '@keszflow/panel/hooks'
+import { Loader, InvoiceForm, useForm } from '@keszflow/components'
 
 export const useCreateModal = () => {
   const [createModalOpen, setCreateModalOpen] = useState(false)

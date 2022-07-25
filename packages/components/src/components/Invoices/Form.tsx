@@ -18,7 +18,7 @@ import {
   Input,
   Sortable,
 } from '@keszflow/components'
-import { useUser } from '@keszflow/panel/hooks/useUser'
+import { UserRoles } from '@keszflow/panel/hooks/useUser'
 import { ForwardedRef, forwardRef, useRef, useState } from 'react'
 import * as Yup from 'yup'
 
@@ -43,21 +43,18 @@ export const InvoiceForm = forwardRef(
       invoice,
       list,
       type,
+      role = UserRoles.Accountant,
     }: {
       invoice: IInvoice | undefined
       list?: boolean
       type?: InvoiceTypes
+      role?: UserRoles
     },
     ref: ForwardedRef<any>
   ) => {
     interface IAdornment {
       [x: string]: boolean | object
     }
-
-    const { user } = useUser()
-    // temp hardcode
-    let role = user?.role
-    role = 'accountant'
 
     const defaultItem: IItemInfo = {
       pos: 0,
@@ -139,7 +136,7 @@ export const InvoiceForm = forwardRef(
       const isCorrect = adornmentValues[name]
 
       return {
-        endAdornment: role === 'accountant' &&
+        endAdornment: role === UserRoles.Accountant &&
           type === InvoiceTypes.Uploaded && (
             <InputAdornment position="end">
               <ActionButton

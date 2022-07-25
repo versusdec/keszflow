@@ -1,5 +1,5 @@
 import React from 'react'
-import { SignUpJSX } from './index'
+import { SignUp } from './index'
 import {
   fireEvent,
   render,
@@ -14,10 +14,10 @@ import { mount, shallow } from 'enzyme'
 afterEach(cleanup)
 
 describe('Sign Up', () => {
-  const getComponent = () => <SignUpJSX handleSubmit={(v: any) => {}} />
+  const getComponent = () => <SignUp handleSubmit={() => {}} />
 
   it('renders all components', () => {
-    render(<SignUpJSX handleSubmit={(v: any) => {}} />)
+    render(<SignUp handleSubmit={() => {}} />)
     expect(screen.getByTestId('signup')).toBeInTheDocument()
     expect(screen.getByTestId('form')).toBeInTheDocument()
     expect(screen.getByTestId('email')).toBeInTheDocument()
@@ -37,7 +37,7 @@ describe('Sign Up', () => {
   })
 
   it('should have empty inputs', () => {
-    const wrapped = mount(<SignUpJSX handleSubmit={(v: any) => {}} />)
+    const wrapped = mount(<SignUp handleSubmit={() => {}} />)
     expect(wrapped.find("input[name='email']").get(0).props.value).toEqual('')
     expect(wrapped.find("input[name='password']").get(0).props.value).toEqual(
       ''
@@ -50,7 +50,7 @@ describe('Sign Up', () => {
 
 describe('Sign in Form', () => {
   test('should update login field on change', () => {
-    const tree = mount(<SignUpJSX handleSubmit={(v: any) => {}} />)
+    const tree = mount(<SignUp handleSubmit={() => {}} />)
     const login = tree.find("input[name='email']")
     login.simulate('change', {
       persist: () => {},
@@ -63,7 +63,7 @@ describe('Sign in Form', () => {
   })
 
   test('should update password field on change', () => {
-    const tree = mount(<SignUpJSX handleSubmit={(v: any) => {}} />)
+    const tree = mount(<SignUp handleSubmit={() => {}} />)
 
     const password = tree.find("input[name='password']")
 
@@ -79,7 +79,7 @@ describe('Sign in Form', () => {
   })
 
   test('should update confirm password field on change', () => {
-    const tree = mount(<SignUpJSX handleSubmit={(v: any) => {}} />)
+    const tree = mount(<SignUp handleSubmit={() => {}} />)
 
     const password = tree.find("input[name='confirmPassword']")
 
@@ -114,7 +114,7 @@ describe('Sign in Form', () => {
           handleSubmit,
         }
 
-        wrapper = render(<SignUpJSX {...props} />)
+        wrapper = render(<SignUp {...props} />)
 
         fakeUser = {
           login: 'admin@test.com',
@@ -145,7 +145,7 @@ describe('Sign in Form', () => {
         })
       })
 
-      test('Submits Login with email and password', async () => {
+      test('Submits Login with email and password', () => {
         // Assert--------------
         act(async () => {
           await waitFor(() => {

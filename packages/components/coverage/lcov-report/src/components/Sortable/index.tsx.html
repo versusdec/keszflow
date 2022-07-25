@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">51.21% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/40</span>
+                <span class='fraction'>21/41</span>
             </div>
         
             
@@ -138,9 +138,11 @@
 <a name='L73'></a><a href='#L73'>73</a>
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
-<a name='L76'></a><a href='#L76'>76</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -150,33 +152,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -192,7 +198,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -209,10 +215,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useRef, useEffect, useMemo, useContext } from 'react'
 import { Box } from '@mui/material'
 import { AppContext } from '@keszflow/components'
@@ -225,16 +229,20 @@ export interface ISortable {
   [rest: string]: any
 }
 &nbsp;
-const Sortable = ({ items, Component, onChange, ...rest }: ISortable) =&gt; {
+export const Sortable = ({
+  items,
+  Component,
+  onChange,
+  ...rest
+}: ISortable) =&gt; {
   const [list, setList] = useState&lt;any[]&gt;(items)
   const [draggable, setDraggable] = useState(true)
   const dragItem = useRef(-1)
   const dragOverItem = useRef(-1)
   const state = useContext(AppContext)
-&nbsp;
   useEffect(() =&gt; {
     setList(items)
-  }, [items])
+  }, [items, rest.deps])
 &nbsp;
   const isDraggable = <span class="fstat-no" title="function not covered" >(e</span>: React.MouseEvent&lt;HTMLElement&gt;) =&gt; {
     const { nodeName } = <span class="cstat-no" title="statement not covered" >e.target as HTMLElement</span>
@@ -251,7 +259,7 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) =&gt; {
 <span class="cstat-no" title="statement not covered" >    dragOverItem.current = position</span>
   }
 &nbsp;
-  const drop = <span class="fstat-no" title="function not covered" >(e</span>: React.MouseEvent&lt;HTMLElement&gt;) =&gt; {
+  const drop = <span class="fstat-no" title="function not covered" >() =</span>&gt; {
 <span class="cstat-no" title="statement not covered" >    state?.setStore({ ...state?.store, sortableDragging: false })</span>
 &nbsp;
     const copyListItems = <span class="cstat-no" title="statement not covered" >[...list]</span>
@@ -282,12 +290,10 @@ const Sortable = ({ items, Component, onChange, ...rest }: ISortable) =&gt; {
         &lt;Component item={item} index={index} {...rest} /&gt;
       &lt;/Box&gt;
     ))
-  }, [list, draggable])
+  }, [list, draggable, rest.deps])
 &nbsp;
   return &lt;Box className={'sortable-list'}&gt;{list &amp;&amp; ListJSX}&lt;/Box&gt;
 }
-&nbsp;
-export default Sortable
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -295,7 +301,7 @@ export default Sortable
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Thu Jul 21 2022 10:15:52 GMT+0300 (за східноєвропейським літнім часом)
+                at 2022-07-25T06:42:31.827Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -10,7 +10,7 @@ import {
 import { mount, shallow, ReactWrapper } from 'enzyme'
 import { IInvoice, IItemInfo } from '../Create'
 import { LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 afterEach(cleanup)
 
@@ -55,7 +55,7 @@ const props = {
 
 describe('Invoice Form render', () => {
   const getComponent = () => (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <InvoiceForm {...props} />
     </LocalizationProvider>
   )
@@ -89,7 +89,7 @@ describe('render all inputs', () => {
     issueDate: HTMLInputElement | null
 
   const getComponent = () => (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <InvoiceForm {...props} />
     </LocalizationProvider>
   )
@@ -164,7 +164,7 @@ describe('input values', () => {
     issueDate: ReactWrapper
 
   const getComponent = () => (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <InvoiceForm {...props} />
     </LocalizationProvider>
   )
@@ -312,7 +312,7 @@ describe('FormComponent', () => {
       handleSubmit = jest.fn()
 
       const getComponent = () => (
-        <LocalizationProvider dateAdapter={AdapterMoment}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
           <InvoiceForm {...props} />
         </LocalizationProvider>
       )
@@ -324,14 +324,14 @@ describe('FormComponent', () => {
         file: '',
         seller: {
           name: 'Konyaka',
-          country: 'Poland',
+          country: 'poland',
           address_line_1: 's1',
           address_line_2: 's2',
           address_line_3: 's3',
         },
         buyer: {
           name: 'skotynyaka',
-          country: 'Poland',
+          country: 'poland',
           address_line_1: 'b1',
           address_line_2: 'b2',
           address_line_3: 'b3',
@@ -433,7 +433,7 @@ describe('FormComponent', () => {
       })
     })
 
-    test('Submit', async () => {
+    test('Submit', () => {
       // Assert--------------
       act(async () => {
         await waitFor(() => {

@@ -1,0 +1,241 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/elements/keszflowBusinessLogo/index.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/elements/keszflowBusinessLogo</a> index.tsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>7/7</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>1/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>7/7</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input oninput="onInput()" type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import PropTypes from 'prop-types'
+import { Box } from '@mui/material'
+&nbsp;
+interface ILogoProps {
+  height?: number
+  width?: number
+  colorMain?: string
+  colorSecondary?: string
+}
+&nbsp;
+const LogoLG = ({ height, width, colorMain, colorSecondary }: ILogoProps) =&gt; (
+  &lt;Box
+    sx={{
+      '&amp; svg': {
+        height,
+        width,
+      },
+    }}
+  &gt;
+    &lt;svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 600 120"
+      xmlSpace="preserve"
+    &gt;
+      &lt;g fillRule="evenodd" clipRule="evenodd"&gt;
+        &lt;path
+          fill={colorMain}
+          d="M28.4 0h63.4c15.6 0 28.3 12.7 28.3 28.3v63.4c0 15.6-12.7 28.3-28.3 28.3H28.4C12.8 120 .1 107.3.1 91.7V28.3C.1 12.7 12.8 0 28.4 0z"
+        /&gt;
+        &lt;path
+          fill={colorSecondary}
+          d="m.1 96.6 32.7-27.8c3.3-2.8 7.2-4 11.5-3.1l30.2 6.8c2.8.6 5.7-.7 7-3.4l26.7-52-35.8 26.6c-3.1 2.2-6.7 3.1-10.4 2.1l-27.4-6.5c-3.5-.8-6.7-.3-9.7 1.5L.1 56.3v40.3z"
+        /&gt;
+      &lt;/g&gt;
+      &lt;g fill={colorMain}&gt;
+        &lt;path d="m184.6 48.2-10.9 11.2v17.5H161V8.4h12.7v35.1l33.9-35.1h14.3L193.1 39l30.5 37.9h-14.9l-24.1-28.7zm93.2 6.5h-41c.7 3.9 2.6 6.9 5.6 9.1 3 2.3 6.8 3.4 11.3 3.4 5.7 0 10.5-1.9 14.2-5.7l6.6 7.5c-2.4 2.8-5.3 4.9-8.9 6.4-3.6 1.4-7.6 2.1-12.1 2.1-5.7 0-10.8-1.1-15.2-3.4s-7.7-5.5-10.1-9.5c-2.4-4.1-3.6-8.7-3.6-13.8 0-5.1 1.2-9.7 3.5-13.8s5.5-7.3 9.6-9.5c4.1-2.3 8.7-3.4 13.9-3.4 5.1 0 9.6 1.1 13.7 3.4 4 2.3 7.1 5.4 9.4 9.5s3.4 8.8 3.4 14.1c-.1.8-.1 2-.3 3.6zm-36.1-17.4c-2.7 2.3-4.4 5.4-4.9 9.3h29.7c-.5-3.8-2.1-6.8-4.8-9.2-2.7-2.3-6-3.5-10-3.5-4-.1-7.3 1.1-10 3.4zm51.8 38.6c-4-1.1-7.3-2.5-9.7-4.2l4.7-9.3c2.4 1.6 5.2 2.8 8.5 3.8s6.5 1.4 9.7 1.4c7.3 0 11-1.9 11-5.8 0-1.8-.9-3.1-2.8-3.8-1.9-.7-4.8-1.4-9-2.1-4.3-.6-7.8-1.4-10.5-2.3-2.7-.8-5-2.3-7-4.4s-3-5.1-3-8.8c0-5 2.1-8.9 6.2-11.9s9.8-4.4 16.8-4.4c3.6 0 7.2.4 10.8 1.2s6.5 1.9 8.8 3.3l-4.7 9.3c-4.4-2.6-9.4-3.9-15-3.9-3.6 0-6.3.6-8.2 1.6-1.9 1.1-2.8 2.5-2.8 4.3 0 1.9 1 3.3 3 4.2 2 .8 5.1 1.6 9.3 2.3s7.6 1.4 10.3 2.3c2.7.8 5 2.3 6.9 4.3 1.9 2 2.9 4.9 2.9 8.6 0 4.9-2.1 8.8-6.4 11.8-4.2 2.9-10 4.4-17.3 4.4-4.3-.2-8.5-.8-12.5-1.9zm87.5-8.8v9.8h-45.1v-7.7l28.6-34.8h-28.1v-9.8h43.8v7.7L351.4 67l29.6.1zm24.9-45.2V25h14.4v9.8h-14v42.1h-12.2V34.8h-8.6V25h8.6v-3.3c0-5.6 1.6-10 4.9-13.3 3.2-3.2 7.8-4.8 13.8-4.8 4.7 0 8.4 1 11.1 2.8l-3.4 9.2c-2.1-1.4-4.4-2.1-6.8-2.1-5.2 0-7.8 2.8-7.8 8.4zm22.6-17.6h12.2v72.6h-12.2V4.3zM466 74.2c-4.2-2.3-7.5-5.5-9.9-9.5-2.4-4.1-3.6-8.7-3.6-13.8 0-5.2 1.2-9.8 3.6-13.8 2.4-4 5.7-7.2 9.9-9.5s9-3.4 14.3-3.4 10.2 1.1 14.4 3.4c4.2 2.3 7.5 5.5 9.9 9.5 2.4 4 3.6 8.6 3.6 13.8s-1.2 9.8-3.6 13.8c-2.4 4.1-5.7 7.3-9.9 9.5s-9 3.4-14.4 3.4c-5.3 0-10-1.1-14.3-3.4zm25.5-11.6c2.9-3 4.4-6.9 4.4-11.8s-1.5-8.8-4.4-11.8c-2.9-3-6.6-4.5-11.2-4.5-4.5 0-8.2 1.5-11.1 4.5-2.9 3-4.4 7-4.4 11.8 0 4.9 1.5 8.8 4.4 11.8 2.9 3 6.6 4.5 11.1 4.5s8.2-1.5 11.2-4.5zm108.5-38-19.3 52.3h-11.8l-13.5-36-13.7 36h-11.8l-19-52.3h11.5l13.8 38.6 14.4-38.6h10.3L575 63.4l14.2-38.8H600zM175.6 98.4c1.4.8 2.6 1.9 3.4 3.4.8 1.5 1.2 3.1 1.2 5s-.4 3.5-1.2 5c-.8 1.5-1.9 2.6-3.4 3.4-1.4.8-3 1.2-4.8 1.2-1.6 0-3-.3-4.3-1-1.3-.7-2.3-1.6-3-2.9v3.7H161V89.6h2.6V101c.8-1.2 1.8-2.1 3-2.8 1.2-.6 2.6-1 4.1-1 1.8 0 3.4.4 4.9 1.2zm-1.5 14.8c1.1-.6 1.9-1.5 2.5-2.6.6-1.1.9-2.4.9-3.8s-.3-2.7-.9-3.8c-.6-1.1-1.5-2-2.5-2.6-1.1-.6-2.3-.9-3.6-.9-1.3 0-2.5.3-3.6.9-1.1.6-1.9 1.5-2.5 2.6-.6 1.1-.9 2.4-.9 3.8s.3 2.7.9 3.8c.6 1.1 1.4 2 2.5 2.6 1.1.6 2.3.9 3.6.9 1.4 0 2.6-.3 3.6-.9zM243.3 97.3v18.9h-2.4v-3.4c-.7 1.2-1.6 2-2.8 2.7-1.2.6-2.5 1-4 1-2.5 0-4.4-.7-5.8-2.1-1.4-1.4-2.1-3.4-2.1-6.1v-11h2.6V108c0 2 .5 3.5 1.5 4.5s2.4 1.5 4.2 1.5c2 0 3.6-.6 4.7-1.8 1.1-1.2 1.7-2.9 1.7-5v-9.9h2.4zM292.1 115.7c-1.4-.4-2.5-1-3.3-1.7l1.1-2c.8.6 1.8 1.1 3 1.5 1.2.4 2.4.6 3.7.6 1.7 0 3-.3 3.8-.8.8-.5 1.2-1.3 1.2-2.3 0-.7-.2-1.2-.7-1.6-.5-.4-1-.7-1.7-.9-.7-.2-1.6-.4-2.8-.6-1.5-.3-2.8-.6-3.7-.9-.9-.3-1.7-.8-2.4-1.5s-1-1.7-1-3c0-1.6.7-2.9 2-3.9s3.1-1.5 5.5-1.5c1.2 0 2.4.2 3.7.5 1.2.3 2.2.7 3 1.3l-1.1 2c-1.6-1.1-3.4-1.6-5.6-1.6-1.6 0-2.9.3-3.7.9-.8.6-1.2 1.3-1.2 2.3 0 .7.2 1.3.7 1.7.5.4 1 .7 1.7 1 .7.2 1.7.4 2.9.6 1.5.3 2.7.6 3.6.9.9.3 1.7.8 2.3 1.5.6.7 1 1.7 1 2.9 0 1.7-.7 3-2.1 3.9-1.4 1-3.3 1.5-5.7 1.5-1.3-.1-2.8-.3-4.2-.8zM349.9 92.6c-.4-.4-.5-.8-.5-1.3s.2-.9.5-1.3c.4-.4.8-.5 1.3-.5s1 .2 1.3.5c.4.3.5.8.5 1.2 0 .5-.2 1-.5 1.3-.4.4-.8.5-1.3.5-.5.2-.9 0-1.3-.4zm.1 4.7h2.6v18.9H350V97.3zM415.9 99.2c1.4 1.4 2.1 3.4 2.1 6v11h-2.6v-10.7c0-2-.5-3.5-1.5-4.5s-2.4-1.5-4.2-1.5c-2 0-3.6.6-4.8 1.8-1.2 1.2-1.8 2.9-1.8 5v9.9h-2.6V97.3h2.4v3.5c.7-1.1 1.7-2 2.9-2.7 1.2-.6 2.7-1 4.3-1 2.5.1 4.4.8 5.8 2.1zM482.4 107.6h-15.8c.1 2 .9 3.6 2.3 4.8 1.4 1.2 3.1 1.8 5.2 1.8 1.2 0 2.3-.2 3.2-.6 1-.4 1.8-1 2.6-1.9l1.4 1.7c-.8 1-1.9 1.8-3.1 2.3-1.3.5-2.6.8-4.1.8-1.9 0-3.7-.4-5.2-1.2-1.5-.8-2.7-2-3.5-3.4-.8-1.5-1.3-3.1-1.3-5 0-1.8.4-3.5 1.2-5 .8-1.5 1.9-2.6 3.3-3.4 1.4-.8 3-1.2 4.7-1.2 1.7 0 3.3.4 4.7 1.2 1.4.8 2.5 1.9 3.3 3.4.8 1.4 1.2 3.1 1.2 5l-.1.7zm-13.7-6.5c-1.2 1.2-1.9 2.7-2.1 4.5H480c-.2-1.9-.9-3.4-2.1-4.5-1.2-1.2-2.8-1.7-4.6-1.7-1.8 0-3.4.5-4.6 1.7zM529.3 115.7c-1.4-.4-2.5-1-3.3-1.7l1.2-2c.8.6 1.8 1.1 3 1.5 1.2.4 2.4.6 3.7.6 1.7 0 3-.3 3.8-.8s1.2-1.3 1.2-2.3c0-.7-.2-1.2-.7-1.6-.5-.4-1-.7-1.7-.9-.7-.2-1.6-.4-2.8-.6-1.5-.3-2.8-.6-3.7-.9-.9-.3-1.7-.8-2.4-1.5s-1-1.7-1-3c0-1.6.7-2.9 2-3.9s3.1-1.5 5.5-1.5c1.2 0 2.4.2 3.7.5 1.2.3 2.2.7 3 1.3l-1.1 2c-1.6-1.1-3.4-1.6-5.6-1.6-1.6 0-2.9.3-3.7.9-.8.6-1.2 1.3-1.2 2.3 0 .7.2 1.3.7 1.7.5.4 1 .7 1.7 1 .7.2 1.7.4 2.9.6 1.5.3 2.7.6 3.6.9s1.7.8 2.3 1.5c.6.7 1 1.7 1 2.9 0 1.7-.7 3-2.1 3.9-1.4 1-3.3 1.5-5.7 1.5-1.5-.1-2.9-.3-4.3-.8zM587.8 115.7c-1.4-.4-2.5-1-3.3-1.7l1.2-2c.8.6 1.8 1.1 3 1.5 1.2.4 2.4.6 3.7.6 1.7 0 3-.3 3.8-.8s1.2-1.3 1.2-2.3c0-.7-.2-1.2-.7-1.6-.5-.4-1-.7-1.7-.9-.7-.2-1.6-.4-2.8-.6-1.5-.3-2.8-.6-3.7-.9-.9-.3-1.7-.8-2.4-1.5s-1-1.7-1-3c0-1.6.7-2.9 2-3.9s3.1-1.5 5.5-1.5c1.2 0 2.4.2 3.7.5 1.2.3 2.2.7 3 1.3l-1.1 2c-1.6-1.1-3.4-1.6-5.6-1.6-1.6 0-2.9.3-3.7.9-.8.6-1.2 1.3-1.2 2.3 0 .7.2 1.3.7 1.7.5.4 1 .7 1.7 1 .7.2 1.7.4 2.9.6 1.5.3 2.7.6 3.6.9s1.7.8 2.3 1.5c.6.7 1 1.7 1 2.9 0 1.7-.7 3-2.1 3.9-1.4 1-3.3 1.5-5.7 1.5-1.4-.1-2.9-.3-4.3-.8z" /&gt;
+      &lt;/g&gt;
+    &lt;/svg&gt;
+  &lt;/Box&gt;
+)
+&nbsp;
+LogoLG.propTypes = {
+  colorMain: PropTypes.string,
+  colorSecondary: PropTypes.string,
+}
+&nbsp;
+LogoLG.defaultProps = {
+  colorMain: '#455A64',
+  colorSecondary: '#FFFFFF',
+} as ILogoProps
+&nbsp;
+export { LogoLG, ILogoProps }
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2022-07-25T06:42:31.827Z
+            </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
+</html>
+    

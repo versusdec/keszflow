@@ -1,5 +1,5 @@
 import React from 'react'
-import { SignInJSX } from './index'
+import { SignIn } from './index'
 import {
   fireEvent,
   render,
@@ -14,10 +14,10 @@ import { mount, shallow } from 'enzyme'
 afterEach(cleanup)
 
 describe('Sign In', () => {
-  const getComponent = () => <SignInJSX handleSubmit={(v: any) => {}} />
+  const getComponent = () => <SignIn handleSubmit={() => {}} />
 
   it('renders all components', () => {
-    render(<SignInJSX handleSubmit={(v: any) => {}} />)
+    render(<SignIn handleSubmit={() => {}} />)
     expect(screen.getByTestId('signin')).toBeInTheDocument()
     expect(screen.getByTestId('form')).toBeInTheDocument()
     expect(screen.getByTestId('login')).toBeInTheDocument()
@@ -36,7 +36,7 @@ describe('Sign In', () => {
   })
 
   it('should have empty inputs', () => {
-    const wrapped = mount(<SignInJSX handleSubmit={(v: any) => {}} />)
+    const wrapped = mount(<SignIn handleSubmit={() => {}} />)
     expect(wrapped.find("input[name='login']").get(0).props.value).toEqual('')
     expect(wrapped.find("input[name='password']").get(0).props.value).toEqual(
       ''
@@ -46,7 +46,7 @@ describe('Sign In', () => {
 
 describe('Sign in Form', () => {
   test('should update login field on change', () => {
-    const tree = mount(<SignInJSX handleSubmit={(v: any) => {}} />)
+    const tree = mount(<SignIn handleSubmit={() => {}} />)
     const login = tree.find("input[name='login']")
     login.simulate('change', {
       persist: () => {},
@@ -59,7 +59,7 @@ describe('Sign in Form', () => {
   })
 
   test('should update password field on change', () => {
-    const tree = mount(<SignInJSX handleSubmit={(v: any) => {}} />)
+    const tree = mount(<SignIn handleSubmit={() => {}} />)
 
     const password = tree.find("input[name='password']")
 
@@ -94,7 +94,7 @@ describe('LoginFormComponent', () => {
         handleSubmit,
       }
 
-      wrapper = render(<SignInJSX {...props} />)
+      wrapper = render(<SignIn {...props} />)
 
       fakeUser = {
         login: 'admin@test.com',
@@ -115,7 +115,7 @@ describe('LoginFormComponent', () => {
       })
     })
 
-    test('Submits Login with email and password', async () => {
+    test('Submits Login with email and password', () => {
       // Assert--------------
       act(async () => {
         await waitFor(() => {

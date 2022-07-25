@@ -1,5 +1,11 @@
 import { useQuery } from 'react-query'
 
+export enum UserRoles {
+  Admin = 'admin',
+  Accountant = 'accountant',
+  Public = 'public',
+}
+
 export interface IUser {
   id: number
   name: string
@@ -8,7 +14,7 @@ export interface IUser {
   email: string
   gender: 'male' | 'female' | 'other'
   language: string
-  role: 'admin' | 'accountant' | 'public'
+  role: UserRoles
   status: string
   avatar: string
 }

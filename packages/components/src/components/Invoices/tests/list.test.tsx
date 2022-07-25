@@ -1,5 +1,5 @@
 import React from 'react'
-import { IList, List } from '../index'
+import { IList, InvoiceList } from '../List'
 
 import { fireEvent, render, screen } from '@testing-library/react'
 import { mount, shallow } from 'enzyme'
@@ -55,7 +55,7 @@ describe('Invoice List', () => {
   let useInvoicesData: invoiceData[]
   let handler: (id: number, type: string) => void
   const getComponent = ({ invoices, openInvoiceHandler }: IList) => (
-    <List invoices={invoices} openInvoiceHandler={openInvoiceHandler} />
+    <InvoiceList invoices={invoices} openInvoiceHandler={openInvoiceHandler} />
   )
 
   beforeEach(() => {
