@@ -1,5 +1,5 @@
 import React from 'react'
-import { SignIn } from './index'
+import { Password } from './index'
 import {
   fireEvent,
   render,
@@ -13,15 +13,16 @@ import { mount, shallow } from 'enzyme'
 
 afterEach(cleanup)
 
-describe('Sign In', () => {
-  const getComponent = () => <SignIn handleSubmit={() => {}} />
-
+const getComponent = (
+  props?: { handleSubmit: () => void; [x: string]: any } | undefined
+) => <Password handleSubmit={() => {}} {...props} />
+describe('Password', () => {
   it('renders all components', () => {
-    render(<SignIn handleSubmit={() => {}} />)
-    expect(screen.getByTestId('signin')).toBeInTheDocument()
+    render(getComponent())
+    expect(screen.getByTestId('passwordComponent')).toBeInTheDocument()
     expect(screen.getByTestId('form')).toBeInTheDocument()
-    expect(screen.getByTestId('login')).toBeInTheDocument()
     expect(screen.getByTestId('password')).toBeInTheDocument()
+    expect(screen.getByTestId('confirmPassword')).toBeInTheDocument()
     expect(screen.getByTestId('submit')).toBeInTheDocument()
   })
 
@@ -36,53 +37,54 @@ describe('Sign In', () => {
   })
 
   it('should have empty inputs', () => {
-    const wrapped = mount(<SignIn handleSubmit={() => {}} />)
-    expect(wrapped.find("input[name='login']").get(0).props.value).toEqual('')
+    const wrapped = mount(getComponent())
     expect(wrapped.find("input[name='password']").get(0).props.value).toEqual(
       ''
     )
+    expect(
+      wrapped.find("input[name='confirmPassword']").get(0).props.value
+    ).toEqual('')
   })
 })
 
-describe('Sign in Form', () => {
-  test('should update login field on change', () => {
-    const tree = mount(<SignIn handleSubmit={() => {}} />)
-    const login = tree.find("input[name='login']")
-    login.simulate('change', {
-      persist: () => {},
-      target: {
-        name: 'login',
-        value: 'test@mail.com',
-      },
-    })
-    expect(login.html()).toMatch('test@mail.com')
-  })
-
-  test('should update password field on change', () => {
-    const tree = mount(<SignIn handleSubmit={() => {}} />)
-
+describe('Password Form', () => {
+  test('should update on change', () => {
+    const tree = mount(getComponent())
     const password = tree.find("input[name='password']")
-
     password.simulate('change', {
       persist: () => {},
       target: {
+        value: '100500',
+      },
+    })
+    expect(password.html()).toMatch('100500')
+  })
+
+  test('should update password field on change', () => {
+    const tree = mount(getComponent())
+
+    const confirmPassword = tree.find("input[name='password']")
+
+    confirmPassword.simulate('change', {
+      persist: () => {},
+      target: {
         name: 'password',
-        value: 'test',
+        value: '100500',
       },
     })
 
-    expect(password.html()).toMatch('test')
+    expect(confirmPassword.html()).toMatch('100500')
   })
 })
 
-describe('LoginFormComponent', () => {
+describe('Password Form Component', () => {
   describe('Submitting form', () => {
     // Arrange--------------
     // Set up variables accessible in tests
     let wrapper: RenderResult
-    let fakeUser: { login: string; password: string }
-    let loginNode: HTMLInputElement
+    let fakeUser: { password: string; confirmPassword: string }
     let passwordNode: HTMLInputElement
+    let confirmPasswordNode: HTMLInputElement
     let loginButtonNode: HTMLButtonElement
     let handleSubmit: () => void
 
@@ -94,21 +96,26 @@ describe('LoginFormComponent', () => {
         handleSubmit,
       }
 
-      wrapper = render(<SignIn {...props} />)
+      wrapper = render(getComponent(props))
 
       fakeUser = {
-        login: 'admin@test.com',
-        password: 'admin',
+        password: '100500',
+        confirmPassword: '100500',
       }
-      loginNode = wrapper.getByTestId('login') as HTMLInputElement
+
       passwordNode = wrapper.getByTestId('password') as HTMLInputElement
+      confirmPasswordNode = wrapper.getByTestId(
+        'confirmPassword'
+      ) as HTMLInputElement
       loginButtonNode = wrapper.getByTestId('submit') as HTMLButtonElement
 
       // Act--------------
       // Change the input values
       act(() => {
-        fireEvent.change(loginNode, { target: { value: fakeUser.login } })
         fireEvent.change(passwordNode, { target: { value: fakeUser.password } })
+        fireEvent.change(confirmPasswordNode, {
+          target: { value: fakeUser.confirmPassword },
+        })
 
         // This should submit the form?
         fireEvent.click(loginButtonNode)

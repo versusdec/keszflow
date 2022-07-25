@@ -24,7 +24,7 @@ export const Password = ({
   })
 
   return (
-    <Box data-testid={'password'}>
+    <Box data-testid={'passwordComponent'}>
       <Typography variant={'h3'} mb={3}>
         Recover password
       </Typography>
